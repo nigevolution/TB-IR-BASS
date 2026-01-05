@@ -1,23 +1,42 @@
-import { generateClientIR } from '../../protected/generate.js'
-import path from 'path'
-import fs from 'fs'
+import fs from "fs";
+import path from "path";
+import crypto from "crypto";
 
 export async function handler(event) {
-  const client = event.queryStringParameters.id
-  if (!client) return { statusCode: 400, body: 'Missing ID' }
 
-  const base = path.join(process.cwd(), 'protected/vault/fender_ultra.wav')
-  const out  = path.join('/tmp', `${client}.wav`)
+  const id = event.queryStringParameters?.id;
+  if (!id) {
+    return { statusCode: 400, body: "ID não informado." };
+  }
 
-  generateClientIR(client, base, out)
+  // IR base protegido (seu IR original)
+  const baseIR = path.join(process.cwd(), "protected/vault/fender_ultra.wav");
+
+  if (!fs.existsSync(baseIR)) {
+    return { statusCode: 500, body: "IR base não encontrado." };
+  }
+
+  const raw = fs.readFileSync(baseIR);
+
+  // 🔐 watermark invisível
+  const signature = crypto.createHash("sha256")
+    .update(id + Date.now().toString())
+    .digest("hex")
+    .slice(0, 32);
+
+  const watermark = Buffer.from("\nTBIR:" + signature + "\n");
+
+  const finalIR = Buffer.concat([raw, watermark]);
+
+  const filename = `${id}.wav`;
 
   return {
     statusCode: 200,
     headers: {
-      'Content-Type': 'audio/wav',
-      'Content-Disposition': `attachment; filename="${client}.wav"`
+      "Content-Type": "audio/wav",
+      "Content-Disposition": `attachment; filename="${filename}"`
     },
-    body: fs.readFileSync(out).toString('base64'),
+    body: finalIR.toString("base64"),
     isBase64Encoded: true
-  }
+  };
 }
