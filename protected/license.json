@@ -1,0 +1,9 @@
+{
+  "product": "TB-IR-BASS",
+  "client_id": "__AUTO__",
+  "purchase_id": "__AUTO__",
+  "device": "TANK-B / TANK-B V2",
+  "watermark": true,
+  "bind_mode": "hardware",
+  "export": "direct"
+}
