@@ -1,35 +1,24 @@
-import { createClient } from '@supabase/supabase-js'
-import fs from 'fs'
+const fs = require("fs")
+const path = require("path")
 
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY
-)
+exports.handler = async (event) => {
+  const { file } = event.queryStringParameters
+  const filePath = path.join(__dirname,"../../public/vault",file)
 
-export async function handler(event) {
-  const { name, email, phone } = event.queryStringParameters
+  if(!fs.existsSync(filePath))
+    return { statusCode:403, body:"Link expirado" }
 
-  if (!name || !email) {
-    return { statusCode: 400, body: "Dados inválidos" }
-  }
-
-  await supabase.from('clients').insert([{
-    id: name.replace(/\s+/g, '_'),
-    nome: name,
-    email,
-    zap: phone
-  }])
-
-  const baseIR = fs.readFileSync('./protected/base_ir.wav')
-  const output = Buffer.concat([baseIR, Buffer.from(`\nTBIR:${email}`)])
+  const data = fs.readFileSync(filePath)
+  fs.unlinkSync(filePath)
 
   return {
-    statusCode: 200,
-    headers: {
-      'Content-Type': 'audio/wav',
-      'Content-Disposition': `attachment; filename="${name}.wav"`
+    statusCode:200,
+    headers:{
+      "Content-Type":"audio/wav",
+      "Content-Disposition":"inline",
+      "Cache-Control":"no-store"
     },
-    body: output.toString('base64'),
-    isBase64Encoded: true
+    body:data.toString("base64"),
+    isBase64Encoded:true
   }
 }
