@@ -1,0 +1,10 @@
+{
+  "product": "TB-IR-BASS",
+  "allowed_devices": ["TANK-B", "TANK-BV2"],
+  "max_devices": 1,
+  "format": ["wav", "am2"],
+  "watermark": true,
+  "bind_hardware": true,
+  "leak_trace": true,
+  "delivery": "m-effects-direct"
+}
