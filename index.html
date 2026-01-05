@@ -1,42 +1,31 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html>
 <head>
 <meta charset="UTF-8">
-<title>TB IR BASS – Secure Installer</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TB IR BASS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-body{
-  background:#0f0f0f;
-  color:#00ff90;
-  font-family: monospace;
-  text-align:center;
-  padding-top:15vh;
-}
-button{
-  background:#00ff90;
-  color:#000;
-  border:none;
-  border-radius:12px;
-  padding:18px 35px;
-  font-size:18px;
-  cursor:pointer;
-}
-button:hover{opacity:0.85;}
+body{background:#000;color:#00ff88;font-family:monospace;text-align:center;padding-top:15vh}
+input,button{padding:14px;font-size:17px;border-radius:10px;margin:5px}
+button{background:#00ff88;color:#000;border:0}
 </style>
 </head>
 <body>
-
 <h1>TB IR BASS</h1>
-<p>Servidor seguro de licenças IR</p>
+<p>Licenciamento seguro de IR</p>
 
-<button onclick="installIR()">
-  🔒 IMPORTAR IR NA TANK-B
-</button>
+<input id="name" placeholder="Nome"><br>
+<input id="email" placeholder="Email"><br>
+<input id="phone" placeholder="WhatsApp"><br>
+<input id="device" placeholder="ID da Tank-B"><br>
+
+<button onclick="go()">🔒 IMPORTAR IR</button>
 
 <script>
-function installIR() {
-  const id = prompt("Digite seu ID de cliente:");
-  if(!id) return;
-  window.location = "/.netlify/functions/generate?id=" + encodeURIComponent(id);
+function go(){
+  const q = `?name=${name.value}&email=${email.value}&phone=${phone.value}&device=${device.value}`;
+  window.location="/api/generate"+q;
 }
 </script>
+</body>
+</html>
