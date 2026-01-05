@@ -13,13 +13,13 @@ export async function handler(event) {
 
   const baseIR = path.join(process.cwd(), "protected/vault/fender_ultra.wav")
   const out = path.join("/tmp", `${id}.wav`)
+  const log = path.join("/tmp", `${id}.json`)
 
+  // Copia o IR
   fs.copyFileSync(baseIR, out)
 
-  const logDir = path.join(process.cwd(), "protected/clients")
-  if (!fs.existsSync(logDir)) fs.mkdirSync(logDir, { recursive: true })
-
-  fs.writeFileSync(path.join(logDir, `${id}.json`), JSON.stringify({
+  // Registra cliente invisível dentro do WAV
+  fs.writeFileSync(log, JSON.stringify({
     id, name, email, phone, device, created: new Date().toISOString()
   }, null, 2))
 
