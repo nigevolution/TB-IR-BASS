@@ -1,34 +1,28 @@
 const fs = require("fs")
 const path = require("path")
 
-exports.handler = async () => {
+exports.handler = async (event) => {
+  const { file } = event.queryStringParameters || {}
 
-  const vaultDir = path.join(__dirname, "../public/vault")
-
-  if (!fs.existsSync(vaultDir)) {
-    return { statusCode: 500, body: "Cofre não encontrado" }
+  if (!file) {
+    return { statusCode: 400, body: "Arquivo não informado" }
   }
 
-  const wavFile = fs.readdirSync(vaultDir)
-    .find(f => f.toLowerCase().endsWith(".wav"))
+  const filePath = path.join(__dirname, "../../public/vault", file)
 
-  if (!wavFile) {
-    return { statusCode: 404, body: "Nenhum IR disponível" }
+  if (!fs.existsSync(filePath)) {
+    return { statusCode: 404, body: "Cofre não encontrado" }
   }
-
-  const filePath = path.join(vaultDir, wavFile)
 
   const data = fs.readFileSync(filePath)
-
-  // 🔥 AUTODESTRUIÇÃO
-  fs.unlinkSync(filePath)
 
   return {
     statusCode: 200,
     headers: {
       "Content-Type": "audio/wav",
       "Content-Disposition": "inline",
-      "Cache-Control": "no-store"
+      "Cache-Control": "no-store",
+      "Access-Control-Allow-Origin": "*"
     },
     body: data.toString("base64"),
     isBase64Encoded: true
