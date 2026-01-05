@@ -1,35 +1,39 @@
-import fs from "fs"
-import path from "path"
+import { createClient } from '@supabase/supabase-js'
+import fs from 'fs'
+import path from 'path'
+
+const supabase = createClient(
+  'https://zyvqkqpdhwukbxmkgawa.supabase.co',
+  'sb_publishable_OT68Y68T113_9msiMlmeZg_ZIv-udl7'
+)
 
 export async function handler(event) {
+  const { name, email, phone } = event.queryStringParameters
 
-  const { name, email, phone, device } = event.queryStringParameters
+  if (!name || !email || !phone)
+    return { statusCode: 400, body: 'Dados obrigatórios' }
 
-  if (!name || !email || !phone || !device) {
-    return { statusCode: 400, body: "Dados incompletos" }
-  }
+  const id = name.replace(/\s+/g, '_') + '_' + Date.now()
 
-  const id = `${name.replace(/\s+/g, "_")}_${Date.now()}`
+  await supabase.from('clients').insert({
+    id,
+    nome: name,
+    email,
+    zap: phone
+  })
 
-  const baseIR = path.join(process.cwd(), "protected/vault/fender_ultra.wav")
-  const out = path.join("/tmp", `${id}.wav`)
-  const log = path.join("/tmp", `${id}.json`)
+  const baseIR = path.join(process.cwd(), 'protected/vault/fender_ultra.wav')
+  const out = `/tmp/${id}.wav`
 
-  // Copia o IR
   fs.copyFileSync(baseIR, out)
-
-  // Registra cliente invisível dentro do WAV
-  fs.writeFileSync(log, JSON.stringify({
-    id, name, email, phone, device, created: new Date().toISOString()
-  }, null, 2))
 
   return {
     statusCode: 200,
     headers: {
-      "Content-Type": "audio/wav",
-      "Content-Disposition": `attachment; filename="${id}.wav"`
+      'Content-Type': 'audio/wav',
+      'Content-Disposition': `attachment; filename="${id}.wav"`
     },
-    body: fs.readFileSync(out).toString("base64"),
+    body: fs.readFileSync(out).toString('base64'),
     isBase64Encoded: true
   }
 }
