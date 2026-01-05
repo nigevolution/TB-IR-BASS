@@ -1,39 +1,35 @@
 import { createClient } from '@supabase/supabase-js'
 import fs from 'fs'
-import path from 'path'
 
 const supabase = createClient(
-  'https://zyvqkqpdhwukbxmkgawa.supabase.co',
-  'sb_publishable_OT68Y68T113_9msiMlmeZg_ZIv-udl7'
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_SERVICE_KEY
 )
 
 export async function handler(event) {
   const { name, email, phone } = event.queryStringParameters
 
-  if (!name || !email || !phone)
-    return { statusCode: 400, body: 'Dados obrigatórios' }
+  if (!name || !email) {
+    return { statusCode: 400, body: "Dados inválidos" }
+  }
 
-  const id = name.replace(/\s+/g, '_') + '_' + Date.now()
-
-  await supabase.from('clients').insert({
-    id,
+  await supabase.from('clients').insert([{
+    id: name.replace(/\s+/g, '_'),
     nome: name,
     email,
     zap: phone
-  })
+  }])
 
-  const baseIR = path.join(process.cwd(), 'protected/vault/fender_ultra.wav')
-  const out = `/tmp/${id}.wav`
-
-  fs.copyFileSync(baseIR, out)
+  const baseIR = fs.readFileSync('./protected/base_ir.wav')
+  const output = Buffer.concat([baseIR, Buffer.from(`\nTBIR:${email}`)])
 
   return {
     statusCode: 200,
     headers: {
       'Content-Type': 'audio/wav',
-      'Content-Disposition': `attachment; filename="${id}.wav"`
+      'Content-Disposition': `attachment; filename="${name}.wav"`
     },
-    body: fs.readFileSync(out).toString('base64'),
+    body: output.toString('base64'),
     isBase64Encoded: true
   }
 }
