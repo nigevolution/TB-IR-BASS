@@ -35,11 +35,8 @@ button:hover{opacity:0.85;}
 
 <script>
 function installIR() {
-  const id = prompt("Digite seu ID de cliente (ex: ELBS-0001)");
+  const id = prompt("Digite seu ID de cliente:");
   if(!id) return;
-  window.location = "/api/generate?id=" + encodeURIComponent(id);
+  window.location = "/.netlify/functions/generate?id=" + encodeURIComponent(id);
 }
 </script>
-
-</body>
-</html>
