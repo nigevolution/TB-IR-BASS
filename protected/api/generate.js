@@ -1,27 +1,22 @@
+import { generateClientIR } from "../generate.js";
 import fs from "fs";
 import path from "path";
 
-export default function handler(req, res) {
-  const id = req.query.id;
+export async function handler(event) {
+  const q = event.queryStringParameters;
+  if(!q.name||!q.email||!q.phone||!q.device)
+    return { statusCode:400, body:"Missing fields" };
 
-  if (!id) {
-    return res.status(400).send("ID inválido");
-  }
+  const id = generateClientIR(q.name,q.email,q.phone,q.device);
+  const file = path.join(process.cwd(), "protected/clients", `${id}.wav`);
 
-  const clientPath = path.join(process.cwd(), "protected", id);
-
-  if (!fs.existsSync(clientPath)) {
-    return res.status(403).send("Licença não encontrada");
-  }
-
-  const irFile = path.join(process.cwd(), "protected", "vault", "fender_ultra.wav");
-
-  if (!fs.existsSync(irFile)) {
-    return res.status(404).send("IR não encontrado");
-  }
-
-  res.setHeader("Content-Type", "audio/wav");
-  res.setHeader("Content-Disposition", 'attachment; filename="TB-IR.wav"');
-
-  res.send(fs.readFileSync(irFile));
+  return {
+    statusCode:200,
+    headers:{
+      "Content-Type":"audio/wav",
+      "Content-Disposition":`attachment; filename=${id}.wav`
+    },
+    body: fs.readFileSync(file).toString("base64"),
+    isBase64Encoded:true
+  };
 }
