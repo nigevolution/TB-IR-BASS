@@ -1,42 +1,35 @@
-import fs from "fs";
-import path from "path";
-import crypto from "crypto";
+import fs from "fs"
+import path from "path"
 
 export async function handler(event) {
 
-  const id = event.queryStringParameters?.id;
-  if (!id) {
-    return { statusCode: 400, body: "ID não informado." };
+  const { name, email, phone, device } = event.queryStringParameters
+
+  if (!name || !email || !phone || !device) {
+    return { statusCode: 400, body: "Dados incompletos" }
   }
 
-  // IR base protegido (seu IR original)
-  const baseIR = path.join(process.cwd(), "protected/vault/fender_ultra.wav");
+  const id = `${name.replace(/\s+/g, "_")}_${Date.now()}`
 
-  if (!fs.existsSync(baseIR)) {
-    return { statusCode: 500, body: "IR base não encontrado." };
-  }
+  const baseIR = path.join(process.cwd(), "protected/vault/fender_ultra.wav")
+  const out = path.join("/tmp", `${id}.wav`)
 
-  const raw = fs.readFileSync(baseIR);
+  fs.copyFileSync(baseIR, out)
 
-  // 🔐 watermark invisível
-  const signature = crypto.createHash("sha256")
-    .update(id + Date.now().toString())
-    .digest("hex")
-    .slice(0, 32);
+  const logDir = path.join(process.cwd(), "protected/clients")
+  if (!fs.existsSync(logDir)) fs.mkdirSync(logDir, { recursive: true })
 
-  const watermark = Buffer.from("\nTBIR:" + signature + "\n");
-
-  const finalIR = Buffer.concat([raw, watermark]);
-
-  const filename = `${id}.wav`;
+  fs.writeFileSync(path.join(logDir, `${id}.json`), JSON.stringify({
+    id, name, email, phone, device, created: new Date().toISOString()
+  }, null, 2))
 
   return {
     statusCode: 200,
     headers: {
       "Content-Type": "audio/wav",
-      "Content-Disposition": `attachment; filename="${filename}"`
+      "Content-Disposition": `attachment; filename="${id}.wav"`
     },
-    body: finalIR.toString("base64"),
+    body: fs.readFileSync(out).toString("base64"),
     isBase64Encoded: true
-  };
+  }
 }
