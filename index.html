@@ -1,49 +1,25 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html>
 <head>
-<meta charset="UTF-8">
-<title>TB IR BASS</title>
-<style>
-body{
-  background:#050505;
-  color:#00ff9c;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  height:100vh;
-  font-family:monospace;
-}
-.box{
-  text-align:center;
-}
-button{
-  background:#00ff9c;
-  border:0;
-  padding:18px 35px;
-  font-size:18px;
-  cursor:pointer;
-  border-radius:8px;
-}
-</style>
+  <meta charset="utf-8">
+  <title>TB IR BASS</title>
 </head>
-<body>
-<div class="box">
+<body style="text-align:center;font-family:sans-serif">
   <h1>TB IR BASS</h1>
-  <p>Servidor seguro de licenças IR</p>
-  <button onclick="installIR()">🔒 IMPORTAR IR NA TANK-B</button>
-</div>
+  <p>Importador seguro de IR</p>
 
-<script>
-function installIR(){
-  const name = prompt("Nome do cliente")
-  const email = prompt("Email")
-  const phone = prompt("WhatsApp")
+  <button onclick="gerar()" style="padding:15px 30px;font-size:18px">
+    🔒 IMPORTAR IR
+  </button>
 
-  if(!name || !email || !phone) return
+  <script>
+  function gerar(){
+    const id = prompt("Digite seu ID de cliente:");
+    if(!id) return;
 
-  window.location =
-    `/netlify/functions/generate?name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&phone=${encodeURIComponent(phone)}`
-}
-</script>
+    const url = "https://tb-ir-bass.netlify.app/.netlify/functions/generate?id=" + encodeURIComponent(id);
+    window.location = "mfx://import?src=" + encodeURIComponent(url);
+  }
+  </script>
 </body>
 </html>
