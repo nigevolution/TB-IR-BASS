@@ -1,6 +1,3 @@
-const fs = require("fs")
-const path = require("path")
-
 exports.handler = async (event) => {
   const { file } = event.queryStringParameters || {}
 
@@ -8,13 +5,16 @@ exports.handler = async (event) => {
     return { statusCode: 400, body: "Arquivo não informado" }
   }
 
-  const filePath = path.join(__dirname, "../../public/vault", file)
+  const fileUrl = `https://tb-ir-bass.netlify.app/vault/${file}`
 
-  if (!fs.existsSync(filePath)) {
+  const res = await fetch(fileUrl)
+
+  if (!res.ok) {
     return { statusCode: 404, body: "Cofre não encontrado" }
   }
 
-  const data = fs.readFileSync(filePath)
+  const buffer = await res.arrayBuffer()
+  const base64 = Buffer.from(buffer).toString("base64")
 
   return {
     statusCode: 200,
@@ -24,7 +24,7 @@ exports.handler = async (event) => {
       "Cache-Control": "no-store",
       "Access-Control-Allow-Origin": "*"
     },
-    body: data.toString("base64"),
+    body: base64,
     isBase64Encoded: true
   }
 }
