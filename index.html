@@ -1,34 +1,49 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>TB iR-BASS</title>
+<title>TB IR BASS</title>
 <style>
-body{font-family:sans-serif;text-align:center;background:#0b0b0b;color:#0f0;padding-top:40px}
-input,button{padding:12px;margin:8px;width:280px;font-size:16px}
-button{background:#00ff99;border:0;border-radius:6px;cursor:pointer}
+body{
+  background:#050505;
+  color:#00ff9c;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  height:100vh;
+  font-family:monospace;
+}
+.box{
+  text-align:center;
+}
+button{
+  background:#00ff9c;
+  border:0;
+  padding:18px 35px;
+  font-size:18px;
+  cursor:pointer;
+  border-radius:8px;
+}
 </style>
 </head>
 <body>
-
-<h1>TB iR-BASS</h1>
-<p>Servidor seguro de licenças IR</p>
-
-<input id="nome" placeholder="Seu nome"><br>
-<input id="email" placeholder="Seu email"><br>
-<input id="zap" placeholder="Seu WhatsApp"><br>
-
-<button onclick="registrar()">🔒 IMPORTAR IR NA TANK-B</button>
+<div class="box">
+  <h1>TB IR BASS</h1>
+  <p>Servidor seguro de licenças IR</p>
+  <button onclick="installIR()">🔒 IMPORTAR IR NA TANK-B</button>
+</div>
 
 <script>
-async function registrar(){
- const n=document.getElementById('nome').value
- const e=document.getElementById('email').value
- const z=document.getElementById('zap').value
- if(!n||!e||!z) return alert("Preencha tudo")
- location.href="/.netlify/functions/register?nome="+encodeURIComponent(n)+"&email="+encodeURIComponent(e)+"&zap="+encodeURIComponent(z)
+function installIR(){
+  const name = prompt("Nome do cliente")
+  const email = prompt("Email")
+  const phone = prompt("WhatsApp")
+
+  if(!name || !email || !phone) return
+
+  window.location =
+    `/netlify/functions/generate?name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&phone=${encodeURIComponent(phone)}`
 }
 </script>
-
 </body>
 </html>
