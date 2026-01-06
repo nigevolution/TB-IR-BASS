@@ -1,25 +1,48 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <title>TB IR BASS</title>
+<meta charset="utf-8">
+<title>TB-BASS IR</title>
+<style>
+body{
+  margin:0;
+  background:#000;
+  color:#fff;
+  font-family:Arial;
+  text-align:center;
+}
+#hero{
+  height:100vh;
+  background:url('/logo.png') center/contain no-repeat;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  padding-bottom:70px;
+}
+.card{
+  background:rgba(0,0,0,.85);
+  padding:30px 50px;
+  border-radius:18px;
+  box-shadow:0 0 50px #ff4500;
+}
+button{
+  padding:14px 34px;
+  font-size:18px;
+  border:none;
+  border-radius:10px;
+  background:#ff4500;
+  color:#fff;
+  cursor:pointer;
+}
+</style>
 </head>
-<body style="text-align:center;font-family:sans-serif">
-  <h1>TB IR BASS</h1>
-  <p>Importador seguro de IR</p>
 
-  <button onclick="gerar()" style="padding:15px 30px;font-size:18px">
-    🔒 IMPORTAR IR
-  </button>
-
-  <script>
-  function gerar(){
-    const id = prompt("Digite seu ID de cliente:");
-    if(!id) return;
-
-    const url = "https://tb-ir-bass.netlify.app/.netlify/functions/generate?id=" + encodeURIComponent(id);
-    window.location = "mfx://import?src=" + encodeURIComponent(url);
-  }
-  </script>
+<body>
+<div id="hero">
+  <div class="card">
+    <h1>IMPORTADOR SEGURO DE IR</h1>
+    <button onclick="location.href='admin.html'">PAINEL ADMIN</button>
+  </div>
+</div>
 </body>
 </html>
