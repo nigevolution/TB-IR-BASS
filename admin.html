@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<body style="font-family:Arial">
+<h2>Gerar Link de IR</h2>
+
+<input id="c" placeholder="Cliente"><br><br>
+<input id="i" placeholder="Arquivo WAV (ex: fender_ultra.wav)"><br><br>
+<input id="h" placeholder="Horas validade (ex: 12)"><br><br>
+
+<button onclick="gerar()">Gerar Link</button>
+<pre id="out"></pre>
+
+<script>
+async function gerar(){
+ const r = await fetch("/.netlify/functions/generate", {
+   method:"POST",
+   body: JSON.stringify({
+     customer: c.value,
+     ir_file: i.value,
+     hours: h.value
+   })
+ })
+ const j = await r.json()
+ out.textContent = j.link
+}
+</script>
+</body>
+</html>
