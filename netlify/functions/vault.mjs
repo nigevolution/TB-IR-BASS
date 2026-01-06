@@ -16,8 +16,13 @@ export const handler = async (event) => {
     return { statusCode: 403, body: "Link expirado" }
   }
 
-  const { data } = await supabase.storage.from("vault").download(lic.ir_file)
-  const buffer = Buffer.from(await data.arrayBuffer())
+  const { data, error } = await supabase.storage.from("vault").download(lic.ir_file)
+
+if (error || !data) {
+  return { statusCode: 404, body: "IR não encontrado no cofre" }
+}
+
+const buffer = Buffer.from(await data.arrayBuffer())
 
   // marca como usado
   await supabase.from("ir_licenses").update({ used: true }).eq("token", token)
