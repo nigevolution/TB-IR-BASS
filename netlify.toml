@@ -1,5 +1,8 @@
 [build]
-  functions = "netlify/functions"
+  publish = "."
 
-[functions]
-  node_bundler = "esbuild"
+[[redirects]]
+  from = "/L/*"
+  to = "/.netlify/functions/vault?token=:splat"
+  status = 200
+  force = true
