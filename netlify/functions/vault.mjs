@@ -16,8 +16,17 @@ export const handler = async (event) => {
     return { statusCode: 403, body: "Link expirado" }
   }
 
-  const { data, error } = await supabase.storage.from("vault").download(lic.ir_file)
+  const { data: files } = await supabase.storage.from("vault").list("", { limit: 1000 })
 
+const target = files.find(f =>
+  f.name.toLowerCase() === lic.ir_file.toLowerCase()
+)
+
+if (!target) {
+  return { statusCode: 404, body: "IR não encontrado no cofre" }
+}
+
+const { data, error } = await supabase.storage.from("vault").download(target.name)
 if (error || !data) {
   return { statusCode: 404, body: "IR não encontrado no cofre" }
 }
