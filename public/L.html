@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script>
+  const code = location.pathname.split("/").pop()
+  location.href = "/.netlify/functions/vault?token=" + code
+</script>
+</head>
+<body></body>
+</html>
