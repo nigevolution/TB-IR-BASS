@@ -1,23 +1,23 @@
-import { createClient } from "@supabase/supabase-js"
+const { createClient } = require("@supabase/supabase-js")
 
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_KEY
-)
-
-export async function handler(event) {
+exports.handler = async (event) => {
   const file = event.queryStringParameters?.file
 
   if (!file) {
     return { statusCode: 400, body: "Arquivo não informado" }
   }
 
+  const supabase = createClient(
+    process.env.SUPABASE_URL,
+    process.env.SUPABASE_SERVICE_ROLE_KEY
+  )
+
   const { data, error } = await supabase.storage
     .from("vault")
     .download(file)
 
   if (error || !data) {
-    return { statusCode: 404, body: "Cofre não encontrado" }
+    return { statusCode: 404, body: "Arquivo não encontrado" }
   }
 
   const buffer = Buffer.from(await data.arrayBuffer())
