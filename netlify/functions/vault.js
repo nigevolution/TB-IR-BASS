@@ -13,7 +13,9 @@ exports.handler = async (event) => {
       process.env.SUPABASE_SERVICE_ROLE_KEY
     )
 
-    const { data, error } = await supabase.storage.from("vault").download(file)
+    const { data, error } = await supabase.storage
+      .from("vault")
+      .download(file)
 
     if (error || !data) {
       return { statusCode: 404, body: "Arquivo não encontrado" }
@@ -23,14 +25,16 @@ exports.handler = async (event) => {
 
     return {
       statusCode: 200,
+      isBase64Encoded: true,
       headers: {
         "Content-Type": "audio/wav",
-        "Content-Disposition": `inline; filename="${file}"`,
+        "Content-Length": buffer.length,
+        "Accept-Ranges": "bytes",
+        "Cache-Control": "no-store",
         "Access-Control-Allow-Origin": "*",
-        "Cache-Control": "no-store"
+        "Content-Disposition": `inline; filename="${file}"`
       },
-      body: buffer.toString("base64"),
-      isBase64Encoded: true
+      body: buffer.toString("base64")
     }
   } catch (e) {
     return { statusCode: 500, body: "Erro interno: " + e.message }
