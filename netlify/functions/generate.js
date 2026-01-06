@@ -1,30 +1,24 @@
-exports.handler = async (event) => {
-  const { file } = event.queryStringParameters || {}
+import { createClient } from "@supabase/supabase-js"
+import crypto from "crypto"
 
-  if (!file) {
-    return { statusCode: 400, body: "Arquivo não informado" }
-  }
+export const handler = async (event) => {
+  const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY)
 
-  const fileUrl = `https://tb-ir-bass.netlify.app/vault/${file}`
+  const { customer, ir_file, hours } = JSON.parse(event.body)
 
-  const res = await fetch(fileUrl)
+  const token = crypto.randomBytes(6).toString("hex")
 
-  if (!res.ok) {
-    return { statusCode: 404, body: "Cofre não encontrado" }
-  }
-
-  const buffer = await res.arrayBuffer()
-  const base64 = Buffer.from(buffer).toString("base64")
+  await supabase.from("ir_licenses").insert({
+    customer,
+    ir_file,
+    token,
+    expires_at: new Date(Date.now() + (hours || 12) * 60 * 60 * 1000)
+  })
 
   return {
     statusCode: 200,
-    headers: {
-      "Content-Type": "audio/wav",
-      "Content-Disposition": "inline",
-      "Cache-Control": "no-store",
-      "Access-Control-Allow-Origin": "*"
-    },
-    body: base64,
-    isBase64Encoded: true
+    body: JSON.stringify({
+      link: `https://tb-ir-bass.netlify.app/.netlify/functions/vault?token=${token}`
+    })
   }
 }
