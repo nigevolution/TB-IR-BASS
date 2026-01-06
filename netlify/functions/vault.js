@@ -1,9 +1,11 @@
-import { createClient } from "@supabase/supabase-js"
+const { createClient } = require("@supabase/supabase-js")
 
-export async function handler(event) {
+exports.handler = async (event) => {
   const file = event.queryStringParameters?.file
 
-  if (!file) return { statusCode: 400, body: "Arquivo não informado" }
+  if (!file) {
+    return { statusCode: 400, body: "Arquivo não informado" }
+  }
 
   const supabase = createClient(
     process.env.SUPABASE_URL,
@@ -12,7 +14,9 @@ export async function handler(event) {
 
   const { data, error } = await supabase.storage.from("vault").download(file)
 
-  if (error || !data) return { statusCode: 404, body: "Arquivo não encontrado" }
+  if (error || !data) {
+    return { statusCode: 404, body: "Arquivo não encontrado" }
+  }
 
   const buffer = Buffer.from(await data.arrayBuffer())
 
