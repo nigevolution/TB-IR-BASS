@@ -1,10 +1,10 @@
-const { createClient } = require("@supabase/supabase-js")
+import { createClient } from "@supabase/supabase-js"
 
 const MAP = {
   "94f3k1": "fender_ultra.wav"
 }
 
-exports.handler = async (event) => {
+export const handler = async (event) => {
   try {
     const id = event.queryStringParameters && event.queryStringParameters.id
     if (!id || !MAP[id]) {
@@ -29,10 +29,19 @@ exports.handler = async (event) => {
     return {
       statusCode: 200,
       headers: {
-  "Content-Type": "audio/wav",
-  "Content-Disposition": "inline; filename=ir.wav",
-  "Cache-Control": "no-store, no-cache, must-revalidate",
-  "Pragma": "no-cache",
-  "Expires": "0",
-  "Access-Control-Allow-Origin": "*"
+        "Content-Type": "audio/wav",
+        "Content-Disposition": "inline; filename=ir.wav",
+        "Cache-Control": "no-store, no-cache, must-revalidate",
+        "Pragma": "no-cache",
+        "Expires": "0",
+        "Accept-Ranges": "bytes",
+        "Access-Control-Allow-Origin": "*"
+      },
+      body: buffer.toString("base64"),
+      isBase64Encoded: true
+    }
+
+  } catch (e) {
+    return { statusCode: 500, body: "Falha interna" }
+  }
 }
