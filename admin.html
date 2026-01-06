@@ -1,14 +1,23 @@
 <!DOCTYPE html>
 <html>
-<body style="font-family:Arial">
+<head>
+<meta charset="utf-8">
+<title>TB-BASS IR • Painel</title>
+</head>
+
+<body style="font-family:Arial; background:#0a0a0a; color:#fff; text-align:center">
+
+<img src="/logo.png" style="max-width:380px; margin:40px auto 20px; display:block">
+
 <h2>Gerar Link de IR</h2>
 
 <input id="c" placeholder="Cliente"><br><br>
 <input id="i" placeholder="Arquivo WAV (ex: fender_ultra.wav)"><br><br>
 <input id="h" placeholder="Horas validade (ex: 12)"><br><br>
 
-<button onclick="gerar()">Gerar Link</button>
-<pre id="out"></pre>
+<button onclick="gerar()" style="padding:12px 30px;font-size:16px">Gerar Link</button>
+
+<pre id="out" style="color:#00ffcc"></pre>
 
 <script>
 async function gerar(){
@@ -24,5 +33,6 @@ async function gerar(){
  out.textContent = j.link
 }
 </script>
+
 </body>
 </html>
