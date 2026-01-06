@@ -1,9 +1,7 @@
 const { createClient } = require("@supabase/supabase-js")
 
 const MAP = {
-  "94f3k1": "fender_ultra.wav",
-  "k7d92x": "mesa_boogie.wav",
-  "q91axp": "darkglass.wav"
+  "94f3k1": "fender_ultra.wav"
 }
 
 exports.handler = async (event) => {
@@ -15,19 +13,21 @@ exports.handler = async (event) => {
     process.env.SUPABASE_SERVICE_ROLE_KEY
   )
 
-  const { data } = await supabase.storage.from("vault").download(MAP[id])
+  const { data, error } = await supabase.storage.from("vault").download(MAP[id])
+  if (error || !data) return { statusCode: 404, body: "Arquivo não encontrado" }
+
   const buffer = Buffer.from(await data.arrayBuffer())
 
   return {
     statusCode: 200,
-    isBase64Encoded: true,
     headers: {
       "Content-Type": "audio/wav",
-      "Content-Disposition": "inline",
+      "Content-Length": buffer.length,
       "Accept-Ranges": "bytes",
       "Cache-Control": "no-store",
       "Access-Control-Allow-Origin": "*"
     },
-    body: buffer.toString("base64")
+    body: buffer.toString("base64"),
+    isBase64Encoded: true
   }
 }
