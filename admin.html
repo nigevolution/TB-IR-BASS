@@ -3,21 +3,65 @@
 <head>
 <meta charset="utf-8">
 <title>TB-BASS IR • Painel</title>
+<style>
+body {
+  margin:0;
+  background:#000;
+  color:#fff;
+  font-family:Arial;
+  text-align:center;
+}
+
+#hero {
+  height:100vh;
+  background:url('/logo.png') center/contain no-repeat;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  padding-bottom:60px;
+}
+
+.panel {
+  background:rgba(0,0,0,.85);
+  display:inline-block;
+  padding:30px 40px;
+  border-radius:16px;
+  box-shadow:0 0 40px #ff4500;
+}
+
+input,button {
+  padding:12px;
+  margin:6px;
+  border-radius:8px;
+  border:none;
+}
+
+button {
+  background:#ff4500;
+  color:#fff;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+pre {
+  color:#00ffd5;
+}
+</style>
 </head>
 
-<body style="font-family:Arial; background:#0a0a0a; color:#fff; text-align:center">
+<body>
 
-<img src="/logo.png" style="max-width:380px; margin:40px auto 20px; display:block">
+<div id="hero">
+  <div class="panel">
+    <h2>Gerar Link de IR</h2>
 
-<h2>Gerar Link de IR</h2>
-
-<input id="c" placeholder="Cliente"><br><br>
-<input id="i" placeholder="Arquivo WAV (ex: fender_ultra.wav)"><br><br>
-<input id="h" placeholder="Horas validade (ex: 12)"><br><br>
-
-<button onclick="gerar()" style="padding:12px 30px;font-size:16px">Gerar Link</button>
-
-<pre id="out" style="color:#00ffcc"></pre>
+    <input id="c" placeholder="Cliente"><br>
+    <input id="i" placeholder="Arquivo WAV"><br>
+    <input id="h" placeholder="Horas validade"><br>
+    <button onclick="gerar()">Gerar Link</button>
+    <pre id="out"></pre>
+  </div>
+</div>
 
 <script>
 async function gerar(){
