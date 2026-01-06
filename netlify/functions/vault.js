@@ -23,14 +23,16 @@ exports.handler = async (event) => {
   const buffer = Buffer.from(await data.arrayBuffer())
 
   return {
-    statusCode: 200,
-    headers: {
-      "Content-Type": "audio/wav",
-      "Content-Disposition": "inline",
-      "Cache-Control": "no-store",
-      "Access-Control-Allow-Origin": "*"
-    },
-    body: buffer.toString("base64"),
-    isBase64Encoded: true
-  }
+  statusCode: 200,
+  headers: {
+    "Content-Type": "audio/wav",
+    "Content-Disposition": "inline; filename=\""+file+"\"",
+    "Accept-Ranges": "bytes",
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Headers": "*",
+    "Cache-Control": "no-store",
+    "X-Content-Type-Options": "nosniff"
+  },
+  body: buffer.toString("base64"),
+  isBase64Encoded: true
 }
