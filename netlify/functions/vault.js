@@ -1,11 +1,11 @@
-const { createClient } = require("@supabase/supabase-js")
+import { createClient } from "@supabase/supabase-js"
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_SERVICE_KEY
 )
 
-exports.handler = async (event) => {
+export async function handler(event) {
   const file = event.queryStringParameters?.file
 
   if (!file) {
@@ -16,7 +16,7 @@ exports.handler = async (event) => {
     .from("vault")
     .download(file)
 
-  if (error) {
+  if (error || !data) {
     return { statusCode: 404, body: "Cofre não encontrado" }
   }
 
