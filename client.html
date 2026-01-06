@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>TB-BASS IR Store</title>
+<style>
+body{margin:0;background:#000;color:#fff;font-family:Arial;text-align:center}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:25px;padding:60px}
+.card{background:#111;border-radius:18px;padding:20px;box-shadow:0 0 30px #ff4500}
+.card img{width:100%;border-radius:12px}
+button{margin-top:15px;padding:12px 30px;background:#ff4500;border:none;border-radius:10px;color:#fff;font-weight:bold;cursor:pointer}
+#box{background:#111;padding:30px;margin:30px;border-radius:18px}
+input{padding:12px;border-radius:8px;border:none;width:260px}
+</style>
+</head>
+
+<body>
+
+<img src="/logo.png" style="max-width:300px;margin-top:30px">
+
+<h1>Catálogo de IR</h1>
+
+<div class="grid">
+
+<div class="card">
+<img src="/logo.png">
+<h2>Fernandez Bass IR</h2>
+<p>Grave profundo, punch real.</p>
+<button onclick="selectIR('Fernandez Bass IR')">IMPORTAR</button>
+</div>
+
+</div>
+
+<div id="box">
+<h3>Colar link/token:</h3>
+<input id="token" placeholder="Cole seu link aqui"><br><br>
+<button onclick="importar()">IMPORTAR AGORA</button>
+<p id="msg"></p>
+</div>
+
+<script>
+function selectIR(n){
+ document.getElementById('msg').textContent="Selecionado: "+n
+}
+function importar(){
+ const t = token.value.trim()
+ if(!t) return
+ location.href = t
+}
+</script>
+
+</body>
+</html>
