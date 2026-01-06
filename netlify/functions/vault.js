@@ -6,7 +6,7 @@ const MAP = {
 
 exports.handler = async (event) => {
   try {
-    const id = event.queryStringParameters?.id
+    const id = event.queryStringParameters && event.queryStringParameters.id
     if (!id || !MAP[id]) {
       return { statusCode: 403, body: "Acesso negado" }
     }
