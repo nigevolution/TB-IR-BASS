@@ -5,29 +5,41 @@ const MAP = {
 }
 
 exports.handler = async (event) => {
-  const id = event.queryStringParameters?.id
-  if (!id || !MAP[id]) return { statusCode: 403, body: "Acesso negado" }
+  try {
+    const id = event.queryStringParameters?.id
+    if (!id || !MAP[id]) {
+      return { statusCode: 403, body: "Acesso negado" }
+    }
 
-  const supabase = createClient(
-    process.env.SUPABASE_URL,
-    process.env.SUPABASE_SERVICE_ROLE_KEY
-  )
+    const supabase = createClient(
+      process.env.SUPABASE_URL,
+      process.env.SUPABASE_SERVICE_ROLE_KEY
+    )
 
-  const { data, error } = await supabase.storage.from("vault").download(MAP[id])
-  if (error || !data) return { statusCode: 404, body: "Arquivo não encontrado" }
+    const { data, error } = await supabase.storage
+      .from("vault")
+      .download(MAP[id])
 
-  const buffer = Buffer.from(await data.arrayBuffer())
+    if (error || !data) {
+      return { statusCode: 404, body: "Arquivo não encontrado" }
+    }
 
-  return {
-    statusCode: 200,
-    headers: {
-      "Content-Type": "audio/wav",
-      "Content-Length": buffer.length,
-      "Accept-Ranges": "bytes",
-      "Cache-Control": "no-store",
-      "Access-Control-Allow-Origin": "*"
-    },
-    body: buffer.toString("base64"),
-    isBase64Encoded: true
+    const buffer = Buffer.from(await data.arrayBuffer())
+
+    return {
+      statusCode: 200,
+      headers: {
+        "Content-Type": "audio/wav",
+        "Content-Length": buffer.length,
+        "Accept-Ranges": "bytes",
+        "Cache-Control": "no-store",
+        "Access-Control-Allow-Origin": "*"
+      },
+      body: buffer.toString("base64"),
+      isBase64Encoded: true
+    }
+
+  } catch (e) {
+    return { statusCode: 500, body: "Falha interna" }
   }
 }
