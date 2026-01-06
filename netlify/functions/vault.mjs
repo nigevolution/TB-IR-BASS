@@ -16,7 +16,7 @@ export const handler = async (event) => {
     return { statusCode: 403, body: "Link expirado" }
   }
 
-  const { data } = await supabase.storage.from("vault-master").download(lic.ir_file)
+  const { data } = await supabase.storage.from("vault").download(lic.ir_file)
   const buffer = Buffer.from(await data.arrayBuffer())
 
   // marca como usado
