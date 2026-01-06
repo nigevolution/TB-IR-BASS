@@ -29,17 +29,10 @@ exports.handler = async (event) => {
     return {
       statusCode: 200,
       headers: {
-        "Content-Type": "audio/wav",
-        "Content-Length": buffer.length,
-        "Accept-Ranges": "bytes",
-        "Cache-Control": "no-store",
-        "Access-Control-Allow-Origin": "*"
-      },
-      body: buffer.toString("base64"),
-      isBase64Encoded: true
-    }
-
-  } catch (e) {
-    return { statusCode: 500, body: "Falha interna" }
-  }
+  "Content-Type": "audio/wav",
+  "Content-Disposition": "inline; filename=ir.wav",
+  "Cache-Control": "no-store, no-cache, must-revalidate",
+  "Pragma": "no-cache",
+  "Expires": "0",
+  "Access-Control-Allow-Origin": "*"
 }
