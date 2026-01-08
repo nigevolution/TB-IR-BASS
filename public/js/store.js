@@ -18,6 +18,13 @@ const produtos = [
   desc:"Grave cheio, médios polidos e definição premium."
  },
  {
+  nome:"Sadowsky Metroline IR",
+  preco:39,
+  link:null,
+  desc:"Timbre clássico, suave e musical.",
+  status:"EM BREVE"
+ },
+ {
   nome:"Warwick Pro Series Corvette IR",
   preco:69,
   link:"https://mpago.la/234okPL",
@@ -28,6 +35,13 @@ const produtos = [
   preco:69,
   link:"https://mpago.la/1WpXcYY",
   desc:"Resposta hi-fi, ultra definição e sustain perfeito."
+ },
+ {
+  nome:"Mayones Jabba 5 IR",
+  preco:89,
+  link:null,
+  desc:"Flagship: profundo, cristalino e profissional.",
+  status:"LANÇAMENTO EM BREVE"
  }
 ];
 
@@ -36,11 +50,16 @@ const grid = document.getElementById("produtos");
 produtos.forEach(p=>{
   const card = document.createElement("div");
   card.className = "card";
+
+  let botao = p.link
+    ? `<button onclick="window.location.href='${p.link}'">Comprar agora</button>`
+    : `<div style="margin-top:10px;font-weight:bold;color:#ffb300">${p.status}</div>`;
+
   card.innerHTML = `
     <h3>${p.nome}</h3>
     <p>${p.desc}</p>
     <b>R$ ${p.preco.toFixed(2).replace(".",",")}</b><br>
-    <button onclick="window.location.href='${p.link}'">Pagar com PIX</button>
+    ${botao}
   `;
   grid.appendChild(card);
 });
