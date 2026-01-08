@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>TB-BASS IR</title>
+<title>TB-BASS IR Store</title>
 
 <style>
 body{
@@ -51,6 +51,7 @@ body{
 
 .card h3{color:#ff7a00}
 .price{font-size:22px;margin:10px 0}
+
 .card button{
   background:#ff7a00;
   color:#000;
@@ -60,24 +61,30 @@ body{
   cursor:pointer;
 }
 
-/* BOTÃO WHATSAPP */
-.whatsapp-float{
+/* WHATSAPP FLOAT */
+#whatsapp-float{
   position:fixed;
-  right:20px;
-  bottom:20px;
-  width:62px;
-  height:62px;
+  right:22px;
+  bottom:22px;
+  width:66px;
+  height:66px;
   background:#25D366;
   border-radius:50%;
-  box-shadow:0 0 20px rgba(37,211,102,0.6);
+  box-shadow:0 0 30px rgba(37,211,102,.7);
+  z-index:99999;
   display:flex;
   align-items:center;
   justify-content:center;
-  z-index:9999;
+  animation:zapFloat 1.6s infinite;
 }
-
-.whatsapp-float img{
-  width:34px;
+#whatsapp-float img{
+  width:38px;
+  height:38px;
+}
+@keyframes zapFloat{
+  0%{transform:translateY(0)}
+  50%{transform:translateY(-6px)}
+  100%{transform:translateY(0)}
 }
 </style>
 </head>
@@ -87,85 +94,67 @@ body{
 <div id="bg-logo"></div>
 
 <div id="conteudo">
-  <h1>TB-BASS IR</h1>
+  <h1 style="color:#ff7a00">TB-BASS IR Store</h1>
+  <p>IR premium direto na pedaleira • PIX e Cartão</p>
 
   <div class="grid">
 
     <div class="card">
-      <h3>BASS MODS IR</h3>
+      <h3>Bass Mods IR</h3>
       <p>Grave definido, ataque rápido e presença moderna.</p>
       <div class="price">R$ 49,00</div>
-      <a href="https://mpago.la/1cvainu"><button>Comprar</button></a>
+      <button onclick="window.open('https://mpago.la/1cvainu')">Comprar agora</button>
     </div>
 
     <div class="card">
-      <h3>FENDER ULTRA IR</h3>
+      <h3>Fender Ultra 2 IR</h3>
       <p>Timbre limpo, quente e equilibrado.</p>
       <div class="price">R$ 49,00</div>
-      <a href="https://mpago.la/1pqvu5J"><button>Comprar</button></a>
+      <button onclick="window.open('https://mpago.la/1pqvu5J')">Comprar agora</button>
     </div>
 
     <div class="card">
-      <h3>SADOWSKY METROLINE IR</h3>
-      <p><b>EM BREVE DISPONÍVEL</b></p>
-      <div class="price">—</div>
-      <button disabled>Em breve</button>
+      <h3>Sadowsky M5 IR</h3>
+      <p>Grave cheio, médios polidos e definição premium.</p>
+      <div class="price">R$ 49,00</div>
+      <button onclick="window.open('https://mpago.la/2nGQqmt')">Comprar agora</button>
     </div>
 
     <div class="card">
-      <h3>MAYONES JABBA 5 IR</h3>
-      <p><b>LANÇAMENTO EM BREVE</b></p>
-      <div class="price">—</div>
-      <button disabled>Em breve</button>
+      <h3>Sadowsky Metroline IR</h3>
+      <p>Timbre clássico, suave e musical.</p>
+      <div class="price">R$ 39,00</div>
+      <button onclick="window.open('https://pagamento.sejaefi.com.br/42719b9c-8306-46ab-af6a-b8fac28e5c79')">Comprar agora</button>
     </div>
 
     <div class="card">
-      <h3>KEN SMITH IR</h3>
+      <h3>Warwick Corvette IR</h3>
+      <p>Médio encorpado e ataque metálico.</p>
+      <div class="price">R$ 69,00</div>
+      <button onclick="window.open('https://mpago.la/234okPL')">Comprar agora</button>
+    </div>
+
+    <div class="card">
+      <h3>Ken Smith IR</h3>
       <p>Resposta hi-fi, ultra definição e sustain perfeito.</p>
       <div class="price">R$ 69,00</div>
-      <a href="https://mpago.la/1WpXcYY"><button>Comprar</button></a>
+      <button onclick="window.open('https://mpago.la/1WpXcYY')">Comprar agora</button>
     </div>
 
     <div class="card">
-      <h3>WARWICK CORVETTE IR</h3>
-      <p>Timbre pesado, médio encorpado e ataque metálico.</p>
-      <div class="price">R$ 69,00</div>
-      <a href="https://mpago.la/234okPL"><button>Comprar</button></a>
+      <h3>Mayones Jabba 5 IR</h3>
+      <p>Flagship: profundo, cristalino e profissional.</p>
+      <div class="price">R$ 89,00</div>
+      <b style="color:#ffcc00">LANÇAMENTO EM BREVE</b>
     </div>
 
   </div>
 </div>
 
-<!-- BOTÃO WHATSAPP FLUTUANTE -->
+<!-- BOTÃO WHATSAPP -->
 <a href="https://wa.me/qr/S2YUU3XBMXFCI1" target="_blank" id="whatsapp-float">
   <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">
 </a>
 
-<style>
-#whatsapp-float{
-  position:fixed;
-  right:22px;
-  bottom:22px;
-  width:64px;
-  height:64px;
-  background:#25D366;
-  border-radius:50%;
-  box-shadow:0 0 25px rgba(37,211,102,0.6);
-  z-index:9999;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  animation: floatZap 2s infinite;
-}
-#whatsapp-float img{
-  width:38px;
-  height:38px;
-}
-@keyframes floatZap{
-  0%{transform:translateY(0)}
-  50%{transform:translateY(-6px)}
-  100%{transform:translateY(0)}
-}
-</style>
 </body>
 </html>
