@@ -1,34 +1,60 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<title>TB-BASS IR Store</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
+<title>TB-BASS IR</title>
+
 <style>
-body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#0b0b0b;color:#fff}
-header{padding:22px;text-align:center;font-size:28px;color:#ff7a00;font-weight:800;letter-spacing:1px}
-.sub{color:#aaa;text-align:center;margin-top:-10px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;padding:28px}
-.card{background:#121212;border:1px solid #ff7a00;border-radius:14px;padding:18px;text-align:center;box-shadow:0 0 20px rgba(255,122,0,.15)}
-.card h3{color:#ff7a00;margin:10px 0}
-.price{font-size:22px;font-weight:700;margin:10px 0}
-.btn{background:#ff7a00;color:#000;border:none;border-radius:8px;padding:12px 22px;font-weight:800;cursor:pointer}
-.cart{position:fixed;right:18px;top:18px;background:#ff7a00;color:#000;padding:10px 14px;border-radius:10px;font-weight:800}
-footer{margin-top:40px;background:#050505;padding:18px;text-align:center;color:#aaa;font-size:13px}
+body{
+  margin:0;
+  background:#000;
+  color:#fff;
+  font-family:Arial, sans-serif;
+  text-align:center;
+}
+
+#hero{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.card{
+  background:rgba(0,0,0,.85);
+  padding:40px 60px;
+  border-radius:20px;
+  box-shadow:0 0 50px #ff4500;
+}
+
+.site-logo{
+  height:180px;
+  max-width:90%;
+  object-fit:contain;
+  margin-bottom:25px;
+}
+
+button{
+  padding:14px 34px;
+  font-size:18px;
+  border:none;
+  border-radius:12px;
+  background:#ff4500;
+  color:#fff;
+  cursor:pointer;
+}
+button:hover{opacity:.85;}
 </style>
 </head>
+
 <body>
 
-<header>TB-BASS IR Store</header>
-<div class="sub">IR premium direto na pedaleira • PIX e Cartão</div>
-<div class="cart">Carrinho: <span id="count">0</span></div>
+<div id="hero">
+  <div class="card">
+    <img src="logo.png" class="site-logo">
+    <button onclick="location.href='client.html'">ENTRAR NA LOJA</button>
+  </div>
+</div>
 
-<div class="grid" id="produtos"></div>
-
-<footer>
-TB-BASS IR Store © 2026 — Cuiabá-MT — WhatsApp (65) 99671-6895 — Elbs
-</footer>
-
-<script src="js/store.js"></script>
 </body>
 </html>
