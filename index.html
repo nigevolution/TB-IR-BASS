@@ -1,3 +1,9 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>TB-BASS IR</title>
+
 <style>
 body{
   margin:0;
@@ -54,16 +60,86 @@ body{
   cursor:pointer;
 }
 
-.topbar{
+/* BOTÃO WHATSAPP */
+.whatsapp-float{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  width:62px;
+  height:62px;
+  background:#25D366;
+  border-radius:50%;
+  box-shadow:0 0 20px rgba(37,211,102,0.6);
   display:flex;
-  justify-content:space-between;
   align-items:center;
+  justify-content:center;
+  z-index:9999;
 }
 
-.cart{
-  background:#ff7a00;
-  padding:10px 18px;
-  border-radius:14px;
-  font-weight:bold;
+.whatsapp-float img{
+  width:34px;
 }
 </style>
+</head>
+
+<body>
+
+<div id="bg-logo"></div>
+
+<div id="conteudo">
+  <h1>TB-BASS IR</h1>
+
+  <div class="grid">
+
+    <div class="card">
+      <h3>BASS MODS IR</h3>
+      <p>Grave definido, ataque rápido e presença moderna.</p>
+      <div class="price">R$ 49,00</div>
+      <a href="https://mpago.la/1cvainu"><button>Comprar</button></a>
+    </div>
+
+    <div class="card">
+      <h3>FENDER ULTRA IR</h3>
+      <p>Timbre limpo, quente e equilibrado.</p>
+      <div class="price">R$ 49,00</div>
+      <a href="https://mpago.la/1pqvu5J"><button>Comprar</button></a>
+    </div>
+
+    <div class="card">
+      <h3>SADOWSKY METROLINE IR</h3>
+      <p><b>EM BREVE DISPONÍVEL</b></p>
+      <div class="price">—</div>
+      <button disabled>Em breve</button>
+    </div>
+
+    <div class="card">
+      <h3>MAYONES JABBA 5 IR</h3>
+      <p><b>LANÇAMENTO EM BREVE</b></p>
+      <div class="price">—</div>
+      <button disabled>Em breve</button>
+    </div>
+
+    <div class="card">
+      <h3>KEN SMITH IR</h3>
+      <p>Resposta hi-fi, ultra definição e sustain perfeito.</p>
+      <div class="price">R$ 69,00</div>
+      <a href="https://mpago.la/1WpXcYY"><button>Comprar</button></a>
+    </div>
+
+    <div class="card">
+      <h3>WARWICK CORVETTE IR</h3>
+      <p>Timbre pesado, médio encorpado e ataque metálico.</p>
+      <div class="price">R$ 69,00</div>
+      <a href="https://mpago.la/234okPL"><button>Comprar</button></a>
+    </div>
+
+  </div>
+</div>
+
+<!-- BOTÃO WHATSAPP -->
+<a href="https://wa.me/qr/S2YUU3XBMXFCI1" target="_blank" class="whatsapp-float">
+  <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png">
+</a>
+
+</body>
+</html>
