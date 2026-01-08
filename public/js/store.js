@@ -1,4 +1,29 @@
-const PIX_BASE = "00020126360014br.gov.bcb.pix0114+55659967168955204000053039865802BR5919Elbs Ferreira Nobre6009Sao Paulo62290525REC695FD8ED61BB024765269163043415";
+function crc16(str) {
+  let crc = 0xFFFF;
+  for (let c = 0; c < str.length; c++) {
+    crc ^= str.charCodeAt(c) << 8;
+    for (let i = 0; i < 8; i++) {
+      crc = crc & 0x8000 ? (crc << 1) ^ 0x1021 : crc << 1;
+    }
+  }
+  return (crc & 0xFFFF).toString(16).toUpperCase().padStart(4, "0");
+}
+
+function gerarPix(valor,produto){
+ const valorStr = valor.toFixed(2);
+ let payload =
+ "00020126360014br.gov.bcb.pix0114+5565996716895" +
+ "52040000" +
+ "5303986" +
+ `54${valorStr.length.toString().padStart(2,"0")}${valorStr}` +
+ "5802BR" +
+ "5919Elbs Ferreira Nobre" +
+ "6013Varzea Grande" +
+ `62100506TB${produto.replace(/[^A-Z0-9]/gi,"").substring(0,10)}`;
+ payload += "6304";
+ payload += crc16(payload);
+ return payload;
+}
 
 const produtos = [
  {nome:"Bass Mods IR",preco:49,desc:"Grave definido, ataque rápido e presença moderna."},
@@ -22,18 +47,10 @@ produtos.forEach(p=>{
     <div class="price">R$ ${p.preco.toFixed(2).replace(".",",")}</div>
     <div class="paybtns">
       <button class="pix" onclick="abrirPix('${p.nome}',${p.preco})">PIX</button>
-      <button class="cardbtn" onclick="alert('Cartão em ativação')">Cartão</button>
-      <button class="mix" onclick="alert('Mix em ativação')">Mix</button>
     </div>
   `;
   grid.appendChild(div);
 });
-
-function gerarPix(valor,produto){
-  const cents = Math.round(valor*100).toString().padStart(12,"0");
-  const txid = "TB"+Math.floor(Math.random()*9999999);
-  return PIX_BASE + `62100506${txid}52040000530398654${cents}6304`;
-}
 
 function abrirPix(produto,valor){
   const codigo = gerarPix(valor,produto);
