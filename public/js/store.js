@@ -1,27 +1,14 @@
+const PIX_BASE = "00020126360014br.gov.bcb.pix0114+55659967168955204000053039865802BR5919Elbs Ferreira Nobre6009Sao Paulo";
+
 const produtos = [
- {nome:"Bass Mods IR",preco:49,desc:"Grave definido, ataque rápido e presença moderna.",
-  pix:"PIX1",cartao:"CARD1",mix:"MIX1"},
-
- {nome:"Fender Ultra IR",preco:49,desc:"Timbre limpo, quente e equilibrado para grooves e slap.",
-  pix:"PIX2",cartao:"CARD2",mix:"MIX2"},
-
- {nome:"Music Man IR",preco:49,desc:"Médio agressivo, punch moderno e resposta dinâmica.",
-  pix:"PIX3",cartao:"CARD3",mix:"MIX3"},
-
- {nome:"Sadowsky M5 IR",preco:49,desc:"Grave cheio, médios polidos e definição premium.",
-  pix:"PIX4",cartao:"CARD4",mix:"MIX4"},
-
- {nome:"Sadowsky Metroline IR",preco:39,desc:"Timbre clássico, suave e musical.",
-  pix:"PIX5",cartao:"CARD5",mix:"MIX5"},
-
- {nome:"Ken Smith IR",preco:69,desc:"Resposta hi-fi, ultra definição e sustain perfeito.",
-  pix:"PIX6",cartao:"CARD6",mix:"MIX6"},
-
- {nome:"Warwick Corvette IR",preco:69,desc:"Timbre pesado, médio encorpado e ataque metálico.",
-  pix:"PIX7",cartao:"CARD7",mix:"MIX7"},
-
- {nome:"Mayones Jabba 5 IR",preco:89,desc:"Flagship: profundo, cristalino e profissional.",
-  pix:"PIX8",cartao:"CARD8",mix:"MIX8"}
+ {nome:"Bass Mods IR",preco:49,desc:"Grave definido, ataque rápido e presença moderna."},
+ {nome:"Fender Ultra IR",preco:49,desc:"Timbre limpo, quente e equilibrado para grooves e slap."},
+ {nome:"Music Man IR",preco:49,desc:"Médio agressivo, punch moderno e resposta dinâmica."},
+ {nome:"Sadowsky M5 IR",preco:49,desc:"Grave cheio, médios polidos e definição premium."},
+ {nome:"Sadowsky Metroline IR",preco:39,desc:"Timbre clássico, suave e musical."},
+ {nome:"Ken Smith IR",preco:69,desc:"Resposta hi-fi, ultra definição e sustain perfeito."},
+ {nome:"Warwick Corvette IR",preco:69,desc:"Timbre pesado, médio encorpado e ataque metálico."},
+ {nome:"Mayones Jabba 5 IR",preco:89,desc:"Flagship: profundo, cristalino e profissional."}
 ];
 
 const grid = document.getElementById("produtos");
@@ -34,10 +21,31 @@ produtos.forEach(p=>{
     <p class="desc">${p.desc}</p>
     <div class="price">R$ ${p.preco.toFixed(2).replace(".",",")}</div>
     <div class="paybtns">
-      <button class="pix" onclick="window.open('${p.pix}','_blank')">PIX</button>
-      <button class="cardbtn" onclick="window.open('${p.cartao}','_blank')">Cartão</button>
-      <button class="mix" onclick="window.open('${p.mix}','_blank')">Mix</button>
+      <button class="pix" onclick="abrirPix('${p.nome}',${p.preco})">PIX</button>
+      <button class="cardbtn" onclick="alert('Cartão em ativação')">Cartão</button>
+      <button class="mix" onclick="alert('Mix em ativação')">Mix</button>
     </div>
   `;
   grid.appendChild(div);
 });
+
+function gerarPix(valor,produto){
+  const cents = Math.round(valor*100).toString().padStart(12,"0");
+  const txid = "TB"+Math.floor(Math.random()*9999999);
+  return PIX_BASE + `62100506${txid}52040000530398654${cents}6304`;
+}
+
+function abrirPix(produto,valor){
+  const codigo = gerarPix(valor,produto);
+  const modal = document.createElement("div");
+  modal.style = "position:fixed;inset:0;background:#000c;display:flex;align-items:center;justify-content:center;z-index:999";
+  modal.innerHTML = `
+    <div style="background:#111;padding:30px;border-radius:20px;text-align:center;max-width:320px">
+      <h3>${produto}</h3>
+      <p><b>R$ ${valor.toFixed(2).replace(".",",")}</b></p>
+      <textarea style="width:100%;height:120px">${codigo}</textarea>
+      <button onclick="navigator.clipboard.writeText('${codigo}')">Copiar PIX</button><br><br>
+      <button onclick="this.parentNode.parentNode.remove()">Fechar</button>
+    </div>`;
+  document.body.appendChild(modal);
+}
