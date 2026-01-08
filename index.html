@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <title>TB-BASS IR</title>
+
 <style>
 body{
   margin:0;
@@ -11,20 +12,23 @@ body{
   font-family:Arial;
   text-align:center;
 }
+
 #hero{
   height:100vh;
-  background:url('/logo.png') center/contain no-repeat;
+  background:url('logo.png') center/contain no-repeat;
   display:flex;
   flex-direction:column;
   justify-content:flex-end;
   padding-bottom:70px;
 }
+
 .card{
   background:rgba(0,0,0,.85);
   padding:30px 50px;
   border-radius:18px;
   box-shadow:0 0 50px #ff4500;
 }
+
 button{
   padding:14px 34px;
   font-size:18px;
@@ -34,23 +38,22 @@ button{
   color:#fff;
   cursor:pointer;
 }
+
+.site-logo{
+  height:140px;
+  max-width:90%;
+  object-fit:contain;
+  margin-bottom:20px;
+}
 </style>
 </head>
 
 <body>
 <div id="hero">
   <div class="card">
-    <div class="logo">
-  <img src="logo.png" class="site-logo">
-</div>
+    <img src="logo.png" class="site-logo">
     <button onclick="location.href='admin.html'">PAINEL ADMIN</button>
   </div>
 </div>
 </body>
 </html>
-.site-logo {
-  height: 140px;
-  max-width: 90%;
-  object-fit: contain;
-  margin-bottom: 20px;
-}
