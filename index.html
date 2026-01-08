@@ -136,10 +136,36 @@ body{
   </div>
 </div>
 
-<!-- BOTÃO WHATSAPP -->
-<a href="https://wa.me/qr/S2YUU3XBMXFCI1" target="_blank" class="whatsapp-float">
-  <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png">
+<!-- BOTÃO WHATSAPP FLUTUANTE -->
+<a href="https://wa.me/qr/S2YUU3XBMXFCI1" target="_blank" id="whatsapp-float">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">
 </a>
 
+<style>
+#whatsapp-float{
+  position:fixed;
+  right:22px;
+  bottom:22px;
+  width:64px;
+  height:64px;
+  background:#25D366;
+  border-radius:50%;
+  box-shadow:0 0 25px rgba(37,211,102,0.6);
+  z-index:9999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  animation: floatZap 2s infinite;
+}
+#whatsapp-float img{
+  width:38px;
+  height:38px;
+}
+@keyframes floatZap{
+  0%{transform:translateY(0)}
+  50%{transform:translateY(-6px)}
+  100%{transform:translateY(0)}
+}
+</style>
 </body>
 </html>
