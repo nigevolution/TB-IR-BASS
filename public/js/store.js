@@ -1,4 +1,4 @@
-const PIX_BASE = "00020126360014br.gov.bcb.pix0114+55659967168955204000053039865802BR5919Elbs Ferreira Nobre6009Sao Paulo";
+const PIX_BASE = "00020126360014br.gov.bcb.pix0114+55659967168955204000053039865802BR5919Elbs Ferreira Nobre6009Sao Paulo62290525REC695FD8ED61BB024765269163043415";
 
 const produtos = [
  {nome:"Bass Mods IR",preco:49,desc:"Grave definido, ataque rápido e presença moderna."},
