@@ -20,9 +20,8 @@ const produtos = [
  {
   nome:"Sadowsky Metroline IR",
   preco:39,
-  link:null,
-  desc:"Timbre clássico, suave e musical.",
-  status:"EM BREVE"
+  link:"https://pagamento.sejaefi.com.br/42719b9c-8306-46ab-af6a-b8fac28e5c79",
+  desc:"Timbre clássico, suave e musical."
  },
  {
   nome:"Warwick Pro Series Corvette IR",
