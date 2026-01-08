@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>TB-BASS IR Store</title>
 <link rel="icon" href="logo.png">
+
 <style>
 body{
  margin:0;
@@ -11,17 +12,18 @@ body{
  font-family:Arial;
  text-align:center;
  background:
-   linear-gradient(rgba(0,0,0,.75), rgba(0,0,0,.75)),
+   linear-gradient(rgba(0,0,0,.8), rgba(0,0,0,.8)),
    url('logo.png') center/cover no-repeat fixed;
 }
+
 h1{color:#ff6a00;margin-top:40px}
-#count{background:#ff6a00;padding:8px 18px;border-radius:20px;float:right;margin:20px}
 .grid{
  display:grid;
  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
  gap:20px;
  padding:60px;
 }
+
 .card{
  background:rgba(0,0,0,.9);
  border:1px solid #ff6a00;
@@ -29,23 +31,23 @@ h1{color:#ff6a00;margin-top:40px}
  padding:20px;
  box-shadow:0 0 25px #ff6a00;
 }
-.desc{color:#bbb;font-size:14px}
+.price{font-size:22px;margin:10px 0}
+.paybtns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.pix{background:#00d54b}
+.cardbtn{background:#008cff}
+.mix{background:#ff9800}
 button{
- background:#ff6a00;
  border:none;
  border-radius:10px;
- padding:10px 25px;
- margin-top:10px;
- color:#000;
+ padding:10px 20px;
  font-weight:bold;
  cursor:pointer;
 }
 footer{opacity:.6;margin:40px 0}
 </style>
 </head>
-<body>
 
-<div id="count">Carrinho: 0</div>
+<body>
 
 <h1>TB-BASS IR Store</h1>
 <p>IR premium direto na pedaleira • PIX e Cartão</p>
