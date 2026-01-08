@@ -1,28 +1,38 @@
-function crc16(str) {
-  let crc = 0xFFFF;
-  for (let c = 0; c < str.length; c++) {
-    crc ^= str.charCodeAt(c) << 8;
-    for (let i = 0; i < 8; i++) {
-      crc = crc & 0x8000 ? (crc << 1) ^ 0x1021 : crc << 1;
+function crc16(payload) {
+  let polinomio = 0x1021;
+  let resultado = 0xFFFF;
+  for (let i = 0; i < payload.length; i++) {
+    resultado ^= payload.charCodeAt(i) << 8;
+    for (let j = 0; j < 8; j++) {
+      resultado = (resultado & 0x8000) ? (resultado << 1) ^ polinomio : resultado << 1;
     }
   }
-  return (crc & 0xFFFF).toString(16).toUpperCase().padStart(4, "0");
+  return (resultado & 0xFFFF).toString(16).toUpperCase().padStart(4, "0");
 }
 
-function gerarPix(valor,produto){
- const valorStr = valor.toFixed(2);
- let payload =
- "00020126360014br.gov.bcb.pix0114+5565996716895" +
- "52040000" +
- "5303986" +
- `54${valorStr.length.toString().padStart(2,"0")}${valorStr}` +
- "5802BR" +
- "5919Elbs Ferreira Nobre" +
- "6009Sao Paulo" +
- `62100506TB${produto.replace(/[^A-Z0-9]/gi,"").substring(0,10)}`;
- payload += "6304";
- payload += crc16(payload);
- return payload;
+function gerarPix(valor, produto) {
+  const nome = "ELBS FERREIRA NOBRE";
+  const cidade = "SAO PAULO";
+  const chave = "+5565996716895";
+  const valorStr = valor.toFixed(2);
+
+  const merchant = `0014br.gov.bcb.pix01${chave.length.toString().padStart(2,"0")}${chave}`;
+  const campo26 = `26${merchant.length.toString().padStart(2,"0")}${merchant}`;
+
+  let payload =
+    "000201" +
+    campo26 +
+    "52040000" +
+    "5303986" +
+    `54${valorStr.length.toString().padStart(2,"0")}${valorStr}` +
+    "5802BR" +
+    `59${nome.length.toString().padStart(2,"0")}${nome}` +
+    `60${cidade.length.toString().padStart(2,"0")}${cidade}` +
+    `62${(produto.length+4).toString().padStart(2,"0")}0503${produto}`;
+
+  payload += "6304";
+  payload += crc16(payload);
+  return payload;
 }
 
 const produtos = [
@@ -39,30 +49,28 @@ const produtos = [
 const grid = document.getElementById("produtos");
 
 produtos.forEach(p=>{
-  const div = document.createElement("div");
-  div.className="card";
-  div.innerHTML = `
+  const d=document.createElement("div");
+  d.className="card";
+  d.innerHTML=`
     <h3>${p.nome}</h3>
-    <p class="desc">${p.desc}</p>
-    <div class="price">R$ ${p.preco.toFixed(2).replace(".",",")}</div>
-    <div class="paybtns">
-      <button class="pix" onclick="abrirPix('${p.nome}',${p.preco})">PIX</button>
-    </div>
+    <p>${p.desc}</p>
+    <b>R$ ${p.preco.toFixed(2).replace(".",",")}</b><br>
+    <button onclick="abrirPix('${p.nome}',${p.preco})">Pagar com PIX</button>
   `;
-  grid.appendChild(div);
+  grid.appendChild(d);
 });
 
 function abrirPix(produto,valor){
-  const codigo = gerarPix(valor,produto);
-  const modal = document.createElement("div");
-  modal.style = "position:fixed;inset:0;background:#000c;display:flex;align-items:center;justify-content:center;z-index:999";
-  modal.innerHTML = `
-    <div style="background:#111;padding:30px;border-radius:20px;text-align:center;max-width:320px">
-      <h3>${produto}</h3>
-      <p><b>R$ ${valor.toFixed(2).replace(".",",")}</b></p>
-      <textarea style="width:100%;height:120px">${codigo}</textarea>
-      <button onclick="navigator.clipboard.writeText('${codigo}')">Copiar PIX</button><br><br>
-      <button onclick="this.parentNode.parentNode.remove()">Fechar</button>
-    </div>`;
-  document.body.appendChild(modal);
+ const code = gerarPix(valor,produto);
+ const m=document.createElement("div");
+ m.style="position:fixed;inset:0;background:#000c;display:flex;align-items:center;justify-content:center;z-index:999";
+ m.innerHTML=`
+ <div style="background:#111;padding:30px;border-radius:20px;color:#fff;text-align:center">
+  <h3>${produto}</h3>
+  <p>Valor: R$ ${valor.toFixed(2)}</p>
+  <textarea style="width:260px;height:110px">${code}</textarea><br>
+  <button onclick="navigator.clipboard.writeText('${code}')">Copiar PIX</button><br><br>
+  <button onclick="this.parentNode.parentNode.remove()">Fechar</button>
+ </div>`;
+ document.body.appendChild(m);
 }
