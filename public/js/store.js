@@ -18,7 +18,7 @@ function gerarPix(valor,produto){
  `54${valorStr.length.toString().padStart(2,"0")}${valorStr}` +
  "5802BR" +
  "5919Elbs Ferreira Nobre" +
- "6013Varzea Grande" +
+ "6009Sao Paulo" +
  `62100506TB${produto.replace(/[^A-Z0-9]/gi,"").substring(0,10)}`;
  payload += "6304";
  payload += crc16(payload);
