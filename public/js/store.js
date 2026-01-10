@@ -2,7 +2,7 @@ const produtos = [
   {
     nome:"Bass Mods IR",
     preco:49,
-    link:null,
+    link:"https://pay.cakto.com.br/rtuwa88_720263",
     desc:"Grave definido, ataque rápido e presença moderna."
   },
   {
