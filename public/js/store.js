@@ -130,3 +130,41 @@ document.body.insertAdjacentHTML("beforeend",`
 <details><summary>É plug & play?</summary><p>Sim. Basta importar o IR e tocar.</p></details>
 </section>
 `);
+// ===== BALÕES DE TEXTO PREMIUM =====
+const labelStyle = document.createElement("style");
+labelStyle.innerHTML = `
+.zap-label{
+ position:absolute;
+ bottom:75px;
+ background:#ff7a00;
+ color:#000;
+ padding:6px 12px;
+ border-radius:20px;
+ font-weight:bold;
+ font-size:13px;
+ white-space:nowrap;
+ box-shadow:0 0 15px rgba(255,140,0,.6);
+ animation:pulseLabel 2s infinite;
+}
+#zap-elbs .zap-label{right:0;}
+#zap-silas .zap-label{left:0;}
+
+@keyframes pulseLabel{
+ 0%{transform:scale(1);opacity:.9}
+ 50%{transform:scale(1.08);opacity:1}
+ 100%{transform:scale(1);opacity:.9}
+}
+`;
+document.head.appendChild(labelStyle);
+
+// Texto Elbs
+const elbsLabel = document.createElement("div");
+elbsLabel.className = "zap-label";
+elbsLabel.innerHTML = "✨ Dúvidas? Fale com <b>Elbs</b>";
+document.getElementById("zap-elbs").appendChild(elbsLabel);
+
+// Texto Silas
+const silasLabel = document.createElement("div");
+silasLabel.className = "zap-label";
+silasLabel.innerHTML = "✨ Dúvidas? Fale com <b>Silas</b>";
+document.getElementById("zap-silas").appendChild(silasLabel);
