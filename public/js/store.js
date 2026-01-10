@@ -13,7 +13,7 @@ const produtos = [
   },
   {
     nome:"Sadowsky M5 IR",
-    preco:49,
+    preco:59,
     link:"https://pay.cakto.com.br/36243of_6",
     desc:"Grave cheio, médios polidos e definição premium."
   },
