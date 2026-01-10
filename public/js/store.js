@@ -173,7 +173,7 @@ zap2.appendChild(silasLabel);
 document.body.insertAdjacentHTML("beforeend",`
 <section style="max-width:1100px;margin:90px auto;padding:40px;border-radius:20px;background:rgba(0,0,0,.75);box-shadow:0 0 40px rgba(255,140,0,.4)">
 <h2 style="color:#ff7a00;text-align:center">Dúvidas Frequentes</h2>
-<details><summary>O que é um IR?</summary><p>É uma captura real de caixas, pré-amps e microfonação profissional.</p></details>
+<details><summary>O que é um IR?</summary><p>IR (Impulse Response) é uma captura real de instrumentos, profissional que transforma o timbre da sua pedaleira em nível de estúdio.</p></details>
 <details><summary>Em quais pedaleiras funciona?</summary><p>Tank-B, Cuvave Cube Baby, Mooer GE, Valeton, Headrush, Hotone, Zoom, Line 6, Ampero e todas que aceitam IR WAV.</p></details>
 <details><summary>Funciona em Windows e Mac?</summary><p>Sim. Windows, Mac, Android e iOS.</p></details>
 <details><summary>Formato?</summary><p>WAV 24bit • 44.1kHz e 48kHz</p></details>
