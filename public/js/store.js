@@ -8,21 +8,52 @@ const produtos = [
   {
     nome:"Fender Ultra 2 IR",
     preco:49,
-    link:"https://mpago.la/1pqvu5J",
+    link:"https://pay.cakto.com.br/w3x2i3r_700686",
     desc:"Timbre limpo, quente e equilibrado."
   },
   {
     nome:"Sadowsky M5 IR",
     preco:49,
-    link:"https://mpago.la/2nGQqmt",
+    link:"https://pay.cakto.com.br/36243of_6",
     desc:"Grave cheio, médios polidos e definição premium."
   },
   {
     nome:"Sadowsky Metroline IR",
     preco:39,
-    link:"https://pagamento.sejaefi.com.br/42719b9c-8306-46ab-af6a-b8fac28e5c79",
+    link:"https://pay.cakto.com.br/yaueq45_665688",
     desc:"Timbre clássico, suave e musical."
   },
+
+  // LANÇAMENTOS PREMIUM
+  {
+    nome:"Lakland SS44-75 IR",
+    preco:null,
+    link:null,
+    desc:"Boutique americano com punch absurdo, slap cristalino e médios vivos.",
+    status:"LANÇAMENTO EM BREVE"
+  },
+  {
+    nome:"Sadowsky NYC IR",
+    preco:null,
+    link:null,
+    desc:"Flagship nova-iorquino com graves profundos e brilho cristalino.",
+    status:"LANÇAMENTO EM BREVE"
+  },
+  {
+    nome:"MTD 535-24 IR",
+    preco:null,
+    link:null,
+    desc:"Boutique luthier com dinâmica extrema e médios orgânicos.",
+    status:"LANÇAMENTO EM BREVE"
+  },
+  {
+    nome:"Mayones Jabba 5 IR",
+    preco:null,
+    link:null,
+    desc:"Flagship europeu com profundidade e definição profissional.",
+    status:"LANÇAMENTO EM BREVE"
+  },
+
   {
     nome:"Warwick Corvette IR",
     preco:69,
@@ -34,13 +65,6 @@ const produtos = [
     preco:69,
     link:"https://mpago.la/1WpXcYY",
     desc:"Resposta hi-fi, ultra definição e sustain perfeito."
-  },
-  {
-    nome:"Mayones Jabba 5 IR",
-    preco:89,
-    link:null,
-    desc:"Flagship: profundo, cristalino e profissional.",
-    status:"LANÇAMENTO EM BREVE"
   }
 ];
 
@@ -54,15 +78,18 @@ produtos.forEach(p=>{
     ? `<button onclick="window.open('${p.link}')">Comprar agora</button>`
     : `<div style="margin-top:10px;font-weight:bold;color:#ffcc00">${p.status}</div>`;
 
+  let preco = p.preco !== null
+    ? `<div class="price">R$ ${p.preco.toFixed(2).replace(".",",")}</div>`
+    : "";
+
   card.innerHTML = `
     <h3>${p.nome}</h3>
     <p>${p.desc}</p>
-    <div class="price">R$ ${p.preco.toFixed(2).replace(".",",")}</div>
+    ${preco}
     ${botao}
   `;
   grid.appendChild(card);
 });
-
 
 // 🔥 BOTÃO WHATSAPP GLOBAL
 const zap = document.createElement("a");
