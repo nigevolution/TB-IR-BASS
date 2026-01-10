@@ -91,32 +91,50 @@ produtos.forEach(p=>{
   grid.appendChild(card);
 });
 
-// 🔥 BOTÃO WHATSAPP GLOBAL
-const zap = document.createElement("a");
-zap.href = "https://wa.me/qr/S2YUU3XBMXFCI1";
-zap.target = "_blank";
-zap.id = "whatsapp-float";
-zap.innerHTML = `<img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">`;
-document.body.appendChild(zap);
+// =======================
+// WHATSAPP ELBS (direita)
+// =======================
+const zap1 = document.createElement("a");
+zap1.href = "https://wa.me/qr/S2YUU3XBMXFCI1";
+zap1.target = "_blank";
+zap1.id = "zap-elbs";
+zap1.innerHTML = `<img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">`;
+document.body.appendChild(zap1);
 
+// =======================
+// WHATSAPP SILAS (esquerda)
+// =======================
+const zap2 = document.createElement("a");
+zap2.href = "https://wa.me/qr/LG6FOBKIZD5QC1";
+zap2.target = "_blank";
+zap2.id = "zap-silas";
+zap2.innerHTML = `<img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">`;
+document.body.appendChild(zap2);
+
+// =======================
+// ESTILOS DOS BOTÕES
+// =======================
 const css = document.createElement("style");
 css.innerHTML = `
-#whatsapp-float{
+#zap-elbs, #zap-silas{
   position:fixed;
-  right:22px;
   bottom:22px;
-  width:66px;
-  height:66px;
+  width:62px;
+  height:62px;
   background:#25D366;
   border-radius:50%;
-  box-shadow:0 0 30px rgba(37,211,102,.7);
+  box-shadow:0 0 25px rgba(37,211,102,.7);
   z-index:99999;
   display:flex;
   align-items:center;
   justify-content:center;
   animation:zapFloat 1.6s infinite;
 }
-#whatsapp-float img{width:38px;height:38px}
+#zap-elbs{ right:22px; }
+#zap-silas{ left:22px; }
+
+#zap-elbs img, #zap-silas img{ width:36px;height:36px }
+
 @keyframes zapFloat{
   0%{transform:translateY(0)}
   50%{transform:translateY(-6px)}
