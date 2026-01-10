@@ -23,8 +23,6 @@ const produtos = [
     link:"https://pay.cakto.com.br/yaueq45_665688",
     desc:"Timbre clássico, suave e musical."
   },
-
-  // LANÇAMENTOS PREMIUM
   {
     nome:"Lakland SS44-75 IR",
     preco:null,
@@ -53,7 +51,6 @@ const produtos = [
     desc:"Flagship europeu com profundidade e definição profissional.",
     status:"LANÇAMENTO EM BREVE"
   },
-
   {
     nome:"Warwick Corvette IR",
     preco:69,
@@ -91,9 +88,7 @@ produtos.forEach(p=>{
   grid.appendChild(card);
 });
 
-// =======================
-// WHATSAPP ELBS (direita)
-// =======================
+/* WHATSAPP ELBS */
 const zap1 = document.createElement("a");
 zap1.href = "https://wa.me/qr/S2YUU3XBMXFCI1";
 zap1.target = "_blank";
@@ -101,9 +96,7 @@ zap1.id = "zap-elbs";
 zap1.innerHTML = `<img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">`;
 document.body.appendChild(zap1);
 
-// =======================
-// WHATSAPP SILAS (esquerda)
-// =======================
+/* WHATSAPP SILAS */
 const zap2 = document.createElement("a");
 zap2.href = "https://wa.me/qr/LG6FOBKIZD5QC1";
 zap2.target = "_blank";
@@ -111,34 +104,29 @@ zap2.id = "zap-silas";
 zap2.innerHTML = `<img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">`;
 document.body.appendChild(zap2);
 
-// =======================
-// ESTILOS DOS BOTÕES
-// =======================
+/* ESTILO WHATS */
 const css = document.createElement("style");
 css.innerHTML = `
-#zap-elbs, #zap-silas{
-  position:fixed;
-  bottom:22px;
-  width:62px;
-  height:62px;
-  background:#25D366;
-  border-radius:50%;
-  box-shadow:0 0 25px rgba(37,211,102,.7);
-  z-index:99999;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  animation:zapFloat 1.6s infinite;
+#zap-elbs,#zap-silas{
+ position:fixed;bottom:22px;width:62px;height:62px;
+ background:#25D366;border-radius:50%;box-shadow:0 0 25px rgba(37,211,102,.7);
+ z-index:99999;display:flex;align-items:center;justify-content:center;
+ animation:zapFloat 1.6s infinite;
 }
-#zap-elbs{ right:22px; }
-#zap-silas{ left:22px; }
-
-#zap-elbs img, #zap-silas img{ width:36px;height:36px }
-
-@keyframes zapFloat{
-  0%{transform:translateY(0)}
-  50%{transform:translateY(-6px)}
-  100%{transform:translateY(0)}
-}
+#zap-elbs{right:22px;} #zap-silas{left:22px;}
+#zap-elbs img,#zap-silas img{width:36px;height:36px;}
+@keyframes zapFloat{0%{transform:translateY(0)}50%{transform:translateY(-6px)}100%{transform:translateY(0)}}
 `;
 document.head.appendChild(css);
+
+/* FAQ AUTOMÁTICO */
+document.body.insertAdjacentHTML("beforeend",`
+<section style="max-width:1100px;margin:90px auto;padding:40px;border-radius:20px;background:rgba(0,0,0,.75);box-shadow:0 0 40px rgba(255,140,0,.4)">
+<h2 style="color:#ff7a00;text-align:center">Dúvidas Frequentes</h2>
+<details><summary>O que é um IR?</summary><p>É uma captura real de caixas, pré-amps e microfonação profissional.</p></details>
+<details><summary>Em quais pedaleiras funciona?</summary><p>Tank-B, Cuvave Cube Baby, Mooer GE, Valeton, Headrush, Hotone, Zoom, Line 6, Ampero e todas que aceitam IR WAV.</p></details>
+<details><summary>Funciona em Windows e Mac?</summary><p>Sim. Windows, Mac, Android e iOS.</p></details>
+<details><summary>Formato?</summary><p>WAV 24bit • 44.1kHz e 48kHz</p></details>
+<details><summary>É plug & play?</summary><p>Sim. Basta importar o IR e tocar.</p></details>
+</section>
+`);
