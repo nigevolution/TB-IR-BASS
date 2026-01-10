@@ -2,7 +2,7 @@ const produtos = [
   {
     nome:"Bass Mods IR",
     preco:49,
-    link:"https://mpago.la/1cvainu",
+    link:"https://pay.cakto.com.br/33zmgjt_716867",
     desc:"Grave definido, ataque rápido e presença moderna."
   },
   {
@@ -23,19 +23,21 @@ const produtos = [
     link:"https://pay.cakto.com.br/yaueq45_665688",
     desc:"Timbre clássico, suave e musical."
   },
+
+  // LANÇAMENTOS
   {
     nome:"Lakland SS44-75 IR",
     preco:null,
     link:null,
     desc:"Boutique americano com punch absurdo, slap cristalino e médios vivos.",
-    status:"LANÇAMENTO EM BREVE"
+    status:"LANÇAMENTO"
   },
   {
     nome:"Sadowsky NYC IR",
     preco:null,
     link:null,
     desc:"Flagship nova-iorquino com graves profundos e brilho cristalino.",
-    status:"LANÇAMENTO EM BREVE"
+    status:"LANÇAMENTO"
   },
   {
     nome:"MTD 535-24 IR",
@@ -51,16 +53,17 @@ const produtos = [
     desc:"Flagship europeu com profundidade e definição profissional.",
     status:"LANÇAMENTO EM BREVE"
   },
+
   {
     nome:"Warwick Corvette IR",
     preco:69,
-    link:"https://mpago.la/234okPL",
+    link:"https://pay.cakto.com.br/3frq3qm_719724",
     desc:"Médio encorpado e ataque metálico."
   },
   {
     nome:"Ken Smith IR",
     preco:69,
-    link:"https://mpago.la/1WpXcYY",
+    link:"https://pay.cakto.com.br/zy8esjf_719715",
     desc:"Resposta hi-fi, ultra definição e sustain perfeito."
   }
 ];
@@ -88,7 +91,7 @@ produtos.forEach(p=>{
   grid.appendChild(card);
 });
 
-/* WHATSAPP ELBS */
+// WHATSAPP ELBS (DIREITA)
 const zap1 = document.createElement("a");
 zap1.href = "https://wa.me/qr/S2YUU3XBMXFCI1";
 zap1.target = "_blank";
@@ -96,7 +99,7 @@ zap1.id = "zap-elbs";
 zap1.innerHTML = `<img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">`;
 document.body.appendChild(zap1);
 
-/* WHATSAPP SILAS */
+// WHATSAPP SILAS (ESQUERDA)
 const zap2 = document.createElement("a");
 zap2.href = "https://wa.me/qr/LG6FOBKIZD5QC1";
 zap2.target = "_blank";
@@ -104,35 +107,28 @@ zap2.id = "zap-silas";
 zap2.innerHTML = `<img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">`;
 document.body.appendChild(zap2);
 
-/* ESTILO WHATS */
+// ESTILO DOS BOTÕES + BALÕES
 const css = document.createElement("style");
 css.innerHTML = `
-#zap-elbs,#zap-silas{
- position:fixed;bottom:22px;width:62px;height:62px;
- background:#25D366;border-radius:50%;box-shadow:0 0 25px rgba(37,211,102,.7);
- z-index:99999;display:flex;align-items:center;justify-content:center;
- animation:zapFloat 1.6s infinite;
+#zap-elbs, #zap-silas{
+  position:fixed;
+  bottom:22px;
+  width:62px;
+  height:62px;
+  background:#25D366;
+  border-radius:50%;
+  box-shadow:0 0 25px rgba(37,211,102,.7);
+  z-index:99999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  animation:zapFloat 1.6s infinite;
 }
-#zap-elbs{right:22px;} #zap-silas{left:22px;}
-#zap-elbs img,#zap-silas img{width:36px;height:36px;}
-@keyframes zapFloat{0%{transform:translateY(0)}50%{transform:translateY(-6px)}100%{transform:translateY(0)}}
-`;
-document.head.appendChild(css);
+#zap-elbs{ right:22px; }
+#zap-silas{ left:22px; }
 
-/* FAQ AUTOMÁTICO */
-document.body.insertAdjacentHTML("beforeend",`
-<section style="max-width:1100px;margin:90px auto;padding:40px;border-radius:20px;background:rgba(0,0,0,.75);box-shadow:0 0 40px rgba(255,140,0,.4)">
-<h2 style="color:#ff7a00;text-align:center">Dúvidas Frequentes</h2>
-<details><summary>O que é um IR?</summary><p>É uma captura real de caixas, pré-amps e microfonação profissional.</p></details>
-<details><summary>Em quais pedaleiras funciona?</summary><p>Tank-B, Cuvave Cube Baby, Mooer GE, Valeton, Headrush, Hotone, Zoom, Line 6, Ampero e todas que aceitam IR WAV.</p></details>
-<details><summary>Funciona em Windows e Mac?</summary><p>Sim. Windows, Mac, Android e iOS.</p></details>
-<details><summary>Formato?</summary><p>WAV 24bit • 44.1kHz e 48kHz</p></details>
-<details><summary>É plug & play?</summary><p>Sim. Basta importar o IR e tocar.</p></details>
-</section>
-`);
-// ===== BALÕES DE TEXTO PREMIUM =====
-const labelStyle = document.createElement("style");
-labelStyle.innerHTML = `
+#zap-elbs img, #zap-silas img{ width:36px;height:36px }
+
 .zap-label{
  position:absolute;
  bottom:75px;
@@ -146,25 +142,30 @@ labelStyle.innerHTML = `
  box-shadow:0 0 15px rgba(255,140,0,.6);
  animation:pulseLabel 2s infinite;
 }
+
 #zap-elbs .zap-label{right:0;}
 #zap-silas .zap-label{left:0;}
 
+@keyframes zapFloat{
+ 0%{transform:translateY(0)}
+ 50%{transform:translateY(-6px)}
+ 100%{transform:translateY(0)}
+}
 @keyframes pulseLabel{
  0%{transform:scale(1);opacity:.9}
  50%{transform:scale(1.08);opacity:1}
  100%{transform:scale(1);opacity:.9}
 }
 `;
-document.head.appendChild(labelStyle);
+document.head.appendChild(css);
 
-// Texto Elbs
+// LABELS
 const elbsLabel = document.createElement("div");
 elbsLabel.className = "zap-label";
 elbsLabel.innerHTML = "✨ Dúvidas? Fale com <b>Elbs</b>";
-document.getElementById("zap-elbs").appendChild(elbsLabel);
+zap1.appendChild(elbsLabel);
 
-// Texto Silas
 const silasLabel = document.createElement("div");
 silasLabel.className = "zap-label";
 silasLabel.innerHTML = "✨ Dúvidas? Fale com <b>Silas</b>";
-document.getElementById("zap-silas").appendChild(silasLabel);
+zap2.appendChild(silasLabel);
