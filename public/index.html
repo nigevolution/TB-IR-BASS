@@ -7,106 +7,105 @@
 
 <style>
 body{
- margin:0;
- color:#fff;
- font-family:Arial;
- text-align:center;
- background:
- linear-gradient(rgba(0,0,0,.88), rgba(0,0,0,.88)),
- url('logo.png') center/cover no-repeat fixed;
+margin:0;
+font-family:Arial;
+text-align:center;
+color:#fff;
+background:
+linear-gradient(rgba(0,0,0,.88),rgba(0,0,0,.88)),
+url('logo.png') center/cover fixed;
 }
 
 h1{color:#ff7a00;margin-top:40px}
+p{opacity:.9}
 
 .grid{
- display:grid;
- grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
- gap:26px;
- padding:60px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+gap:26px;
+padding:60px;
 }
 
 .card{
- background:rgba(0,0,0,.92);
- border:1px solid #ff7a00;
- border-radius:22px;
- padding:24px;
- box-shadow:0 0 20px rgba(255,140,0,.55);
- transition:transform .25s ease, box-shadow .25s ease;
+background:rgba(0,0,0,.92);
+border:1px solid #ff7a00;
+border-radius:20px;
+padding:24px;
+box-shadow:0 0 30px rgba(255,140,0,.6);
+transition:.25s;
 }
 .card:hover{
- transform:translateY(-6px);
- box-shadow:0 0 40px rgba(255,170,0,.85);
+transform:translateY(-8px);
+box-shadow:0 0 50px rgba(255,170,0,.9);
 }
 
 .price{font-size:22px;margin:12px 0;color:#ffc400}
 
 button{
- border:none;
- border-radius:12px;
- padding:11px 26px;
- background:#ff9800;
- font-weight:bold;
- cursor:pointer;
+border:none;
+border-radius:10px;
+padding:10px 24px;
+background:#ff9800;
+font-weight:bold;
+cursor:pointer;
 }
 
-footer{opacity:.6;margin:60px 0 30px}
-
-#faq{
- max-width:920px;
- margin:90px auto 40px;
- padding:40px;
- border-radius:28px;
- background:rgba(0,0,0,.85);
- box-shadow:0 0 45px rgba(255,140,0,.55)
-}
-.faq{
- border:1px solid #ff7a00;
- border-radius:16px;
- padding:16px 22px;
- margin-bottom:14px;
- background:rgba(0,0,0,.7)
-}
-.faq summary{cursor:pointer;font-weight:bold}
-
-/* ===== WHATSAPPS ===== */
+footer{opacity:.6;margin:50px 0}
 
 #zap-elbs,#zap-silas{
- position:fixed;
- bottom:22px;
- width:62px;
- height:62px;
- background:#25D366;
- border-radius:50%;
- display:flex;
- align-items:center;
- justify-content:center;
- box-shadow:0 0 25px rgba(37,211,102,.7);
- animation:zapFloat 1.6s infinite;
- z-index:99999;
+position:fixed;
+bottom:22px;
+width:64px;
+height:64px;
+background:#25D366;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+box-shadow:0 0 25px rgba(37,211,102,.7);
+animation:zapFloat 1.6s infinite;
+z-index:99999;
 }
 #zap-elbs{right:22px}
 #zap-silas{left:22px}
 
-#zap-elbs img,#zap-silas img{width:34px;height:34px}
-
 .zap-label{
- position:fixed;
- bottom:92px;
- font-size:12px;
- background:#ff7a00;
- padding:6px 14px;
- border-radius:30px;
- color:#000;
- box-shadow:0 0 20px rgba(255,140,0,.6);
+position:fixed;
+bottom:96px;
+font-size:12px;
+color:#fff;
+background:#ff7a00;
+padding:6px 12px;
+border-radius:20px;
+box-shadow:0 0 10px rgba(255,140,0,.8);
 }
-#elbs-label{right:18px}
-#silas-label{left:18px}
+#elbs-label{right:20px}
+#silas-label{left:20px}
+
+#zap-elbs img,#zap-silas img{width:36px;height:36px}
 
 @keyframes zapFloat{
- 0%{transform:translateY(0)}
- 50%{transform:translateY(-6px)}
- 100%{transform:translateY(0)}
+0%{transform:translateY(0)}
+50%{transform:translateY(-6px)}
+100%{transform:translateY(0)}
 }
+
+#faq{
+max-width:900px;
+margin:80px auto;
+padding:40px;
+border-radius:30px;
+background:rgba(0,0,0,.9);
+box-shadow:0 0 40px rgba(255,140,0,.6)
+}
+.faq{
+border:1px solid #ff7a00;
+border-radius:16px;
+padding:16px 22px;
+margin-bottom:16px;
+background:rgba(0,0,0,.75)
+}
+.faq summary{cursor:pointer;font-weight:bold}
 </style>
 </head>
 
@@ -129,8 +128,8 @@ footer{opacity:.6;margin:60px 0 30px}
 
 <footer>© TB-BASS IR • Cuiabá-MT</footer>
 
-<div id="silas-label" class="zap-label">✨ Dúvidas? Fale com Silas</div>
-<div id="elbs-label" class="zap-label">✨ Dúvidas? Fale com Elbs</div>
+<div id="silas-label" class="zap-label">Dúvidas? Fale com Silas</div>
+<div id="elbs-label" class="zap-label">Dúvidas? Fale com Elbs</div>
 
 <a id="zap-silas" href="https://wa.me/qr/LG6FOBKIZD5QC1" target="_blank">
 <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">
