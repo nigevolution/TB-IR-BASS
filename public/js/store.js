@@ -90,23 +90,6 @@ produtos.forEach(p=>{
   `;
   grid.appendChild(card);
 });
-
-// WHATSAPP ELBS (DIREITA)
-const zap1 = document.createElement("a");
-zap1.href = "https://wa.me/qr/S2YUU3XBMXFCI1";
-zap1.target = "_blank";
-zap1.id = "zap-elbs";
-zap1.innerHTML = `<img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">`;
-document.body.appendChild(zap1);
-
-// WHATSAPP SILAS (ESQUERDA)
-const zap2 = document.createElement("a");
-zap2.href = "https://wa.me/qr/LG6FOBKIZD5QC1";
-zap2.target = "_blank";
-zap2.id = "zap-silas";
-zap2.innerHTML = `<img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">`;
-document.body.appendChild(zap2);
-
 // ESTILO DOS BOTÕES + BALÕES
 const css = document.createElement("style");
 css.innerHTML = `
