@@ -52,9 +52,29 @@ cursor:pointer;
 
 footer{opacity:.6;margin:50px 0}
 
-#zap-elbs,#zap-silas{
+/* WhatsApp */
+.zap-wrap{
 position:fixed;
 bottom:22px;
+z-index:99999;
+text-align:center;
+}
+
+#silas-wrap{left:22px}
+#elbs-wrap{right:22px}
+
+.zap-label{
+background:#ff9800;
+color:#000;
+padding:6px 14px;
+border-radius:18px;
+font-size:12px;
+font-weight:bold;
+margin-bottom:8px;
+box-shadow:0 0 18px rgba(255,160,0,.9);
+}
+
+.zap-btn{
 width:64px;
 height:64px;
 background:#25D366;
@@ -64,12 +84,9 @@ align-items:center;
 justify-content:center;
 box-shadow:0 0 25px rgba(37,211,102,.7);
 animation:zapFloat 1.6s infinite;
-z-index:99999;
 }
-#zap-elbs{right:22px}
-#zap-silas{left:22px}
 
-#zap-elbs img,#zap-silas img{width:36px;height:36px}
+.zap-btn img{width:36px;height:36px}
 
 @keyframes zapFloat{
 0%{transform:translateY(0)}
@@ -115,13 +132,21 @@ background:rgba(0,0,0,.75)
 
 <footer>© TB-BASS IR • Cuiabá-MT</footer>
 
-<a id="zap-silas" href="https://wa.me/qr/LG6FOBKIZD5QC1" target="_blank">
+<!-- Whats Silas -->
+<div id="silas-wrap" class="zap-wrap">
+<div class="zap-label">Dúvidas? Fale com Silas</div>
+<a class="zap-btn" href="https://wa.me/qr/LG6FOBKIZD5QC1" target="_blank">
 <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">
 </a>
+</div>
 
-<a id="zap-elbs" href="https://wa.me/qr/S2YUU3XBMXFCI1" target="_blank">
+<!-- Whats Elbs -->
+<div id="elbs-wrap" class="zap-wrap">
+<div class="zap-label">Dúvidas? Fale com Elbs</div>
+<a class="zap-btn" href="https://wa.me/qr/S2YUU3XBMXFCI1" target="_blank">
 <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">
 </a>
+</div>
 
 <script src="js/store.js"></script>
 </body>
