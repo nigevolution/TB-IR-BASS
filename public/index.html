@@ -8,35 +8,34 @@
 <style>
 body{
 margin:0;
+color:#fff;
 font-family:Arial;
 text-align:center;
-color:#fff;
 background:
-linear-gradient(rgba(0,0,0,.88),rgba(0,0,0,.88)),
-url('logo.png') center/cover fixed;
+linear-gradient(rgba(0,0,0,.85), rgba(0,0,0,.85)),
+url('logo.png') center/cover no-repeat fixed;
 }
 
 h1{color:#ff7a00;margin-top:40px}
-p{opacity:.9}
 
 .grid{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-gap:26px;
+gap:22px;
 padding:60px;
 }
 
 .card{
-background:rgba(0,0,0,.92);
+background:rgba(0,0,0,.9);
 border:1px solid #ff7a00;
 border-radius:20px;
-padding:24px;
-box-shadow:0 0 30px rgba(255,140,0,.6);
+padding:22px;
+box-shadow:0 0 25px rgba(255,140,0,.6);
 transition:.25s;
 }
 .card:hover{
 transform:translateY(-8px);
-box-shadow:0 0 50px rgba(255,170,0,.9);
+box-shadow:0 0 45px rgba(255,170,0,.9);
 }
 
 .price{font-size:22px;margin:12px 0;color:#ffc400}
@@ -44,39 +43,53 @@ box-shadow:0 0 50px rgba(255,170,0,.9);
 button{
 border:none;
 border-radius:10px;
-padding:10px 24px;
+padding:10px 22px;
 background:#ff9800;
 font-weight:bold;
 cursor:pointer;
 }
 
-footer{opacity:.6;margin:50px 0}
+#faq{
+max-width:900px;
+margin:80px auto;
+padding:40px;
+border-radius:25px;
+background:rgba(0,0,0,.85);
+box-shadow:0 0 40px rgba(255,140,0,.6)
+}
+.faq{
+border:1px solid #ff7a00;
+border-radius:14px;
+padding:16px 20px;
+margin-bottom:14px;
+background:rgba(0,0,0,.7)
+}
+.faq summary{cursor:pointer;font-weight:bold}
 
-/* WhatsApp */
-.zap-wrap{
+#silas-wrap,#elbs-wrap{
 position:fixed;
-bottom:22px;
+bottom:20px;
+display:flex;
+align-items:center;
+gap:10px;
 z-index:99999;
-text-align:center;
 }
 
 #silas-wrap{left:22px}
-#elbs-wrap{right:22px}
+#elbs-wrap{right:70px} /* corrigido aqui */
 
-.zap-label{
+.whats-balloon{
 background:#ff9800;
-color:#000;
-padding:6px 14px;
-border-radius:18px;
-font-size:12px;
-font-weight:bold;
-margin-bottom:8px;
-box-shadow:0 0 18px rgba(255,160,0,.9);
+padding:8px 16px;
+border-radius:20px;
+font-size:13px;
+white-space:nowrap;
+box-shadow:0 0 15px rgba(255,152,0,.8);
 }
 
-.zap-btn{
-width:64px;
-height:64px;
+.whats-btn{
+width:62px;
+height:62px;
 background:#25D366;
 border-radius:50%;
 display:flex;
@@ -85,31 +98,13 @@ justify-content:center;
 box-shadow:0 0 25px rgba(37,211,102,.7);
 animation:zapFloat 1.6s infinite;
 }
-
-.zap-btn img{width:36px;height:36px}
+.whats-btn img{width:34px;height:34px}
 
 @keyframes zapFloat{
 0%{transform:translateY(0)}
 50%{transform:translateY(-6px)}
 100%{transform:translateY(0)}
 }
-
-#faq{
-max-width:900px;
-margin:80px auto;
-padding:40px;
-border-radius:30px;
-background:rgba(0,0,0,.9);
-box-shadow:0 0 40px rgba(255,140,0,.6)
-}
-.faq{
-border:1px solid #ff7a00;
-border-radius:16px;
-padding:16px 22px;
-margin-bottom:16px;
-background:rgba(0,0,0,.75)
-}
-.faq summary{cursor:pointer;font-weight:bold}
 </style>
 </head>
 
@@ -122,8 +117,7 @@ background:rgba(0,0,0,.75)
 
 <section id="faq">
 <h2 style="color:#ff7a00">Dúvidas Frequentes</h2>
-
-<details class="faq"><summary>O que é um IR?</summary><p>IR é uma captura real de caixas, prés e microfonação profissional.</p></details>
+<details class="faq"><summary>O que é um IR?</summary><p>Captura real de caixas, prés e microfonação profissional.</p></details>
 <details class="faq"><summary>Em quais pedaleiras funciona?</summary><p>Tank-B, Mooer GE, Valeton, HeadRush, Hotone, Zoom, Line6, Ampero e outras.</p></details>
 <details class="faq"><summary>Funciona em Windows e Mac?</summary><p>Sim, Windows, Mac, Android e iOS.</p></details>
 <details class="faq"><summary>Formato?</summary><p>WAV 24bit 44.1kHz e 48kHz.</p></details>
@@ -133,17 +127,17 @@ background:rgba(0,0,0,.75)
 <footer>© TB-BASS IR • Cuiabá-MT</footer>
 
 <!-- Whats Silas -->
-<div id="silas-wrap" class="zap-wrap">
-<div class="zap-label">Dúvidas? Fale com Silas</div>
-<a class="zap-btn" href="https://wa.me/qr/LG6FOBKIZD5QC1" target="_blank">
+<div id="silas-wrap">
+<div class="whats-balloon">Dúvidas? Fale com Silas</div>
+<a class="whats-btn" href="https://wa.me/qr/LG6FOBKIZD5QC1" target="_blank">
 <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">
 </a>
 </div>
 
 <!-- Whats Elbs -->
-<div id="elbs-wrap" class="zap-wrap">
-<div class="zap-label">Dúvidas? Fale com Elbs</div>
-<a class="zap-btn" href="https://wa.me/qr/S2YUU3XBMXFCI1" target="_blank">
+<div id="elbs-wrap">
+<div class="whats-balloon">Dúvidas? Fale com Elbs</div>
+<a class="whats-btn" href="https://wa.me/qr/S2YUU3XBMXFCI1" target="_blank">
 <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">
 </a>
 </div>
