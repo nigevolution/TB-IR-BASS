@@ -24,39 +24,109 @@ h1{color:#ff6a00;margin-top:40px}
  padding:60px;
 }
 
+/* =======================
+   ANIMAÇÃO PREMIUM
+======================= */
 .card{
  background:rgba(0,0,0,.9);
  border:1px solid #ff6a00;
  border-radius:18px;
  padding:20px;
  box-shadow:0 0 25px #ff6a00;
+ opacity:0;
+ transform:translateY(40px) scale(.95);
+ animation:cardEnter .9s cubic-bezier(.22,1,.36,1) forwards;
 }
+.card:nth-child(1){animation-delay:.05s}
+.card:nth-child(2){animation-delay:.12s}
+.card:nth-child(3){animation-delay:.18s}
+.card:nth-child(4){animation-delay:.24s}
+.card:nth-child(5){animation-delay:.30s}
+.card:nth-child(6){animation-delay:.36s}
+.card:nth-child(7){animation-delay:.42s}
+.card:nth-child(8){animation-delay:.48s}
+.card:nth-child(9){animation-delay:.54s}
+.card:nth-child(10){animation-delay:.60s}
+.card:nth-child(11){animation-delay:.66s}
+.card:nth-child(12){animation-delay:.72s}
+
+@keyframes cardEnter{
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+
+.card:hover{
+ transform:scale(1.06);
+ box-shadow:0 0 45px rgba(255,140,0,.9);
+ border-color:#ffc400;
+}
+
 .price{font-size:22px;margin:10px 0}
-.paybtns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
-.pix{background:#00d54b}
-.cardbtn{background:#008cff}
-.mix{background:#ff9800}
 button{
  border:none;
  border-radius:10px;
  padding:10px 20px;
  font-weight:bold;
  cursor:pointer;
+ background:#ff9800;
 }
-footer{opacity:.6;margin:40px 0}
+
+/* WHATSAPP FLUTUANTE */
+#zap-elbs,#zap-silas{
+ position:fixed;
+ bottom:22px;
+ width:70px;
+ height:70px;
+ border-radius:50%;
+ background:#25D366;
+ box-shadow:0 0 30px rgba(37,211,102,.8);
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ z-index:999;
+ animation:zapFloat 1.6s infinite;
+}
+#zap-elbs{right:20px}
+#zap-silas{left:20px}
+#zap-elbs img,#zap-silas img{width:38px}
+
+@keyframes zapFloat{
+ 50%{transform:translateY(-6px)}
+}
+
+.zap-label{
+ position:absolute;
+ top:-28px;
+ background:#25D366;
+ color:#000;
+ padding:3px 10px;
+ border-radius:12px;
+ font-size:12px;
+ font-weight:bold;
+}
 </style>
 </head>
 
 <body>
 
 <h1>TB-BASS IR Store</h1>
-<p>IR premium direto na pedaleira • PIX e Cartão</p>
+<p>IR premium • Windows e Mac • PIX e Cartão</p>
 
 <div id="produtos" class="grid"></div>
 
-<footer>
-Cuiabá-MT •
+<footer style="opacity:.6;margin:40px 0">
+© TB-BASS IR — Todos os direitos reservados
 </footer>
+
+<!-- WHATSAPP -->
+<a id="zap-elbs" href="https://wa.me/qr/S2YUU3XBMXFCI1" target="_blank">
+ <span class="zap-label">Fale com Elbs</span>
+ <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">
+</a>
+
+<a id="zap-silas" href="https://wa.me/qr/LG6FOBKIZD5QC1" target="_blank">
+ <span class="zap-label">Fale com Silas</span>
+ <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">
+</a>
 
 <script src="js/store.js"></script>
 </body>
