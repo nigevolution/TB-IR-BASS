@@ -12,120 +12,128 @@ body{
  font-family:Arial;
  text-align:center;
  background:
-   linear-gradient(rgba(0,0,0,.8), rgba(0,0,0,.8)),
-   url('logo.png') center/cover no-repeat fixed;
+ linear-gradient(rgba(0,0,0,.85), rgba(0,0,0,.85)),
+ url('logo.png') center/cover no-repeat fixed;
 }
 
-h1{color:#ff6a00;margin-top:40px}
+h1{color:#ff7a00;margin-top:40px}
+
 .grid{
  display:grid;
  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
- gap:20px;
+ gap:22px;
  padding:60px;
 }
 
-/* =======================
-   ANIMAÇÃO PREMIUM
-======================= */
 .card{
  background:rgba(0,0,0,.9);
- border:1px solid #ff6a00;
- border-radius:18px;
- padding:20px;
- box-shadow:0 0 25px #ff6a00;
- opacity:0;
- transform:translateY(40px) scale(.95);
- animation:cardEnter .9s cubic-bezier(.22,1,.36,1) forwards;
+ border:1px solid #ff7a00;
+ border-radius:20px;
+ padding:22px;
+ box-shadow:0 0 25px rgba(255,140,0,.6);
+ transition:.25s;
 }
-.card:nth-child(1){animation-delay:.05s}
-.card:nth-child(2){animation-delay:.12s}
-.card:nth-child(3){animation-delay:.18s}
-.card:nth-child(4){animation-delay:.24s}
-.card:nth-child(5){animation-delay:.30s}
-.card:nth-child(6){animation-delay:.36s}
-.card:nth-child(7){animation-delay:.42s}
-.card:nth-child(8){animation-delay:.48s}
-.card:nth-child(9){animation-delay:.54s}
-.card:nth-child(10){animation-delay:.60s}
-.card:nth-child(11){animation-delay:.66s}
-.card:nth-child(12){animation-delay:.72s}
-
-@keyframes cardEnter{
-  to{opacity:1;transform:translateY(0) scale(1)}
-}
-
 .card:hover{
- transform:scale(1.06);
- box-shadow:0 0 45px rgba(255,140,0,.9);
- border-color:#ffc400;
+ transform:translateY(-8px);
+ box-shadow:0 0 45px rgba(255,170,0,.9);
 }
 
-.price{font-size:22px;margin:10px 0}
+.price{font-size:22px;margin:12px 0;color:#ffc400}
+
 button{
  border:none;
  border-radius:10px;
- padding:10px 20px;
+ padding:10px 22px;
+ background:#ff9800;
  font-weight:bold;
  cursor:pointer;
- background:#ff9800;
 }
 
-/* WHATSAPP FLUTUANTE */
+footer{opacity:.6;margin:40px 0}
+
 #zap-elbs,#zap-silas{
  position:fixed;
  bottom:22px;
- width:70px;
- height:70px;
- border-radius:50%;
+ width:62px;
+ height:62px;
  background:#25D366;
- box-shadow:0 0 30px rgba(37,211,102,.8);
+ border-radius:50%;
  display:flex;
  align-items:center;
  justify-content:center;
- z-index:999;
+ box-shadow:0 0 25px rgba(37,211,102,.7);
  animation:zapFloat 1.6s infinite;
+ z-index:99999;
 }
-#zap-elbs{right:20px}
-#zap-silas{left:20px}
-#zap-elbs img,#zap-silas img{width:38px}
-
-@keyframes zapFloat{
- 50%{transform:translateY(-6px)}
-}
+#zap-elbs{right:22px}
+#zap-silas{left:22px}
 
 .zap-label{
- position:absolute;
- top:-28px;
- background:#25D366;
- color:#000;
- padding:3px 10px;
- border-radius:12px;
+ position:fixed;
+ bottom:92px;
  font-size:12px;
- font-weight:bold;
+ color:#fff;
+ opacity:.85;
 }
+#elbs-label{right:18px}
+#silas-label{left:18px}
+
+#zap-elbs img,#zap-silas img{width:34px;height:34px}
+
+@keyframes zapFloat{
+ 0%{transform:translateY(0)}
+ 50%{transform:translateY(-6px)}
+ 100%{transform:translateY(0)}
+}
+
+#faq{
+ max-width:900px;
+ margin:80px auto;
+ padding:40px;
+ border-radius:25px;
+ background:rgba(0,0,0,.85);
+ box-shadow:0 0 40px rgba(255,140,0,.6)
+}
+.faq{
+ border:1px solid #ff7a00;
+ border-radius:14px;
+ padding:16px 20px;
+ margin-bottom:14px;
+ background:rgba(0,0,0,.7)
+}
+.faq summary{cursor:pointer;font-weight:bold}
 </style>
 </head>
 
 <body>
 
 <h1>TB-BASS IR Store</h1>
-<p>IR premium • Windows e Mac • PIX e Cartão</p>
+<p>IR premium direto na pedaleira • PIX e Cartão</p>
 
 <div id="produtos" class="grid"></div>
 
-<footer style="opacity:.6;margin:40px 0">
-© TB-BASS IR — Todos os direitos reservados
-</footer>
+<section id="faq">
+<h2 style="color:#ff7a00">Dúvidas Frequentes</h2>
 
-<!-- WHATSAPP -->
-<a id="zap-elbs" href="https://wa.me/qr/S2YUU3XBMXFCI1" target="_blank">
- <span class="zap-label">Fale com Elbs</span>
- <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">
-</a>
+<details class="faq"><summary>O que é um IR?</summary><p>IR é uma captura real de caixas, prés e microfonação profissional.</p></details>
+<details class="faq"><summary>Em quais pedaleiras funciona?</summary><p>Tank-B, Mooer GE, Valeton, HeadRush, Hotone, Zoom, Line6, Ampero e outras.</p></details>
+<details class="faq"><summary>Funciona em Windows e Mac?</summary><p>Sim, Windows, Mac, Android e iOS.</p></details>
+<details class="faq"><summary>Formato?</summary><p>WAV 24bit 44.1kHz e 48kHz.</p></details>
+<details class="faq"><summary>É plug & play?</summary><p>Sim, só importar e tocar.</p></details>
+</section>
+
+<footer>© TB-BASS IR • Cuiabá-MT</footer>
+
+<!-- WhatsApps -->
+<div id="silas-label" class="zap-label">Dúvidas? Fale com Silas</div>
+<div id="elbs-label" class="zap-label">Dúvidas? Fale com Elbs</div>
 
 <a id="zap-silas" href="https://wa.me/qr/LG6FOBKIZD5QC1" target="_blank">
- <span class="zap-label">Fale com Silas</span>
- <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">
+<img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">
+</a>
+
+<a id="zap-elbs" href="https://wa.me/qr/S2YUU3XBMXFCI1" target="_blank">
+<img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">
 </a>
 
 <script src="js/store.js"></script>
