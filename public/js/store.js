@@ -37,7 +37,6 @@ const produtos = [
     link:null,
     desc:"Boutique americano com punch absurdo, slap cristalino e médios vivos.",
     status:"LANÇAMENTO"
-    release:"2026-01-20T12:00:00"
   },
   {
     nome:"Sadowsky NYC IR",
@@ -45,7 +44,6 @@ const produtos = [
     link:null,
     desc:"Flagship nova-iorquino com graves profundos e brilho cristalino.",
     status:"LANÇAMENTO"
-    release:"2026-01-20T12:00:00"
   },
   {
     nome:"MTD 535-24 IR",
