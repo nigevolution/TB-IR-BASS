@@ -30,7 +30,7 @@ const produtos = [
     desc:"Timbre clássico, suave e musical."
   },
 
-  /* ===== LANÇAMENTOS ===== */
+  /* ===== LANÇAMENTOS COM CONTADOR ===== */
 
   {
     nome:"Lakland SS44-75 IR",
@@ -54,7 +54,7 @@ const produtos = [
     link:null,
     desc:"Boutique luthier com dinâmica extrema e médios orgânicos.",
     status:"LANÇAMENTO EM BREVE",
-    
+    release:"2026-03-01T12:00:00"
   },
   {
     nome:"Mayones Jabba 5 IR",
@@ -62,7 +62,7 @@ const produtos = [
     link:null,
     desc:"Flagship europeu com profundidade e definição profissional.",
     status:"LANÇAMENTO EM BREVE",
-    
+    release:"2026-03-15T12:00:00"
   },
 
   {
@@ -81,7 +81,7 @@ const produtos = [
 
 const grid = document.getElementById("produtos");
 
-/* ===== RENDERIZA OS CARDS ===== */
+/* ===== CRIA OS CARDS ===== */
 produtos.forEach(p=>{
   const card = document.createElement("div");
   card.className = "card";
@@ -94,17 +94,13 @@ produtos.forEach(p=>{
 
   if(p.link){
     botao = `<button onclick="window.open('${p.link}')">Comprar agora</button>`;
-  }
-  else if(p.release){
+  } else if(p.release){
     botao = `
       <div class="countdown" data-date="${p.release}">
-        ⏳ Carregando...
+        ⏳ 00d 00h 00m 00s
       </div>
       <div class="status">${p.status}</div>
     `;
-  }
-  else{
-    botao = `<div class="status">${p.status}</div>`;
   }
 
   card.innerHTML = `
@@ -117,29 +113,28 @@ produtos.forEach(p=>{
   grid.appendChild(card);
 });
 
-/* ===== CONTAGEM REGRESSIVA ===== */
+/* ===== CONTADOR EM TEMPO REAL ===== */
 function startCountdown(){
   document.querySelectorAll(".countdown").forEach(el=>{
     const target = new Date(el.dataset.date).getTime();
 
-    function update(){
+    const timer = setInterval(()=>{
       const now = Date.now();
       const diff = target - now;
 
       if(diff <= 0){
-        el.innerHTML = "🚀 DISPONÍVEL";
+        el.innerHTML = "🚀 DISPONÍVEL AGORA";
+        clearInterval(timer);
         return;
       }
 
       const d = Math.floor(diff / (1000 * 60 * 60 * 24));
       const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
       const m = Math.floor((diff / (1000 * 60)) % 60);
+      const s = Math.floor((diff / 1000) % 60);
 
-      el.innerHTML = `⏳ ${d}d ${h}h ${m}m`;
-      setTimeout(update, 60000);
-    }
-
-    update();
+      el.innerHTML = `⏳ ${d}d ${h}h ${m}m ${s}s`;
+    }, 1000);
   });
 }
 
