@@ -30,13 +30,12 @@ const produtos = [
     desc:"Timbre clássico, suave e musical."
   },
 
-  /* ===== LANÇAMENTO COM CRONÔMETRO ===== */
+  /* ===== LANÇAMENTOS COM CRONÔMETRO ===== */
   {
     nome:"Lakland SS44-75 IR",
     preco:69,
     link:null,
     desc:"Boutique americano com punch absurdo, slap cristalino e médios vivos.",
-    status:"LANÇAMENTO",
     release:"2026-01-13T19:00:00"
   },
   {
@@ -44,24 +43,23 @@ const produtos = [
     preco:null,
     link:null,
     desc:"Flagship nova-iorquino com graves profundos e brilho cristalino.",
-    status:"LANÇAMENTO",
     release:"2026-01-20T12:00:00"
   },
 
-  /* ===== APENAS LANÇAMENTO (SEM CRONÔMETRO) ===== */
+  /* ===== APENAS LANÇAMENTO (SEM RELÓGIO) ===== */
   {
     nome:"MTD 535-24 IR",
     preco:null,
     link:null,
     desc:"Boutique luthier com dinâmica extrema e médios orgânicos.",
-    status:"LANÇAMENTO EM BREVE"
+    status:"LANÇAMENTO"
   },
   {
     nome:"Mayones Jabba 5 IR",
     preco:null,
     link:null,
     desc:"Flagship europeu com profundidade e definição profissional.",
-    status:"LANÇAMENTO EM BREVE"
+    status:"LANÇAMENTO"
   },
 
   {
@@ -80,52 +78,50 @@ const produtos = [
 
 const grid = document.getElementById("produtos");
 
-/* ===== MONTA OS CARDS ===== */
-produtos.forEach(p=>{
+/* ===== CRIA OS CARDS ===== */
+produtos.forEach((p,i)=>{
   const card = document.createElement("div");
   card.className = "card";
 
-  let preco = p.preco !== null
-    ? `<div class="price">R$ ${p.preco.toFixed(2).replace(".",",")}</div>`
-    : "";
-
-  let conteudoExtra = "";
-
-  /* PRODUTO COM LINK */
-  if(p.link){
-    conteudoExtra = `<button onclick="window.open('${p.link}')">Comprar agora</button>`;
-  }
-
-  /* LANÇAMENTO COM DATA (CRONÔMETRO) */
-  else if(p.release){
-    conteudoExtra = `
-      <div class="countdown" data-date="${p.release}">
-        ⏳ 00d 00h 00m 00s
-      </div>
-      <div class="status">${p.status}</div>
-    `;
-  }
-
-  /* APENAS LANÇAMENTO (SEM DATA) */
-  else if(p.status){
-    conteudoExtra = `
-      <div class="status" style="color:#ffb86b;font-weight:bold;margin-top:14px">
-        ${p.status}
-      </div>
-    `;
-  }
-
-  card.innerHTML = `
+  let html = `
+    <div class="badge">NOVO</div>
     <h3>${p.nome}</h3>
     <p>${p.desc}</p>
-    ${preco}
-    ${conteudoExtra}
   `;
 
+  /* PREÇO */
+  if(p.preco){
+    html += `<div class="price">R$ ${p.preco.toFixed(2).replace(".",",")}</div>`;
+  }
+
+  /* COM LINK IMEDIATO */
+  if(p.link && !p.release){
+    html += `<button onclick="window.open('${p.link}')">Comprar agora</button>`;
+  }
+
+  /* LANÇAMENTO COM DATA */
+  if(p.release){
+    html += `
+      <div class="countdown" 
+           data-date="${p.release}" 
+           data-link="${p.link}"
+           data-price="${p.preco}">
+        ⏳ 00d 00h 00m 00s
+      </div>
+      <div class="status">LANÇAMENTO</div>
+    `;
+  }
+
+  /* LANÇAMENTO SEM DATA */
+  if(p.status){
+    html += `<div class="status">${p.status}</div>`;
+  }
+
+  card.innerHTML = html;
   grid.appendChild(card);
 });
 
-/* ===== CRONÔMETRO EM TEMPO REAL ===== */
+/* ===== CRONÔMETRO + AUTO LIBERA ===== */
 function startCountdown(){
   document.querySelectorAll(".countdown").forEach(el=>{
     const target = new Date(el.dataset.date).getTime();
@@ -135,19 +131,67 @@ function startCountdown(){
       const diff = target - now;
 
       if(diff <= 0){
-        el.innerHTML = "🚀 DISPONÍVEL AGORA";
+        el.innerHTML = `
+          <div class="price">R$ ${Number(el.dataset.price).toFixed(2).replace(".",",")}</div>
+          <button onclick="window.open('${el.dataset.link}')">
+            Comprar agora
+          </button>
+        `;
+        el.classList.remove("countdown");
         clearInterval(timer);
         return;
       }
 
-      const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      const m = Math.floor((diff / (1000 * 60)) % 60);
+      const d = Math.floor(diff / (1000*60*60*24));
+      const h = Math.floor((diff / (1000*60*60)) % 24);
+      const m = Math.floor((diff / (1000*60)) % 60);
       const s = Math.floor((diff / 1000) % 60);
 
       el.innerHTML = `⏳ ${d}d ${h}h ${m}m ${s}s`;
-    }, 1000);
+    },1000);
   });
 }
 
 startCountdown();
+
+/* ===== ESTILOS EXTRA ===== */
+const css = document.createElement("style");
+css.innerHTML = `
+.badge{
+  position:absolute;
+  top:14px;
+  right:14px;
+  background:#ff9a3c;
+  color:#2a0f16;
+  padding:5px 12px;
+  font-size:11px;
+  font-weight:bold;
+  border-radius:20px;
+  animation:pulse 1.6s infinite;
+}
+
+.status{
+  margin-top:14px;
+  font-weight:bold;
+  color:#ffb86b;
+}
+
+.countdown{
+  margin-top:14px;
+  font-weight:bold;
+  color:#ffb86b;
+  animation:glow 1.5s infinite alternate;
+}
+
+@keyframes glow{
+  from{text-shadow:0 0 10px rgba(255,154,60,.4)}
+  to{text-shadow:0 0 22px rgba(255,154,60,.9)}
+}
+
+@keyframes pulse{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.08)}
+  100%{transform:scale(1)}
+}
+`;
+document.head.appendChild(css);
