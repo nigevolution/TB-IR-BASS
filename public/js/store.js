@@ -30,34 +30,39 @@ const produtos = [
     desc:"Timbre clássico, suave e musical."
   },
 
-  // LANÇAMENTOS
+  /* ===== LANÇAMENTOS ===== */
+
   {
     nome:"Lakland SS44-75 IR",
     preco:null,
     link:null,
     desc:"Boutique americano com punch absurdo, slap cristalino e médios vivos.",
-    status:"LANÇAMENTO"
+    status:"LANÇAMENTO",
+    release:"2026-01-20T12:00:00"
   },
   {
     nome:"Sadowsky NYC IR",
     preco:null,
     link:null,
     desc:"Flagship nova-iorquino com graves profundos e brilho cristalino.",
-    status:"LANÇAMENTO"
+    status:"LANÇAMENTO",
+    release:"2026-01-20T12:00:00"
   },
   {
     nome:"MTD 535-24 IR",
     preco:null,
     link:null,
     desc:"Boutique luthier com dinâmica extrema e médios orgânicos.",
-    status:"LANÇAMENTO EM BREVE"
+    status:"LANÇAMENTO EM BREVE",
+    
   },
   {
     nome:"Mayones Jabba 5 IR",
     preco:null,
     link:null,
     desc:"Flagship europeu com profundidade e definição profissional.",
-    status:"LANÇAMENTO EM BREVE"
+    status:"LANÇAMENTO EM BREVE",
+    
   },
 
   {
@@ -76,17 +81,31 @@ const produtos = [
 
 const grid = document.getElementById("produtos");
 
+/* ===== RENDERIZA OS CARDS ===== */
 produtos.forEach(p=>{
   const card = document.createElement("div");
-  card.className="card";
-
-  let botao = p.link
-    ? `<button onclick="window.open('${p.link}')">Comprar agora</button>`
-    : `<div style="margin-top:10px;font-weight:bold;color:#ffcc00">${p.status}</div>`;
+  card.className = "card";
 
   let preco = p.preco !== null
     ? `<div class="price">R$ ${p.preco.toFixed(2).replace(".",",")}</div>`
     : "";
+
+  let botao = "";
+
+  if(p.link){
+    botao = `<button onclick="window.open('${p.link}')">Comprar agora</button>`;
+  }
+  else if(p.release){
+    botao = `
+      <div class="countdown" data-date="${p.release}">
+        ⏳ Carregando...
+      </div>
+      <div class="status">${p.status}</div>
+    `;
+  }
+  else{
+    botao = `<div class="status">${p.status}</div>`;
+  }
 
   card.innerHTML = `
     <h3>${p.nome}</h3>
@@ -94,5 +113,34 @@ produtos.forEach(p=>{
     ${preco}
     ${botao}
   `;
+
   grid.appendChild(card);
 });
+
+/* ===== CONTAGEM REGRESSIVA ===== */
+function startCountdown(){
+  document.querySelectorAll(".countdown").forEach(el=>{
+    const target = new Date(el.dataset.date).getTime();
+
+    function update(){
+      const now = Date.now();
+      const diff = target - now;
+
+      if(diff <= 0){
+        el.innerHTML = "🚀 DISPONÍVEL";
+        return;
+      }
+
+      const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const m = Math.floor((diff / (1000 * 60)) % 60);
+
+      el.innerHTML = `⏳ ${d}d ${h}h ${m}m`;
+      setTimeout(update, 60000);
+    }
+
+    update();
+  });
+}
+
+startCountdown();
