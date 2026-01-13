@@ -47,20 +47,20 @@ const produtos = [
     release:"2026-01-20T12:00:00",
     status:"LANÇAMENTO"
   },
-
+  {
+    nome:"Mayones Jabba 5 IR",
+    preco:null,
+    link:null,
+    desc:"Flagship europeu com profundidade e definição profissional.",
+    status:"LANÇAMENTO EM BREVE"
+    release:"2026-01-23T19:00:00",
+  },
   /* ===== LANÇAMENTO SEM RELÓGIO ===== */
   {
     nome:"MTD 535-24 IR",
     preco:null,
     link:null,
     desc:"Boutique luthier com dinâmica extrema e médios orgânicos.",
-    status:"LANÇAMENTO EM BREVE"
-  },
-  {
-    nome:"Mayones Jabba 5 IR",
-    preco:null,
-    link:null,
-    desc:"Flagship europeu com profundidade e definição profissional.",
     status:"LANÇAMENTO EM BREVE"
   },
 
