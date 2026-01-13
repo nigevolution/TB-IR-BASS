@@ -53,16 +53,14 @@ const produtos = [
     preco:null,
     link:null,
     desc:"Boutique luthier com dinâmica extrema e médios orgânicos.",
-    status:"LANÇAMENTO EM BREVE",
-    release:
+    status:"LANÇAMENTO EM BREVE"
   },
   {
     nome:"Mayones Jabba 5 IR",
     preco:null,
     link:null,
     desc:"Flagship europeu com profundidade e definição profissional.",
-    status:"LANÇAMENTO EM BREVE",
-    release:
+    status:"LANÇAMENTO EM BREVE"
   },
 
   {
