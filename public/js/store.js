@@ -38,7 +38,7 @@ const produtos = [
     link:null,
     desc:"Boutique americano com punch absurdo, slap cristalino e médios vivos.",
     status:"LANÇAMENTO",
-    release:"2026-01-13T19:00:00"
+    release:"2026-01-13T19:00:00:00"
   },
   {
     nome:"Sadowsky NYC IR",
