@@ -33,7 +33,7 @@ const produtos = [
   /* ===== LANÇAMENTO COM CRONÔMETRO ===== */
   {
     nome:"Lakland SS44-75 IR",
-    preco:null,
+    preco:69,
     link:null,
     desc:"Boutique americano com punch absurdo, slap cristalino e médios vivos.",
     status:"LANÇAMENTO",
