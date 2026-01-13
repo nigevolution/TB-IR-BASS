@@ -53,7 +53,7 @@ const produtos = [
     link:null,
     desc:"Flagship europeu com profundidade e definição profissional.",
     release:"2026-01-23T19:00:00",
-    status:"LANÇAMENTO EM BREVE"
+    status:"LANÇAMENTO"
   },
   /* ===== LANÇAMENTO SEM RELÓGIO ===== */
   {
