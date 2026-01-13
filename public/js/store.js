@@ -41,7 +41,7 @@ const produtos = [
   },
   {
     nome:"Sadowsky NYC IR",
-    preco:79,
+    preco:null,
     link:"https://pay.cakto.com.br/EXEMPLO",
     desc:"Flagship nova-iorquino com graves profundos e brilho cristalino.",
     release:"2026-01-20T12:00:00",
