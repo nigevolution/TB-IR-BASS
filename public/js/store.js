@@ -30,8 +30,7 @@ const produtos = [
     desc:"Timbre clássico, suave e musical."
   },
 
-  /* ===== LANÇAMENTOS COM CONTADOR ===== */
-
+  /* ===== LANÇAMENTO COM CRONÔMETRO ===== */
   {
     nome:"Lakland SS44-75 IR",
     preco:null,
@@ -48,6 +47,8 @@ const produtos = [
     status:"LANÇAMENTO",
     release:"2026-01-20T12:00:00"
   },
+
+  /* ===== APENAS LANÇAMENTO (SEM CRONÔMETRO) ===== */
   {
     nome:"MTD 535-24 IR",
     preco:null,
@@ -79,7 +80,7 @@ const produtos = [
 
 const grid = document.getElementById("produtos");
 
-/* ===== CRIA OS CARDS ===== */
+/* ===== MONTA OS CARDS ===== */
 produtos.forEach(p=>{
   const card = document.createElement("div");
   card.className = "card";
@@ -88,12 +89,16 @@ produtos.forEach(p=>{
     ? `<div class="price">R$ ${p.preco.toFixed(2).replace(".",",")}</div>`
     : "";
 
-  let botao = "";
+  let conteudoExtra = "";
 
+  /* PRODUTO COM LINK */
   if(p.link){
-    botao = `<button onclick="window.open('${p.link}')">Comprar agora</button>`;
-  } else if(p.release){
-    botao = `
+    conteudoExtra = `<button onclick="window.open('${p.link}')">Comprar agora</button>`;
+  }
+
+  /* LANÇAMENTO COM DATA (CRONÔMETRO) */
+  else if(p.release){
+    conteudoExtra = `
       <div class="countdown" data-date="${p.release}">
         ⏳ 00d 00h 00m 00s
       </div>
@@ -101,17 +106,26 @@ produtos.forEach(p=>{
     `;
   }
 
+  /* APENAS LANÇAMENTO (SEM DATA) */
+  else if(p.status){
+    conteudoExtra = `
+      <div class="status" style="color:#ffb86b;font-weight:bold;margin-top:14px">
+        ${p.status}
+      </div>
+    `;
+  }
+
   card.innerHTML = `
     <h3>${p.nome}</h3>
     <p>${p.desc}</p>
     ${preco}
-    ${botao}
+    ${conteudoExtra}
   `;
 
   grid.appendChild(card);
 });
 
-/* ===== CONTADOR EM TEMPO REAL ===== */
+/* ===== CRONÔMETRO EM TEMPO REAL ===== */
 function startCountdown(){
   document.querySelectorAll(".countdown").forEach(el=>{
     const target = new Date(el.dataset.date).getTime();
