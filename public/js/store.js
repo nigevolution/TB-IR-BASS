@@ -33,7 +33,7 @@ const produtos = [
   /* ===== LANÇAMENTOS COM CRONÔMETRO ===== */
   {
     nome:"Lakland SS44-75 IR",
-    preco:69,
+    preco:59,
     link:"https://pay.cakto.com.br/wgonjnx_723722",
     desc:"Boutique americano com punch absurdo, slap cristalino e médios vivos.",
     release:"2026-01-13T19:00:00",
