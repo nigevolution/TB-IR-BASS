@@ -145,11 +145,10 @@ produtos.forEach(p => {
     html += `<div class="status">${p.status}</div>`;
   }
 
-  /* ===== BOTÃO COMPRAR ===== */
-  if (p.link) {
-    html += `<button class="buy-btn" onclick="window.open('${p.link}')">Comprar agora</button>`;
-  }
-
+  // botão comprar SOMENTE se NÃO for lançamento com cronômetro
+if (p.link && !p.release) {
+  html += `<button class="buy-btn" onclick="window.open('${p.link}')">Comprar agora</button>`;
+}
   card.innerHTML = html;
   grid.appendChild(card);
 });
