@@ -55,13 +55,12 @@ const produtos = [
     status: "LANÇAMENTO"
   },
 
-  /* ===== LANÇAMENTO SEM CRONÔMETRO ===== */
   {
     nome: "Mayones Jabba 5 IR",
     preco: null,
     link: null,
-    release: "2026-01-20T12:00:00",
     desc: "Flagship europeu com profundidade e definição profissional.",
+    release: "2026-01-23T19:00:00",
     status: "LANÇAMENTO"
   },
   {
@@ -102,20 +101,18 @@ produtos.forEach(p => {
   const card = document.createElement("div");
   card.className = "card";
 
-  const isNovo = p.status || p.release;
-
   let html = `
-    ${isNovo ? `<div class="badge">NOVO</div>` : ``}
+    ${(p.status || p.release) ? `<div class="badge">NOVO</div>` : ``}
     <h3>${p.nome}</h3>
     <p>${p.desc}</p>
   `;
 
-  /* ===== PREÇO (NUNCA EM LANÇAMENTO) ===== */
+  /* PREÇO NORMAL (apenas quando NÃO tem cronômetro) */
   if (p.preco && !p.release) {
     html += `<div class="price">R$ ${p.preco.toFixed(2).replace(".", ",")}</div>`;
   }
 
-  /* ===== PREVIEW 30s ===== */
+  /* PREVIEW 30s */
   if (p.audio) {
     html += `
       <div class="audio-wrap">
@@ -129,7 +126,7 @@ produtos.forEach(p => {
     `;
   }
 
-  /* ===== CRONÔMETRO ===== */
+  /* CRONÔMETRO */
   if (p.release) {
     html += `
       <div class="countdown"
@@ -145,10 +142,11 @@ produtos.forEach(p => {
     html += `<div class="status">${p.status}</div>`;
   }
 
-  // botão comprar SOMENTE se NÃO for lançamento com cronômetro
-if (p.link && !p.release) {
-  html += `<button class="buy-btn" onclick="window.open('${p.link}')">Comprar agora</button>`;
-}
+  /* BOTÃO COMPRAR (somente se NÃO tiver cronômetro ativo) */
+  if (p.link && !p.release) {
+    html += `<button class="buy-btn" onclick="window.open('${p.link}')">Comprar agora</button>`;
+  }
+
   card.innerHTML = html;
   grid.appendChild(card);
 });
@@ -162,7 +160,7 @@ function startCountdown() {
       const diff = target - Date.now();
 
       if (diff <= 0) {
-        el.innerHTML = `
+        el.outerHTML = `
           <div class="price">R$ ${Number(el.dataset.price).toFixed(2).replace(".", ",")}</div>
           <button class="buy-btn" onclick="window.open('${el.dataset.link}')">Comprar agora</button>
         `;
@@ -185,7 +183,8 @@ startCountdown();
 const css = document.createElement("style");
 css.innerHTML = `
 .audio-wrap{margin-top:14px}
-.preview-btn{margin-bottom:16px}
+.preview-btn{margin-bottom:18px}
+.status{margin:12px 0 16px;font-weight:bold;color:#ffb86b}
 .buy-btn{margin-top:10px}
 `;
 document.head.appendChild(css);
