@@ -30,7 +30,7 @@ const produtos = [
     desc:"Timbre clássico, suave e musical."
   },
 
-  /* LANÇAMENTO COM ÁUDIO */
+  /* 🔥 LANÇAMENTO COM PREVIEW */
   {
     nome:"Lakland SS44-75 IR",
     preco:59,
@@ -40,6 +40,30 @@ const produtos = [
     audio:"/audio/lakland-sl-44-75.mp3"
   },
 
+  /* 🔒 LANÇAMENTOS SEM ÁUDIO (POR ENQUANTO) */
+  {
+    nome:"Sadowsky NYC IR",
+    preco:null,
+    link:null,
+    desc:"Flagship nova-iorquino com graves profundos e brilho cristalino.",
+    status:"LANÇAMENTO"
+  },
+  {
+    nome:"Mayones Jabba 5 IR",
+    preco:null,
+    link:null,
+    desc:"Flagship europeu com profundidade e definição profissional.",
+    status:"LANÇAMENTO"
+  },
+  {
+    nome:"MTD 535-24 IR",
+    preco:null,
+    link:null,
+    desc:"Boutique luthier com dinâmica extrema e médios orgânicos.",
+    status:"LANÇAMENTO EM BREVE"
+  },
+
+  /* PRODUTOS NORMAIS */
   {
     nome:"Warwick Corvette IR",
     preco:69,
@@ -78,17 +102,20 @@ produtos.forEach(p=>{
     html += `<div class="price">R$ ${p.preco.toFixed(2).replace(".",",")}</div>`;
   }
 
-  /* PLAYER CORRETO */
+  /* PREVIEW DE ÁUDIO */
   if(p.audio){
     html += `
       <div class="audio-wrap">
-        <audio preload="none" data-preview>
+        <audio preload="none">
           <source src="${p.audio}" type="audio/mpeg">
         </audio>
         <button class="play-btn">▶ Preview 30s</button>
       </div>
       <div class="status">${p.status}</div>
     `;
+  }
+  else if(p.status){
+    html += `<div class="status">${p.status}</div>`;
   }
 
   if(p.link){
@@ -117,7 +144,7 @@ document.addEventListener("click", e=>{
   }
 });
 
-/* ESTILO */
+/* ESTILO DO PLAYER */
 const css = document.createElement("style");
 css.innerHTML = `
 .audio-wrap{margin-top:14px}
