@@ -1,3 +1,4 @@
+<script>
 const produtos = [
   {
     nome:"Bass Mods IR",
@@ -30,7 +31,7 @@ const produtos = [
     desc:"Timbre clássico, suave e musical."
   },
 
-  /* ===== LANÇAMENTOS COM ÁUDIO ===== */
+  /* ===== LANÇAMENTOS COM PREVIEW ===== */
   {
     nome:"Lakland SS44-75 IR",
     preco:59,
@@ -38,7 +39,7 @@ const produtos = [
     desc:"Boutique americano com punch absurdo, slap cristalino e médios vivos.",
     release:"2026-01-13T19:00:00",
     status:"LANÇAMENTO",
-    audio:"audio/lakland-sl-44-75.wav"
+    audio:"/audio/lakland-sl-44-75.mp3"
   },
   {
     nome:"Sadowsky NYC IR",
@@ -47,10 +48,10 @@ const produtos = [
     desc:"Flagship nova-iorquino com graves profundos e brilho cristalino.",
     release:"2026-01-20T12:00:00",
     status:"LANÇAMENTO",
-    audio:"audio/sadowsky-nyc.wav"
+    audio:"/audio/sadowsky-nyc.mp3"
   },
 
-  /* ===== LANÇAMENTO SEM RELÓGIO ===== */
+  /* ===== LANÇAMENTOS SEM RELÓGIO ===== */
   {
     nome:"Mayones Jabba 5 IR",
     preco:null,
@@ -106,16 +107,19 @@ produtos.forEach(p=>{
     html += `<div class="price">R$ ${p.preco.toFixed(2).replace(".",",")}</div>`;
   }
 
-  /* ===== PLAYER DE ÁUDIO (30s) ===== */
+  /* ===== PLAYER DE PREVIEW (30s) ===== */
   if(p.audio){
     html += `
       <div class="audio-wrap">
         <audio preload="none"
           onplay="stopAllAudios(); this.play();"
-          ontimeupdate="if(this.currentTime > 30){ this.pause(); this.currentTime = 0 }">
-          <source src="${p.audio}" type="audio/wav">
+          ontimeupdate="if(this.currentTime >= 30){ this.pause(); this.currentTime = 0 }">
+          <source src="${p.audio}" type="audio/mpeg">
         </audio>
-        <button class="play-btn" onclick="this.previousElementSibling.play()">▶ Preview 30s</button>
+        <button class="play-btn"
+          onclick="this.previousElementSibling.play()">
+          ▶ Ouvir preview (30s)
+        </button>
       </div>
     `;
   }
@@ -143,13 +147,14 @@ produtos.forEach(p=>{
   grid.appendChild(card);
 });
 
-/* ===== CRONÔMETRO ===== */
+/* ===== CRONÔMETRO EM TEMPO REAL ===== */
 function startCountdown(){
   document.querySelectorAll(".countdown").forEach(el=>{
     const target = new Date(el.dataset.date).getTime();
 
     const timer = setInterval(()=>{
       const diff = target - Date.now();
+
       if(diff <= 0){
         el.innerHTML = `
           <div class="price">R$ ${Number(el.dataset.price).toFixed(2).replace(".",",")}</div>
@@ -158,17 +163,19 @@ function startCountdown(){
         clearInterval(timer);
         return;
       }
+
       const d = Math.floor(diff / 86400000);
       const h = Math.floor(diff / 3600000 % 24);
       const m = Math.floor(diff / 60000 % 60);
       const s = Math.floor(diff / 1000 % 60);
+
       el.innerHTML = `⏳ ${d}d ${h}h ${m}m ${s}s`;
     },1000);
   });
 }
 startCountdown();
 
-/* ===== ESTILO DO PLAYER ===== */
+/* ===== ESTILOS ===== */
 const css = document.createElement("style");
 css.innerHTML = `
 .audio-wrap{margin-top:14px}
@@ -179,6 +186,40 @@ css.innerHTML = `
   padding:8px 16px;
   font-weight:bold;
   cursor:pointer;
+  margin-top:6px;
+}
+.play-btn:hover{opacity:.9}
+
+.badge{
+  position:absolute;
+  top:14px;
+  right:14px;
+  background:#ff9a3c;
+  color:#2a0f16;
+  padding:5px 12px;
+  font-size:11px;
+  font-weight:bold;
+  border-radius:20px;
+  animation:pulse 1.6s infinite;
+}
+
+.status{
+  margin-top:12px;
+  font-weight:bold;
+  color:#ffb86b;
+}
+
+.countdown{
+  margin-top:12px;
+  font-weight:bold;
+  color:#ffb86b;
+}
+
+@keyframes pulse{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.08)}
+  100%{transform:scale(1)}
 }
 `;
 document.head.appendChild(css);
+</script>
