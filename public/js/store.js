@@ -35,22 +35,24 @@ const produtos = [
     audio:"/audio/sadowsky-metroline.mp3"
   },
 
-  /* 🔥 LANÇAMENTOS */
+  /* ===== LANÇAMENTOS COM CRONÔMETRO ===== */
   {
     nome:"Lakland SS44-75 IR",
     preco:59,
     link:"https://pay.cakto.com.br/wgonjnx_723722",
     desc:"Boutique americano com punch absurdo, slap cristalino e médios vivos.",
-    status:"LANÇAMENTO",
-    audio:"/audio/lakland-sl-44-75.mp3"
+    audio:"/audio/lakland-sl-44-75.mp3",
+    release:"2026-01-13T19:00:00",
+    status:"LANÇAMENTO"
   },
   {
     nome:"Sadowsky NYC IR",
-    preco:null,
-    link:null,
+    preco:59,
+    link:"https://pay.cakto.com.br/EXEMPLO",
     desc:"Flagship nova-iorquino com graves profundos e brilho cristalino.",
-    status:"LANÇAMENTO",
-    audio:"/audio/sadowsky-nyc.mp3"
+    audio:"/audio/sadowsky-nyc.mp3",
+    release:"2026-01-20T12:00:00",
+    status:"LANÇAMENTO"
   },
   {
     nome:"Mayones Jabba 5 IR",
@@ -85,20 +87,29 @@ const produtos = [
 
 const grid = document.getElementById("produtos");
 
-/* 🔇 PARA TODOS OS ÁUDIOS */
-function stopAllAudios(){
-  document.querySelectorAll("audio").forEach(a=>{
-    a.pause();
-    a.currentTime = 0;
-  });
+/* ===== ÁUDIO GLOBAL ===== */
+let currentAudio = null;
+function playPreview(audio){
+  if(currentAudio && currentAudio !== audio){
+    currentAudio.pause();
+    currentAudio.currentTime = 0;
+  }
+  currentAudio = audio;
+  audio.currentTime = 0;
+  audio.play();
+  setTimeout(()=>{
+    audio.pause();
+    audio.currentTime = 0;
+  },30000);
 }
 
+/* ===== RENDER ===== */
 produtos.forEach(p=>{
   const card = document.createElement("div");
   card.className = "card";
 
   let html = `
-    ${p.status ? `<div class="badge">NOVO</div>` : ``}
+    ${(p.status || p.release) ? `<div class="badge">NOVO</div>` : ``}
     <h3>${p.nome}</h3>
     <p>${p.desc}</p>
   `;
@@ -107,7 +118,6 @@ produtos.forEach(p=>{
     html += `<div class="price">R$ ${p.preco.toFixed(2).replace(".",",")}</div>`;
   }
 
-  /* ▶️ PLAYER DE PREVIEW */
   if(p.audio){
     html += `
       <div class="audio-wrap">
@@ -119,37 +129,59 @@ produtos.forEach(p=>{
     `;
   }
 
-  if(p.status){
+  if(p.release){
+    html += `
+      <div class="countdown"
+        data-date="${p.release}"
+        data-price="${p.preco}"
+        data-link="${p.link}">
+        ⏳ 00d 00h 00m 00s
+      </div>
+      <div class="status">${p.status}</div>
+    `;
+  }
+  else if(p.status){
     html += `<div class="status">${p.status}</div>`;
   }
-
-  if(p.link){
-    html += `<button onclick="window.open('${p.link}')">Comprar agora</button>`;
+  else if(p.link){
+    html += `<button class="buy-btn" onclick="window.open('${p.link}')">Comprar agora</button>`;
   }
 
   card.innerHTML = html;
   grid.appendChild(card);
-});
 
-/* 🎧 CONTROLE DE PLAY (FUNCIONA EM TODOS OS NAVEGADORES) */
-document.addEventListener("click", e=>{
-  if(e.target.classList.contains("play-btn")){
-    const audio = e.target.previousElementSibling;
-
-    stopAllAudios();
-    audio.currentTime = 0;
-    audio.play();
-
-    audio.ontimeupdate = () => {
-      if(audio.currentTime >= 30){
-        audio.pause();
-        audio.currentTime = 0;
-      }
-    };
+  const audio = card.querySelector("audio");
+  const btn = card.querySelector(".play-btn");
+  if(audio && btn){
+    btn.addEventListener("click", ()=>playPreview(audio));
   }
 });
 
-/* 🎨 ESTILO DO PLAYER */
+/* ===== CRONÔMETRO ===== */
+function startCountdown(){
+  document.querySelectorAll(".countdown").forEach(el=>{
+    const target = new Date(el.dataset.date).getTime();
+    const timer = setInterval(()=>{
+      const diff = target - Date.now();
+      if(diff <= 0){
+        el.innerHTML = `
+          <div class="price">R$ ${Number(el.dataset.price).toFixed(2).replace(".",",")}</div>
+          <button class="buy-btn" onclick="window.open('${el.dataset.link}')">Comprar agora</button>
+        `;
+        clearInterval(timer);
+        return;
+      }
+      const d = Math.floor(diff / 86400000);
+      const h = Math.floor(diff / 3600000 % 24);
+      const m = Math.floor(diff / 60000 % 60);
+      const s = Math.floor(diff / 1000 % 60);
+      el.innerHTML = `⏳ ${d}d ${h}h ${m}m ${s}s`;
+    },1000);
+  });
+}
+startCountdown();
+
+/* ===== ESTILOS ===== */
 const css = document.createElement("style");
 css.innerHTML = `
 .audio-wrap{margin-top:14px}
@@ -160,6 +192,8 @@ css.innerHTML = `
   padding:8px 16px;
   font-weight:bold;
   cursor:pointer;
+  margin-bottom:18px;
 }
+.buy-btn{margin-top:6px}
 `;
 document.head.appendChild(css);
