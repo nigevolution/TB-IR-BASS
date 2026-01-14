@@ -37,15 +37,17 @@ const produtos = [
     link:"https://pay.cakto.com.br/wgonjnx_723722",
     desc:"Boutique americano com punch absurdo, slap cristalino e médios vivos.",
     release:"2026-01-13T19:00:00",
-    status:"LANÇAMENTO"
+    status:"LANÇAMENTO",
+    audio:"LAKLAND SL 44-75.wav"
   },
   {
     nome:"Sadowsky NYC IR",
     preco:null,
-    link:"https://pay.cakto.com.br/EXEMPLO",
+    link:null,
     desc:"Flagship nova-iorquino com graves profundos e brilho cristalino.",
     release:"2026-01-20T12:00:00",
-    status:"LANÇAMENTO"
+    status:"LANÇAMENTO",
+    audio:"SADOWSKY NYC.wav"
   },
   {
     nome:"Mayones Jabba 5 IR",
@@ -55,6 +57,7 @@ const produtos = [
     release:"2026-01-23T19:00:00",
     status:"LANÇAMENTO"
   },
+
   /* ===== LANÇAMENTO SEM RELÓGIO ===== */
   {
     nome:"MTD 535-24 IR",
@@ -80,11 +83,19 @@ const produtos = [
 
 const grid = document.getElementById("produtos");
 
+/* ===== PARA TODOS OS ÁUDIOS AO TOCAR UM ===== */
+function stopAllAudios(){
+  document.querySelectorAll("audio").forEach(a=>{
+    a.pause();
+    a.currentTime = 0;
+  });
+}
+
 produtos.forEach(p=>{
   const card = document.createElement("div");
   card.className = "card";
 
-  const isNovo = p.status || p.release;
+  const isNovo = p.status === "LANÇAMENTO" || p.status === "LANÇAMENTO EM BREVE";
 
   let html = `
     ${isNovo ? `<div class="badge">NOVO</div>` : ``}
@@ -92,21 +103,33 @@ produtos.forEach(p=>{
     <p>${p.desc}</p>
   `;
 
+  /* ===== PLAYER DE ÁUDIO ===== */
+  if(p.audio){
+    html += `
+      <audio controls preload="none"
+        onplay="stopAllAudios(); this.play();">
+        <source src="audio/${p.audio}" type="audio/wav">
+      </audio>
+    `;
+  }
+
+  /* ===== PREÇO ===== */
   if(p.preco){
     html += `<div class="price">R$ ${p.preco.toFixed(2).replace(".",",")}</div>`;
   }
 
+  /* ===== CRONÔMETRO ===== */
   if(p.release){
     html += `
-      <div class="countdown" 
-           data-date="${p.release}" 
-           data-link="${p.link}"
-           data-price="${p.preco}">
+      <div class="countdown"
+        data-date="${p.release}"
+        data-link="${p.link}"
+        data-price="${p.preco}">
         ⏳ 00d 00h 00m 00s
       </div>
       <div class="status">${p.status}</div>
     `;
-  } 
+  }
   else if(p.status){
     html += `<div class="status">${p.status}</div>`;
   }
@@ -124,8 +147,7 @@ function startCountdown(){
     const target = new Date(el.dataset.date).getTime();
 
     const timer = setInterval(()=>{
-      const now = Date.now();
-      const diff = target - now;
+      const diff = target - Date.now();
 
       if(diff <= 0){
         el.innerHTML = `
@@ -136,9 +158,9 @@ function startCountdown(){
         return;
       }
 
-      const d = Math.floor(diff / (1000*60*60*24));
-      const h = Math.floor((diff / (1000*60*60)) % 24);
-      const m = Math.floor((diff / (1000*60)) % 60);
+      const d = Math.floor(diff / 86400000);
+      const h = Math.floor((diff / 3600000) % 24);
+      const m = Math.floor((diff / 60000) % 60);
       const s = Math.floor((diff / 1000) % 60);
 
       el.innerHTML = `⏳ ${d}d ${h}h ${m}m ${s}s`;
@@ -147,9 +169,14 @@ function startCountdown(){
 }
 startCountdown();
 
-/* ===== ESTILOS ===== */
+/* ===== ESTILO ===== */
 const css = document.createElement("style");
 css.innerHTML = `
+audio{
+  width:100%;
+  margin:14px 0;
+}
+
 .badge{
   position:absolute;
   top:14px;
@@ -160,31 +187,12 @@ css.innerHTML = `
   font-size:11px;
   font-weight:bold;
   border-radius:20px;
-  animation:pulse 1.6s infinite;
 }
 
-.status{
+.status,.countdown{
   margin-top:12px;
   font-weight:bold;
   color:#ffb86b;
-}
-
-.countdown{
-  margin-top:12px;
-  font-weight:bold;
-  color:#ffb86b;
-  animation:glow 1.4s infinite alternate;
-}
-
-@keyframes glow{
-  from{text-shadow:0 0 10px rgba(255,154,60,.4)}
-  to{text-shadow:0 0 22px rgba(255,154,60,.9)}
-}
-
-@keyframes pulse{
-  0%{transform:scale(1)}
-  50%{transform:scale(1.08)}
-  100%{transform:scale(1)}
 }
 `;
 document.head.appendChild(css);
