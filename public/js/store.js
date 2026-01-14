@@ -115,8 +115,10 @@ produtos.forEach(p=>{
     <p>${p.desc}</p>
   `;
 
-  if(p.preco){
-    html += `<div class="price">R$ ${p.preco.toFixed(2).replace(".",",")}</div>`;
+  // PREÇO SÓ SE NÃO FOR LANÇAMENTO
+if(p.preco && !p.release){
+  html += `<div class="price">R$ ${p.preco.toFixed(2).replace(".",",")}</div>`;
+}
   }
 
   if(p.audio){
