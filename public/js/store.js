@@ -3,34 +3,39 @@ const produtos = [
     nome:"Bass Mods IR",
     preco:49,
     link:"https://pay.cakto.com.br/rtuwa88_720263",
-    desc:"Grave definido, ataque rápido e presença moderna."
+    desc:"Grave definido, ataque rápido e presença moderna.",
+    audio:"/audio/bass-mods.mp3"
   },
   {
     nome:"Fender Ultra 2 IR",
     preco:49,
     link:"https://pay.cakto.com.br/w3x2i3r_700686",
-    desc:"Timbre limpo, quente e equilibrado."
+    desc:"Timbre limpo, quente e equilibrado.",
+    audio:"/audio/fender-ultra-ii.mp3"
   },
   {
     nome:"Music Man IR",
     preco:49,
     link:"https://pay.cakto.com.br/n9ji2mm_700692",
-    desc:"Punch agressivo, slap estalado e presença absurda."
+    desc:"Punch agressivo, slap estalado e presença absurda.",
+    audio:"/audio/music-man.mp3"
   },
   {
     nome:"Sadowsky M5 IR",
     preco:59,
     link:"https://pay.cakto.com.br/36243of_6",
-    desc:"Grave cheio, médios polidos e definição premium."
+    desc:"Grave cheio, médios polidos e definição premium.",
+    audio:"/audio/sadowsky-m5.mp3"
   },
   {
     nome:"Sadowsky Metroline IR",
     preco:39,
     link:"https://pay.cakto.com.br/yaueq45_665688",
-    desc:"Timbre clássico, suave e musical."
+    desc:"Timbre clássico, suave e musical.",
+    audio:"/audio/sadowsky-metroline.mp3"
   },
 
-  /* 🔥 LANÇAMENTO COM PREVIEW */
+  /* 🔥 LANÇAMENTOS */
   {
     nome:"Lakland SS44-75 IR",
     preco:59,
@@ -39,14 +44,13 @@ const produtos = [
     status:"LANÇAMENTO",
     audio:"/audio/lakland-sl-44-75.mp3"
   },
-
-  /* 🔒 LANÇAMENTOS SEM ÁUDIO (POR ENQUANTO) */
   {
     nome:"Sadowsky NYC IR",
     preco:null,
     link:null,
     desc:"Flagship nova-iorquino com graves profundos e brilho cristalino.",
-    status:"LANÇAMENTO"
+    status:"LANÇAMENTO",
+    audio:"/audio/sadowsky-nyc.mp3"
   },
   {
     nome:"Mayones Jabba 5 IR",
@@ -63,24 +67,25 @@ const produtos = [
     status:"LANÇAMENTO EM BREVE"
   },
 
-  /* PRODUTOS NORMAIS */
   {
     nome:"Warwick Corvette IR",
     preco:69,
     link:"https://pay.cakto.com.br/3frq3qm_719724",
-    desc:"Médio encorpado e ataque metálico."
+    desc:"Médio encorpado e ataque metálico.",
+    audio:"/audio/warwick-corvette.mp3"
   },
   {
     nome:"Ken Smith IR",
     preco:69,
     link:"https://pay.cakto.com.br/zy8esjf_719715",
-    desc:"Resposta hi-fi, ultra definição e sustain perfeito."
+    desc:"Resposta hi-fi, ultra definição e sustain perfeito.",
+    audio:"/audio/ken-smith.mp3"
   }
 ];
 
 const grid = document.getElementById("produtos");
 
-/* PARA TODOS OS ÁUDIOS */
+/* 🔇 PARA TODOS OS ÁUDIOS */
 function stopAllAudios(){
   document.querySelectorAll("audio").forEach(a=>{
     a.pause();
@@ -102,7 +107,7 @@ produtos.forEach(p=>{
     html += `<div class="price">R$ ${p.preco.toFixed(2).replace(".",",")}</div>`;
   }
 
-  /* PREVIEW DE ÁUDIO */
+  /* ▶️ PLAYER DE PREVIEW */
   if(p.audio){
     html += `
       <div class="audio-wrap">
@@ -111,10 +116,10 @@ produtos.forEach(p=>{
         </audio>
         <button class="play-btn">▶ Preview 30s</button>
       </div>
-      <div class="status">${p.status}</div>
     `;
   }
-  else if(p.status){
+
+  if(p.status){
     html += `<div class="status">${p.status}</div>`;
   }
 
@@ -126,7 +131,7 @@ produtos.forEach(p=>{
   grid.appendChild(card);
 });
 
-/* CONTROLE DE PLAY (CORRETO) */
+/* 🎧 CONTROLE DE PLAY (FUNCIONA EM TODOS OS NAVEGADORES) */
 document.addEventListener("click", e=>{
   if(e.target.classList.contains("play-btn")){
     const audio = e.target.previousElementSibling;
@@ -144,7 +149,7 @@ document.addEventListener("click", e=>{
   }
 });
 
-/* ESTILO DO PLAYER */
+/* 🎨 ESTILO DO PLAYER */
 const css = document.createElement("style");
 css.innerHTML = `
 .audio-wrap{margin-top:14px}
