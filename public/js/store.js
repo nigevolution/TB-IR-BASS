@@ -30,40 +30,14 @@ const produtos = [
     desc:"Timbre clássico, suave e musical."
   },
 
-  /* ===== LANÇAMENTOS COM ÁUDIO ===== */
+  /* LANÇAMENTO COM ÁUDIO */
   {
     nome:"Lakland SS44-75 IR",
     preco:59,
     link:"https://pay.cakto.com.br/wgonjnx_723722",
     desc:"Boutique americano com punch absurdo, slap cristalino e médios vivos.",
-    release:"2026-01-13T19:00:00",
     status:"LANÇAMENTO",
     audio:"/audio/lakland-sl-44-75.mp3"
-  },
-  {
-    nome:"Sadowsky NYC IR",
-    preco:null,
-    link:null,
-    desc:"Flagship nova-iorquino com graves profundos e brilho cristalino.",
-    release:"2026-01-20T12:00:00",
-    status:"LANÇAMENTO",
-    audio:"/audio/sadowsky-nyc.mp3"
-  },
-
-  /* ===== LANÇAMENTO SEM RELÓGIO ===== */
-  {
-    nome:"Mayones Jabba 5 IR",
-    preco:null,
-    link:null,
-    desc:"Flagship europeu com profundidade e definição profissional.",
-    status:"LANÇAMENTO"
-  },
-  {
-    nome:"MTD 535-24 IR",
-    preco:null,
-    link:null,
-    desc:"Boutique luthier com dinâmica extrema e médios orgânicos.",
-    status:"LANÇAMENTO EM BREVE"
   },
 
   {
@@ -82,7 +56,7 @@ const produtos = [
 
 const grid = document.getElementById("produtos");
 
-/* ===== PARA PARAR OUTROS ÁUDIOS ===== */
+/* PARA TODOS OS ÁUDIOS */
 function stopAllAudios(){
   document.querySelectorAll("audio").forEach(a=>{
     a.pause();
@@ -90,15 +64,12 @@ function stopAllAudios(){
   });
 }
 
-/* ===== MONTAGEM DOS CARDS ===== */
 produtos.forEach(p=>{
   const card = document.createElement("div");
   card.className = "card";
 
-  const isNovo = p.status || p.release;
-
   let html = `
-    ${isNovo ? `<div class="badge">NOVO</div>` : ``}
+    ${p.status ? `<div class="badge">NOVO</div>` : ``}
     <h3>${p.nome}</h3>
     <p>${p.desc}</p>
   `;
@@ -107,39 +78,20 @@ produtos.forEach(p=>{
     html += `<div class="price">R$ ${p.preco.toFixed(2).replace(".",",")}</div>`;
   }
 
-  /* ===== PLAYER DE ÁUDIO (FUNCIONA NO SAFARI) ===== */
+  /* PLAYER CORRETO */
   if(p.audio){
     html += `
       <div class="audio-wrap">
-        <audio
-          controls
-          preload="none"
-          style="width:100%"
-          onplay="stopAllAudios()"
-          ontimeupdate="if(this.currentTime > 30){ this.pause(); this.currentTime = 0 }">
+        <audio preload="none" data-preview>
           <source src="${p.audio}" type="audio/mpeg">
         </audio>
-        <div class="audio-label">▶ Preview 30s</div>
-      </div>
-    `;
-  }
-
-  /* ===== CRONÔMETRO ===== */
-  if(p.release){
-    html += `
-      <div class="countdown"
-        data-date="${p.release}"
-        data-link="${p.link}"
-        data-price="${p.preco}">
-        ⏳ 00d 00h 00m 00s
+        <button class="play-btn">▶ Preview 30s</button>
       </div>
       <div class="status">${p.status}</div>
     `;
   }
-  else if(p.status){
-    html += `<div class="status">${p.status}</div>`;
-  }
-  else if(p.link){
+
+  if(p.link){
     html += `<button onclick="window.open('${p.link}')">Comprar agora</button>`;
   }
 
@@ -147,74 +99,35 @@ produtos.forEach(p=>{
   grid.appendChild(card);
 });
 
-/* ===== CRONÔMETRO EM TEMPO REAL ===== */
-function startCountdown(){
-  document.querySelectorAll(".countdown").forEach(el=>{
-    const target = new Date(el.dataset.date).getTime();
+/* CONTROLE DE PLAY (CORRETO) */
+document.addEventListener("click", e=>{
+  if(e.target.classList.contains("play-btn")){
+    const audio = e.target.previousElementSibling;
 
-    const timer = setInterval(()=>{
-      const diff = target - Date.now();
+    stopAllAudios();
+    audio.currentTime = 0;
+    audio.play();
 
-      if(diff <= 0){
-        el.innerHTML = `
-          <div class="price">R$ ${Number(el.dataset.price).toFixed(2).replace(".",",")}</div>
-          <button onclick="window.open('${el.dataset.link}')">Comprar agora</button>
-        `;
-        clearInterval(timer);
-        return;
+    audio.ontimeupdate = () => {
+      if(audio.currentTime >= 30){
+        audio.pause();
+        audio.currentTime = 0;
       }
+    };
+  }
+});
 
-      const d = Math.floor(diff / 86400000);
-      const h = Math.floor(diff / 3600000 % 24);
-      const m = Math.floor(diff / 60000 % 60);
-      const s = Math.floor(diff / 1000 % 60);
-
-      el.innerHTML = `⏳ ${d}d ${h}h ${m}m ${s}s`;
-    },1000);
-  });
-}
-startCountdown();
-
-/* ===== ESTILOS ===== */
+/* ESTILO */
 const css = document.createElement("style");
 css.innerHTML = `
 .audio-wrap{margin-top:14px}
-.audio-label{
-  margin-top:6px;
-  font-size:12px;
-  color:#ffb86b;
-  font-weight:bold;
-}
-
-.badge{
-  position:absolute;
-  top:14px;
-  right:14px;
+.play-btn{
   background:#ff9a3c;
-  color:#2a0f16;
-  padding:5px 12px;
-  font-size:11px;
-  font-weight:bold;
+  border:none;
   border-radius:20px;
-  animation:pulse 1.6s infinite;
-}
-
-.status{
-  margin-top:12px;
+  padding:8px 16px;
   font-weight:bold;
-  color:#ffb86b;
-}
-
-.countdown{
-  margin-top:12px;
-  font-weight:bold;
-  color:#ffb86b;
-}
-
-@keyframes pulse{
-  0%{transform:scale(1)}
-  50%{transform:scale(1.08)}
-  100%{transform:scale(1)}
+  cursor:pointer;
 }
 `;
 document.head.appendChild(css);
