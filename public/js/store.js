@@ -1,3 +1,4 @@
+/* ================== PRODUTOS ================== */
 const produtos = [
   {
     nome: "Bass Mods IR",
@@ -35,7 +36,7 @@ const produtos = [
     audio: "/audio/sadowsky-metroline.mp3"
   },
 
-  /* ===== LANÇAMENTOS COM CRONÔMETRO ===== */
+  /* ===== LANÇAMENTOS ===== */
   {
     nome: "Lakland SS44-75 IR",
     preco: 59,
@@ -54,7 +55,6 @@ const produtos = [
     release: "2026-01-20T12:00:00",
     status: "LANÇAMENTO"
   },
-
   {
     nome: "Mayones Jabba 5 IR",
     preco: null,
@@ -70,7 +70,6 @@ const produtos = [
     desc: "Boutique luthier com dinâmica extrema e médios orgânicos.",
     status: "LANÇAMENTO EM BREVE"
   },
-
   {
     nome: "Warwick Corvette IR",
     preco: 69,
@@ -89,7 +88,7 @@ const produtos = [
 
 const grid = document.getElementById("produtos");
 
-/* ===== CONTROLE GLOBAL DE ÁUDIO ===== */
+/* ================== ÁUDIO ================== */
 function stopAllAudios() {
   document.querySelectorAll("audio").forEach(a => {
     a.pause();
@@ -97,17 +96,18 @@ function stopAllAudios() {
   });
 }
 
+/* ================== RENDER ================== */
 produtos.forEach(p => {
   const card = document.createElement("div");
   card.className = "card";
 
   let html = `
-    ${(p.status || p.release) ? `<div class="badge">NOVO</div>` : ``}
+    ${p.status || p.release ? `<div class="badge">NOVO</div>` : ``}
     <h3>${p.nome}</h3>
     <p>${p.desc}</p>
   `;
 
-  /* PREÇO NORMAL (apenas quando NÃO tem cronômetro) */
+  /* PREÇO (somente se NÃO estiver em lançamento) */
   if (p.preco && !p.release) {
     html += `<div class="price">R$ ${p.preco.toFixed(2).replace(".", ",")}</div>`;
   }
@@ -116,17 +116,24 @@ produtos.forEach(p => {
   if (p.audio) {
     html += `
       <div class="audio-wrap">
-        <audio preload="none"
-          onplay="stopAllAudios(); this.play();"
+        <audio preload="metadata"
           ontimeupdate="if(this.currentTime >= 30){ this.pause(); this.currentTime = 0 }">
           <source src="${p.audio}" type="audio/mpeg">
         </audio>
-        <button class="preview-btn" onclick="this.previousElementSibling.play()">▶ Preview 30s</button>
+        <button class="preview-btn"
+          onclick="
+            stopAllAudios();
+            const audio = this.previousElementSibling;
+            audio.currentTime = 0;
+            audio.play();
+          ">
+          ▶ Preview 30s
+        </button>
       </div>
     `;
   }
 
-  /* CRONÔMETRO */
+  /* LANÇAMENTO COM CRONÔMETRO */
   if (p.release) {
     html += `
       <div class="countdown"
@@ -142,7 +149,7 @@ produtos.forEach(p => {
     html += `<div class="status">${p.status}</div>`;
   }
 
-  /* BOTÃO COMPRAR (somente se NÃO tiver cronômetro ativo) */
+  /* BOTÃO COMPRAR (somente fora de lançamento) */
   if (p.link && !p.release) {
     html += `<button class="buy-btn" onclick="window.open('${p.link}')">Comprar agora</button>`;
   }
@@ -151,7 +158,7 @@ produtos.forEach(p => {
   grid.appendChild(card);
 });
 
-/* ===== CRONÔMETRO EM TEMPO REAL ===== */
+/* ================== CRONÔMETRO ================== */
 function startCountdown() {
   document.querySelectorAll(".countdown").forEach(el => {
     const target = new Date(el.dataset.date).getTime();
@@ -179,12 +186,12 @@ function startCountdown() {
 }
 startCountdown();
 
-/* ===== ESTILOS ===== */
+/* ================== ESTILO ================== */
 const css = document.createElement("style");
 css.innerHTML = `
-.audio-wrap{margin-top:14px}
-.preview-btn{margin-bottom:18px}
-.status{margin:12px 0 16px;font-weight:bold;color:#ffb86b}
-.buy-btn{margin-top:10px}
+.audio-wrap { margin-top:14px }
+.preview-btn { margin-bottom:14px }
+.buy-btn { margin-top:8px }
+.status { margin-top:10px }
 `;
 document.head.appendChild(css);
