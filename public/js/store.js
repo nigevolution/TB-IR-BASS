@@ -58,6 +58,7 @@ const produtos = [
     nome:"Mayones Jabba 5 IR",
     preco:null,
     link:null,
+    release:"2026-01-23T19:00:00",
     desc:"Flagship europeu com profundidade e definição profissional.",
     status:"LANÇAMENTO"
   },
