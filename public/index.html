@@ -8,38 +8,54 @@
 
 <style>
 :root{
+  --bg-main:#2a0f16;
+  --bg-card:rgba(20,5,10,.88);
   --accent:#ff9a3c;
   --accent-soft:#ffb86b;
   --text-main:#f5eaea;
 }
 
-/* FUNDO PREMIUM ESTÁVEL */
+/* FUNDO CINEMATOGRÁFICO */
 body{
   margin:0;
   font-family:Arial,sans-serif;
   color:var(--text-main);
   text-align:center;
   background:
-    linear-gradient(rgba(12,6,6,.82),rgba(12,6,6,.82)),
+    linear-gradient(rgba(12,6,6,.85),rgba(12,6,6,.85)),
     url("bg-tbbass.png") center/cover no-repeat;
 }
 
 /* MOBILE SUAVE */
-@media (max-width:768px){
+@media(max-width:768px){
   body{background-attachment:scroll}
 }
+
+/* MARCA D’ÁGUA */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:url("logo1.png") center/280px no-repeat;
+  opacity:.06;
+  pointer-events:none;
+  z-index:-1;
+}
+
+/* TÍTULO */
+h1{color:var(--accent);margin-top:40px}
 
 /* GRID */
 .grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-  gap:28px;
-  padding:50px;
+  gap:26px;
+  padding:60px;
 }
 
-/* CARD */
+/* CARDS */
 .card{
-  background:rgba(20,5,10,.9);
+  background:var(--bg-card);
   border-radius:22px;
   padding:26px;
   box-shadow:0 0 0 1px rgba(255,154,60,.35),0 25px 70px rgba(0,0,0,.85);
@@ -50,36 +66,77 @@ body{
 
 /* BOTÕES */
 .preview-btn,.buy-btn{
-  display:block;
   width:100%;
-  border:none;
   margin-top:12px;
+  border:none;
   padding:13px;
   border-radius:14px;
   background:linear-gradient(135deg,#ff9a3c,#ff7a00);
+  color:#2a0f16;
   font-weight:bold;
   cursor:pointer;
   box-shadow:0 0 25px rgba(255,154,60,.6);
 }
 
+/* PREVIEW VIVO */
 .preview-btn.playing{
   animation:pulse 1.4s infinite;
-  box-shadow:0 0 35px rgba(255,184,107,.9);
+  box-shadow:0 0 40px rgba(255,184,107,.9);
 }
-
 @keyframes pulse{
   0%{transform:scale(1)}
   50%{transform:scale(1.07)}
   100%{transform:scale(1)}
 }
+
+/* FAQ */
+#faq{
+  max-width:900px;
+  margin:90px auto;
+  padding:45px;
+  border-radius:28px;
+  background:rgba(20,5,10,.9);
+  box-shadow:0 0 60px rgba(255,154,60,.35);
+}
+#faq h2{color:var(--accent)}
+.faq{background:rgba(42,15,22,.95);border-radius:18px;padding:18px;margin:14px 0}
+
+/* WHATS */
+#silas-wrap,#elbs-wrap{
+  position:fixed;bottom:22px;display:flex;align-items:center;gap:10px;z-index:99999
+}
+#silas-wrap{left:22px} #elbs-wrap{right:22px}
+.whats-balloon{background:linear-gradient(135deg,#ff9a3c,#ff7a00);padding:8px 16px;border-radius:20px;font-weight:bold;color:#2a0f16}
+.whats-btn{width:62px;height:62px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 0 25px rgba(37,211,102,.7)}
+.whats-btn img{width:34px}
 </style>
 </head>
 
 <body>
+
 <h1>TB-BASS IR Store</h1>
 <p>IR premium direto na pedaleira • PIX e Cartão</p>
 
 <div id="produtos" class="grid"></div>
+
+<section id="faq">
+<h2>Dúvidas Frequentes</h2>
+<details class="faq"><summary>O que é um IR?</summary><p>É uma captura real de instrumentos e caixas que transforma o timbre do seu baixo em nível de estúdio.</p></details>
+<details class="faq"><summary>Em quais pedaleiras funciona?</summary><p>Tank-B, Mooer, Valeton, HeadRush, Hotone, Zoom, Line6, Ampero e outras.</p></details>
+<details class="faq"><summary>Formato?</summary><p>WAV 24bit • 44.1kHz e 48kHz.</p></details>
+</section>
+
+<footer>© TB-BASS IR • Cuiabá-MT</footer>
+
+<div id="silas-wrap">
+<div class="whats-balloon">Dúvidas? Fale com Silas</div>
+<a class="whats-btn" href="https://wa.me/qr/LG6FOBKIZD5QC1" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"></a>
+</div>
+
+<div id="elbs-wrap">
+<div class="whats-balloon">Dúvidas? Fale com Elbs</div>
+<a class="whats-btn" href="https://wa.me/message/3QND546Y75L3M1" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"></a>
+</div>
 
 <script src="js/store.js"></script>
 </body>
