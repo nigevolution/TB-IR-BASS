@@ -1,62 +1,27 @@
-const produtos = [
-  {
-    nome:"Lakland SS44-75 IR",
-    preco:59,
-    link:"https://pay.cakto.com.br/wgonjnx_723722",
-    desc:"Boutique americano com punch absurdo.",
-    audio:"/audio/lakland-sl-44-75.mp3",
-    release:"2026-01-13T19:00:00",
-    status:"LANÇAMENTO"
-  }
-];
+/* ================== CRONÔMETRO ================== */
+function startCountdown() {
+  document.querySelectorAll(".countdown").forEach(el => {
+    const target = new Date(el.dataset.date).getTime();
 
-const grid=document.getElementById("produtos");
+    const timer = setInterval(() => {
+      const diff = target - Date.now();
 
-function stopAllAudios(){
-  document.querySelectorAll("audio").forEach(a=>{
-    a.pause();a.currentTime=0;
-  });
-}
-
-produtos.forEach(p=>{
-  const card=document.createElement("div");
-  card.className="card";
-
-  let html=`<h3>${p.nome}</h3><p>${p.desc}</p>`;
-
-  if(p.audio){
-    html+=`
-      <audio preload="metadata"></audio>
-      <button onclick="stopAllAudios();this.previousElementSibling.play()">▶ Preview 30s</button>`;
-  }
-
-  if(p.release){
-    html+=`
-      <div class="countdown" data-date="${p.release}" data-link="${p.link}" data-price="${p.preco}">
-        ⏳ 00d 00h 00m 00s
-      </div>`;
-  }
-
-  card.innerHTML=html;
-  grid.appendChild(card);
-});
-
-function startCountdown(){
-  document.querySelectorAll(".countdown").forEach(el=>{
-    const target=new Date(el.dataset.date).getTime();
-    const timer=setInterval(()=>{
-      const diff=target-Date.now();
-      if(diff<=0){
-        el.outerHTML=`<div class="price">R$ ${Number(el.dataset.price).toFixed(2)}</div>
-        <button onclick="window.open('${el.dataset.link}')">Comprar agora</button>`;
-        clearInterval(timer);return;
+      if (diff <= 0) {
+        el.outerHTML = `
+          <div class="price">R$ ${Number(el.dataset.price).toFixed(2).replace(".", ",")}</div>
+          <button class="buy-btn" onclick="window.open('${el.dataset.link}')">Comprar agora</button>
+        `;
+        clearInterval(timer);
+        return;
       }
-      const d=Math.floor(diff/86400000);
-      const h=Math.floor((diff/3600000)%24);
-      const m=Math.floor((diff/60000)%60);
-      const s=Math.floor((diff/1000)%60);
-      el.innerHTML=`⏳ ${d}d ${h}h ${m}m ${s}s`;
-    },1000);
+
+      const d = Math.floor(diff / 86400000);
+      const h = Math.floor((diff / 3600000) % 24);
+      const m = Math.floor((diff / 60000) % 60);
+      const s = Math.floor((diff / 1000) % 60);
+
+      el.innerHTML = `⏳ ${d}d ${h}h ${m}m ${s}s`;
+    }, 1000);
   });
 }
 startCountdown();
