@@ -32,36 +32,42 @@ produtos.forEach(p=>{
   const card = document.createElement("div");
   card.className = "card";
 
-  let html = `<h3>${p.nome}</h3><p>${p.desc}</p>`;
+  let html = `
+    <h3>${p.nome}</h3>
+    <p>${p.desc}</p>
+  `;
 
-  if(p.preco && !p.release){
-    html += `<div class="price">R$ ${p.preco.toFixed(2).replace(".",",")}</div>`;
-  }
-
+  /* PREVIEW */
   if(p.audio){
     html += `
     <div class="audio-wrap">
-      <audio preload="metadata"></audio>
+      <audio preload="metadata" src="${p.audio}"></audio>
       <button class="preview-btn">▶ Preview 30s</button>
     </div>`;
   }
 
-  if(p.release){
-    html += `<div class="countdown" data-date="${p.release}" data-link="${p.link}" data-price="${p.preco}">⏳ 00d 00h 00m 00s</div>`;
-  }
-
+  /* BOTÃO COMPRAR */
   if(p.link && !p.release){
     html += `<button class="buy-btn" onclick="window.open('${p.link}')">Comprar agora</button>`;
+  }
+
+  /* PREÇO — AGORA ABAIXO DO BOTÃO */
+  if(p.preco && !p.release){
+    html += `<div class="price">R$ ${p.preco.toFixed(2).replace(".",",")}</div>`;
+  }
+
+  /* LANÇAMENTO */
+  if(p.release){
+    html += `<div class="countdown" data-date="${p.release}" data-link="${p.link}" data-price="${p.preco}">⏳ 00d 00h 00m 00s</div>`;
   }
 
   card.innerHTML = html;
   grid.appendChild(card);
 
-  /* ===== CONTROLE DO PLAY ANIMADO ===== */
+  /* ===== PLAY ANIMADO ===== */
   if(p.audio){
     const audio = card.querySelector("audio");
     const btn = card.querySelector(".preview-btn");
-    audio.src = p.audio;
 
     btn.addEventListener("click",()=>{
       if(!audio.paused){
@@ -87,11 +93,6 @@ produtos.forEach(p=>{
         btn.innerText = "▶ Preview 30s";
       }
     });
-
-    audio.addEventListener("ended",()=>{
-      btn.classList.remove("playing");
-      btn.innerText = "▶ Preview 30s";
-    });
   }
 });
 
@@ -103,8 +104,9 @@ function startCountdown(){
       const diff = target - Date.now();
       if(diff<=0){
         el.outerHTML = `
+          <button class="buy-btn" onclick="window.open('${el.dataset.link}')">Comprar agora</button>
           <div class="price">R$ ${Number(el.dataset.price).toFixed(2).replace(".",",")}</div>
-          <button class="buy-btn" onclick="window.open('${el.dataset.link}')">Comprar agora</button>`;
+        `;
         clearInterval(timer);
         return;
       }
@@ -117,19 +119,3 @@ function startCountdown(){
   });
 }
 startCountdown();
-
-/* ================== CSS DO PLAY ANIMADO ================== */
-const css = document.createElement("style");
-css.innerHTML = `
-.preview-btn.playing{
-  background:linear-gradient(135deg,#ffb86b,#ff7a00);
-  box-shadow:0 0 25px rgba(255,154,60,.9);
-  animation:pulse 1.1s infinite;
-}
-@keyframes pulse{
-  0%{transform:scale(1)}
-  50%{transform:scale(1.06)}
-  100%{transform:scale(1)}
-}
-`;
-document.head.appendChild(css);
