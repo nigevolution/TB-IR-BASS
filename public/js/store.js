@@ -1,83 +1,16 @@
 /* ================== PRODUTOS ================== */
 const produtos = [
-  {
-    nome:"Bass Mods IR",
-    preco:49,
-    link:"https://pay.cakto.com.br/rtuwa88_720263",
-    desc:"Grave definido, ataque rápido e presença moderna.",
-    audio:"/audio/bass-mods.mp3"
-  },
-  {
-    nome:"Fender Ultra 2 IR",
-    preco:49,
-    link:"https://pay.cakto.com.br/w3x2i3r_700686",
-    desc:"Timbre limpo, quente e equilibrado.",
-    audio:"/audio/fender-ultra-ii.mp3"
-  },
-  {
-    nome:"Music Man IR",
-    preco:49,
-    link:"https://pay.cakto.com.br/n9ji2mm_700692",
-    desc:"Punch agressivo, slap estalado e presença absurda.",
-    audio:"/audio/music-man.mp3"
-  },
-  {
-    nome:"Sadowsky M5 IR",
-    preco:59,
-    link:"https://pay.cakto.com.br/36243of_6",
-    desc:"Grave cheio, médios polidos e definição premium.",
-    audio:"/audio/sadowsky-m5.mp3"
-  },
-  {
-    nome:"Sadowsky Metroline IR",
-    preco:39,
-    link:"https://pay.cakto.com.br/yaueq45_665688",
-    desc:"Timbre clássico, suave e musical.",
-    audio:"/audio/sadowsky-metroline.mp3"
-  },
-  {
-    nome:"Lakland SS44-75 IR",
-    preco:59,
-    link:"https://pay.cakto.com.br/wgonjnx_723722",
-    desc:"Boutique americano com punch absurdo, slap cristalino e médios vivos.",
-    audio:"/audio/lakland-sl-44-75.mp3",
-    release:"2026-01-13T19:00:00"
-  },
-  {
-    nome:"Sadowsky NYC IR",
-    preco:59,
-    link:"https://pay.cakto.com.br/EXEMPLO",
-    desc:"Flagship nova-iorquino com graves profundos e brilho cristalino.",
-    audio:"/audio/sadowsky-nyc.mp3",
-    release:"2026-01-20T12:00:00"
-  },
-  {
-    nome:"Mayones Jabba 5 IR",
-    preco:null,
-    link:null,
-    desc:"Flagship europeu com profundidade e definição profissional.",
-    release:"2026-01-23T19:00:00"
-  },
-  {
-    nome:"MTD 535-24 IR",
-    preco:null,
-    link:null,
-    desc:"Boutique luthier com dinâmica extrema e médios orgânicos."
-  },
-  {
-    nome:"Warwick Corvette IR",
-    preco:69,
-    link:"https://pay.cakto.com.br/3frq3qm_719724",
-    desc:"Médio encorpado e ataque metálico.",
-    audio:"/audio/warwick-corvette.mp3"
-  },
-  {
-    nome:"Ken Smith IR",
-    preco:69,
-    link:"https://pay.cakto.com.br/zy8esjf_719715",
-    desc:"Resposta hi-fi, ultra definição e sustain perfeito.",
-    audio:"/audio/ken-smith.mp3"
-  }
+  { nome:"Bass Mods IR", preco:49, link:"https://pay.cakto.com.br/rtuwa88_720263", desc:"Grave definido, ataque rápido e presença moderna.", audio:"/audio/bass-mods.mp3" },
+  { nome:"Fender Ultra 2 IR", preco:49, link:"https://pay.cakto.com.br/w3x2i3r_700686", desc:"Timbre limpo, quente e equilibrado.", audio:"/audio/fender-ultra-ii.mp3" },
+  { nome:"Music Man IR", preco:49, link:"https://pay.cakto.com.br/n9ji2mm_700692", desc:"Punch agressivo, slap estalado e presença absurda.", audio:"/audio/music-man.mp3" },
+  { nome:"Sadowsky M5 IR", preco:59, link:"https://pay.cakto.com.br/36243of_6", desc:"Grave cheio, médios polidos e definição premium.", audio:"/audio/sadowsky-m5.mp3" },
+  { nome:"Sadowsky Metroline IR", preco:39, link:"https://pay.cakto.com.br/yaueq45_665688", desc:"Timbre clássico, suave e musical.", audio:"/audio/sadowsky-metroline.mp3" },
+  { nome:"Lakland SS44-75 IR", preco:59, link:"https://pay.cakto.com.br/wgonjnx_723722", desc:"Boutique americano com punch absurdo, slap cristalino e médios vivos.", audio:"/audio/lakland-sl-44-75.mp3", release:"2026-01-13T19:00:00" },
+  { nome:"Sadowsky NYC IR", preco:59, link:"https://pay.cakto.com.br/EXEMPLO", desc:"Flagship nova-iorquino com graves profundos e brilho cristalino.", audio:"/audio/sadowsky-nyc.mp3", release:"2026-01-20T12:00:00" },
+  { nome:"Mayones Jabba 5 IR", preco:null, link:null, desc:"Flagship europeu com profundidade e definição profissional.", release:"2026-01-23T19:00:00" },
+  { nome:"MTD 535-24 IR", preco:null, link:null, desc:"Boutique luthier com dinâmica extrema e médios orgânicos." },
+  { nome:"Warwick Corvette IR", preco:69, link:"https://pay.cakto.com.br/3frq3qm_719724", desc:"Médio encorpado e ataque metálico.", audio:"/audio/warwick-corvette.mp3" },
+  { nome:"Ken Smith IR", preco:69, link:"https://pay.cakto.com.br/zy8esjf_719715", desc:"Resposta hi-fi, ultra definição e sustain perfeito.", audio:"/audio/ken-smith.mp3" }
 ];
 
 const grid = document.getElementById("produtos");
@@ -87,6 +20,10 @@ function stopAllAudios(){
   document.querySelectorAll("audio").forEach(a=>{
     a.pause();
     a.currentTime = 0;
+  });
+  document.querySelectorAll(".preview-btn").forEach(b=>{
+    b.classList.remove("playing");
+    b.innerText = "▶ Preview 30s";
   });
 }
 
@@ -104,10 +41,8 @@ produtos.forEach(p=>{
   if(p.audio){
     html += `
     <div class="audio-wrap">
-      <audio preload="metadata" ontimeupdate="if(this.currentTime>=30){this.pause();this.currentTime=0}">
-        <source src="${p.audio}" type="audio/mpeg">
-      </audio>
-      <button class="preview-btn" onclick="stopAllAudios();const a=this.previousElementSibling;a.currentTime=0;a.play();">▶ Preview 30s</button>
+      <audio preload="metadata"></audio>
+      <button class="preview-btn">▶ Preview 30s</button>
     </div>`;
   }
 
@@ -121,16 +56,51 @@ produtos.forEach(p=>{
 
   card.innerHTML = html;
   grid.appendChild(card);
+
+  /* ===== CONTROLE DO PLAY ANIMADO ===== */
+  if(p.audio){
+    const audio = card.querySelector("audio");
+    const btn = card.querySelector(".preview-btn");
+    audio.src = p.audio;
+
+    btn.addEventListener("click",()=>{
+      if(!audio.paused){
+        audio.pause();
+        audio.currentTime = 0;
+        btn.classList.remove("playing");
+        btn.innerText = "▶ Preview 30s";
+        return;
+      }
+
+      stopAllAudios();
+      audio.currentTime = 0;
+      audio.play();
+      btn.classList.add("playing");
+      btn.innerText = "⏸ Tocando…";
+    });
+
+    audio.addEventListener("timeupdate",()=>{
+      if(audio.currentTime >= 30){
+        audio.pause();
+        audio.currentTime = 0;
+        btn.classList.remove("playing");
+        btn.innerText = "▶ Preview 30s";
+      }
+    });
+
+    audio.addEventListener("ended",()=>{
+      btn.classList.remove("playing");
+      btn.innerText = "▶ Preview 30s";
+    });
+  }
 });
 
 /* ================== CRONÔMETRO ================== */
 function startCountdown(){
   document.querySelectorAll(".countdown").forEach(el=>{
     const target = new Date(el.dataset.date).getTime();
-
     const timer = setInterval(()=>{
       const diff = target - Date.now();
-
       if(diff<=0){
         el.outerHTML = `
           <div class="price">R$ ${Number(el.dataset.price).toFixed(2).replace(".",",")}</div>
@@ -138,14 +108,28 @@ function startCountdown(){
         clearInterval(timer);
         return;
       }
-
-      const d = Math.floor(diff/86400000);
-      const h = Math.floor((diff/3600000)%24);
-      const m = Math.floor((diff/60000)%60);
-      const s = Math.floor((diff/1000)%60);
-
-      el.innerHTML = `⏳ ${d}d ${h}h ${m}m ${s}s`;
+      const d=Math.floor(diff/86400000);
+      const h=Math.floor((diff/3600000)%24);
+      const m=Math.floor((diff/60000)%60);
+      const s=Math.floor((diff/1000)%60);
+      el.innerHTML=`⏳ ${d}d ${h}h ${m}m ${s}s`;
     },1000);
   });
 }
 startCountdown();
+
+/* ================== CSS DO PLAY ANIMADO ================== */
+const css = document.createElement("style");
+css.innerHTML = `
+.preview-btn.playing{
+  background:linear-gradient(135deg,#ffb86b,#ff7a00);
+  box-shadow:0 0 25px rgba(255,154,60,.9);
+  animation:pulse 1.1s infinite;
+}
+@keyframes pulse{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.06)}
+  100%{transform:scale(1)}
+}
+`;
+document.head.appendChild(css);
