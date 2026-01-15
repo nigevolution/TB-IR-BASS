@@ -3,67 +3,83 @@
 <head>
 <meta charset="UTF-8">
 <title>TB-BASS IR Store</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <link rel="icon" href="logo.png">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
 :root{
   --accent:#ff9a3c;
   --accent-soft:#ffb86b;
-  --bg-card:rgba(20,5,10,.92);
   --text-main:#f5eaea;
 }
 
-html,body{margin:0;padding:0;width:100%;height:100%;overscroll-behavior:none}
-body{font-family:Arial,sans-serif;color:var(--text-main);text-align:center;background:#000}
-
-#bg-layer{
-  position:fixed;inset:0;
-  background:linear-gradient(rgba(0,0,0,.65),rgba(0,0,0,.95)),url("bg-hero.jpg") center/cover no-repeat;
-  z-index:-1;
+/* FUNDO PREMIUM ESTÁVEL */
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  color:var(--text-main);
+  text-align:center;
+  background:
+    linear-gradient(rgba(12,6,6,.82),rgba(12,6,6,.82)),
+    url("bg-tbbass.png") center/cover no-repeat;
 }
 
-h1{color:var(--accent);margin-top:36px}
-
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:26px;padding:48px 26px}
-
-.card{background:var(--bg-card);border-radius:22px;padding:26px;box-shadow:0 18px 40px rgba(0,0,0,.75);transition:.35s}
-.card:hover{transform:translateY(-6px) scale(1.02)}
-
-.price{font-size:22px;margin:14px 0;color:var(--accent-soft)}
-
-button{border:none;border-radius:14px;padding:12px 26px;background:linear-gradient(135deg,#ff9a3c,#ff7a00);color:#2a0f16;font-weight:bold;cursor:pointer}
-
-/* PREVIEW ANIMADO */
-.preview-btn{position:relative;overflow:hidden}
-.preview-btn::after{
-  content:"";position:absolute;inset:0;
-  background:radial-gradient(circle,rgba(255,154,60,.45),transparent 60%);
-  opacity:0;animation:pulseGlow 2s infinite;pointer-events:none
-}
-.preview-btn.playing{box-shadow:0 0 35px rgba(255,154,60,.85)}
-.preview-btn.playing::after{opacity:1}
-
-@keyframes pulseGlow{
-  0%{transform:scale(.8);opacity:.6}
-  70%{transform:scale(1.6);opacity:0}
-  100%{opacity:0}
+/* MOBILE SUAVE */
+@media (max-width:768px){
+  body{background-attachment:scroll}
 }
 
-#faq{max-width:900px;margin:80px auto;padding:36px;border-radius:26px;background:rgba(15,10,8,.92)}
-footer{opacity:.7;margin:40px 0}
+/* GRID */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:28px;
+  padding:50px;
+}
+
+/* CARD */
+.card{
+  background:rgba(20,5,10,.9);
+  border-radius:22px;
+  padding:26px;
+  box-shadow:0 0 0 1px rgba(255,154,60,.35),0 25px 70px rgba(0,0,0,.85);
+}
+
+/* PREÇO */
+.price{color:var(--accent-soft);font-size:22px;margin:14px 0}
+
+/* BOTÕES */
+.preview-btn,.buy-btn{
+  display:block;
+  width:100%;
+  border:none;
+  margin-top:12px;
+  padding:13px;
+  border-radius:14px;
+  background:linear-gradient(135deg,#ff9a3c,#ff7a00);
+  font-weight:bold;
+  cursor:pointer;
+  box-shadow:0 0 25px rgba(255,154,60,.6);
+}
+
+.preview-btn.playing{
+  animation:pulse 1.4s infinite;
+  box-shadow:0 0 35px rgba(255,184,107,.9);
+}
+
+@keyframes pulse{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.07)}
+  100%{transform:scale(1)}
+}
 </style>
 </head>
 
 <body>
-<div id="bg-layer"></div>
-
 <h1>TB-BASS IR Store</h1>
 <p>IR premium direto na pedaleira • PIX e Cartão</p>
 
 <div id="produtos" class="grid"></div>
-
-<footer>© TB-BASS IR</footer>
 
 <script src="js/store.js"></script>
 </body>
