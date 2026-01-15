@@ -8,38 +8,42 @@
 
 <style>
 :root{
-  --bg-main:#2a0f16;
-  --bg-card:rgba(20,5,10,.88);
   --accent:#ff9a3c;
   --accent-soft:#ffb86b;
   --text-main:#f5eaea;
+  --bg-card:rgba(20,5,10,.88);
 }
 
-/* FUNDO CINEMATOGRÁFICO */
+html,body{margin:0;padding:0}
 body{
-  margin:0;
   font-family:Arial,sans-serif;
   color:var(--text-main);
   text-align:center;
+  background:#000;
+}
+
+/* FUNDO CINEMATOGRÁFICO FIXO */
+#bg-layer{
+  position:fixed;
+  inset:0;
   background:
-    linear-gradient(rgba(12,6,6,.85),rgba(12,6,6,.85)),
-    url("bg-tbbass.png") center/cover no-repeat;
+    radial-gradient(ellipse at center,rgba(0,0,0,.35),rgba(0,0,0,.92)),
+    url("bg-hero.jpg") center/cover no-repeat;
+  z-index:-2;
+}
+
+/* VINHETA */
+#bg-layer::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:radial-gradient(circle at center,transparent 40%,rgba(0,0,0,.85));
+  pointer-events:none;
 }
 
 /* MOBILE SUAVE */
 @media(max-width:768px){
-  body{background-attachment:scroll}
-}
-
-/* MARCA D’ÁGUA */
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  background:url("logo1.png") center/280px no-repeat;
-  opacity:.06;
-  pointer-events:none;
-  z-index:-1;
+  #bg-layer{background-attachment:scroll}
 }
 
 /* TÍTULO */
@@ -113,6 +117,7 @@ h1{color:var(--accent);margin-top:40px}
 </head>
 
 <body>
+<div id="bg-layer"></div>
 
 <h1>TB-BASS IR Store</h1>
 <p>IR premium direto na pedaleira • PIX e Cartão</p>
