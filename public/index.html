@@ -4,90 +4,104 @@
 <meta charset="UTF-8">
 <title>TB-BASS IR Store</title>
 <link rel="icon" href="logo.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
 :root{
-  --bg-main:#2a0f16;
   --bg-card:rgba(20,5,10,.88);
   --accent:#ff9a3c;
   --accent-soft:#ffb86b;
   --text-main:#f5eaea;
 }
 
-/* FUNDO */
+/* FUNDO PREMIUM */
 body{
   margin:0;
   font-family:Arial, sans-serif;
   color:var(--text-main);
   text-align:center;
   background:
-    linear-gradient(rgba(42,15,22,.92), rgba(42,15,22,.92)),
+    linear-gradient(rgba(10,0,0,.80), rgba(10,0,0,.80)),
     url("bg-tbbass.png") center/cover no-repeat fixed;
 }
 
-/* remove tremida no mobile */
-@media(max-width:768px){
-  body{ background-attachment:scroll; }
+/* HEADER */
+h1{
+  color:var(--accent);
+  margin:40px 0 6px;
+  letter-spacing:1px;
 }
-
-/* TÍTULO */
-h1{ color:var(--accent); margin-top:40px }
+.subtitle{
+  opacity:.85;
+}
 
 /* GRID */
 .grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:30px;
-  padding:60px;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:26px;
+  padding:60px 20px;
 }
 
-/* CARD */
+/* CARDS */
 .card{
   background:var(--bg-card);
-  border-radius:24px;
-  padding:28px;
-  box-shadow:0 0 0 1px rgba(255,154,60,.35),0 20px 60px rgba(0,0,0,.7);
+  border-radius:26px;
+  padding:26px;
+  box-shadow:0 0 0 1px rgba(255,154,60,.35),0 20px 50px rgba(0,0,0,.6);
+  transition:.35s ease;
 }
-
-/* PREÇO */
-.price{ color:var(--accent-soft); font-size:22px; margin:12px 0 }
+.card:hover{transform:translateY(-8px) scale(1.02)}
 
 /* BOTÕES */
 button{
-  margin-top:10px;
+  width:100%;
+  margin-top:12px;
   border:none;
   border-radius:14px;
-  padding:13px 26px;
+  padding:14px;
   background:linear-gradient(135deg,#ff9a3c,#ff7a00);
   color:#2a0f16;
   font-weight:bold;
   cursor:pointer;
-  box-shadow:0 10px 25px rgba(255,154,60,.45);
 }
 
-/* ANIMAÇÃO PREVIEW */
-.preview-btn.playing{
-  animation:pulse 1.4s infinite;
-  box-shadow:0 0 30px rgba(255,154,60,.9);
+/* WHATSAPP */
+#silas-wrap,#elbs-wrap{
+  position:fixed;
+  bottom:22px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  z-index:9999;
 }
-@keyframes pulse{
-  0%{transform:scale(1)}
-  50%{transform:scale(1.07)}
-  100%{transform:scale(1)}
+#silas-wrap{left:22px}
+#elbs-wrap{right:22px}
+
+.whats-balloon{
+  background:linear-gradient(135deg,#ff9a3c,#ff7a00);
+  padding:8px 16px;
+  border-radius:20px;
+  font-size:13px;
+  font-weight:bold;
+  color:#2a0f16;
 }
 
-/* FAQ */
-#faq{ max-width:900px;margin:90px auto;padding:40px;background:rgba(20,5,10,.9);border-radius:30px }
-.faq{ margin-bottom:16px }
+.whats-btn{
+  width:62px;
+  height:62px;
+  background:#25D366;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
 
-/* WHATS */
-#silas-wrap,#elbs-wrap{ position:fixed; bottom:22px; display:flex; align-items:center; gap:10px; z-index:999 }
-#silas-wrap{ left:22px }
-#elbs-wrap{ right:22px }
-
+/* MOBILE FIX */
 @media(max-width:768px){
-  #elbs-wrap{ bottom:96px }
-  .whats-balloon{ display:none }
+  #silas-wrap{left:16px;bottom:20px}
+  #elbs-wrap{right:16px;bottom:96px}
+  .whats-balloon{display:none}
 }
 </style>
 </head>
@@ -95,20 +109,24 @@ button{
 <body>
 
 <h1>TB-BASS IR Store</h1>
-<p>IR premium direto na pedaleira • PIX e Cartão</p>
+<div class="subtitle">IR premium direto na pedaleira • PIX e Cartão</div>
 
 <div id="produtos" class="grid"></div>
 
-<section id="faq">
-<h2>Dúvidas Frequentes</h2>
-<details class="faq"><summary>O que é IR?</summary><p>Captura real de instrumentos.</p></details>
-<details class="faq"><summary>Funciona onde?</summary><p>Todas pedaleiras que aceitam IR.</p></details>
-</section>
+<!-- Whats -->
+<div id="silas-wrap">
+  <div class="whats-balloon">Dúvidas? Fale com Silas</div>
+  <a class="whats-btn" href="https://wa.me/qr/LG6FOBKIZD5QC1" target="_blank">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="34">
+  </a>
+</div>
 
-<footer>© TB-BASS IR</footer>
-
-<div id="silas-wrap"><a class="whats-btn" href="https://wa.me/qr/LG6FOBKIZD5QC1"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="32"></a></div>
-<div id="elbs-wrap"><a class="whats-btn" href="https://wa.me/message/3QND546Y75L3M1"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="32"></a></div>
+<div id="elbs-wrap">
+  <div class="whats-balloon">Dúvidas? Fale com Elbs</div>
+  <a class="whats-btn" href="https://wa.me/message/3QND546Y75L3M1" target="_blank">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="34">
+  </a>
+</div>
 
 <script src="js/store.js"></script>
 </body>
