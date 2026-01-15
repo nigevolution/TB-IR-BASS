@@ -3,170 +3,129 @@
 <head>
 <meta charset="UTF-8">
 <title>TB-BASS IR Store</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="logo.png">
 
 <style>
+:root{
+--accent:#ff9a3c;
+--accent-soft:#ffbf7a;
+--text:#fff;
+}
+
+html,body{scroll-behavior:smooth;}
+
 body{
-  margin:0;
-  font-family:Arial;
-  background:#000;
-  color:#fff;
+margin:0;
+font-family:Arial;
+color:var(--text);
+text-align:center;
+background:
+radial-gradient(ellipse at center,rgba(0,0,0,.35),rgba(0,0,0,.92)),
+url("bg-hero.jpg") center/cover no-repeat;
 }
 
-/* fundo com logo gigante */
-#bg-logo{
-  position:fixed;
-  top:0; left:0;
-  width:100%;
-  height:100%;
-  background:url("logo.png") center/contain no-repeat;
-  opacity:0.15;
-  z-index:0;
-  pointer-events:none;
+/* Parallax só desktop */
+@media(min-width:900px){
+body{background-attachment:fixed;}
 }
 
-/* conteúdo por cima */
-#conteudo{
-  position:relative;
-  z-index:1;
-  padding:40px;
-  text-align:center;
+/* Mobile smooth */
+@media(max-width:768px){
+.card{backdrop-filter:none;}
 }
 
-/* cards */
+h1{color:var(--accent);margin:50px 0 10px;}
 .grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:25px;
-  max-width:1100px;
-  margin:40px auto;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:28px;
+padding:70px 25px;
 }
 
 .card{
-  background:rgba(0,0,0,0.85);
-  border:1px solid #ff7a00;
-  border-radius:18px;
-  padding:25px;
-  box-shadow:0 0 20px rgba(255,120,0,0.3);
+background:rgba(15,10,8,.85);
+border-radius:26px;
+padding:28px;
+box-shadow:0 25px 60px rgba(0,0,0,.9);
+transition:.35s;
+}
+.card:hover{transform:translateY(-10px) scale(1.03)}
+
+.price{color:var(--accent-soft);font-size:22px;margin:14px 0}
+
+button{
+border:none;border-radius:18px;
+padding:14px 28px;
+background:linear-gradient(135deg,#ff9a3c,#ff7a00);
+font-weight:bold;
+box-shadow:0 0 25px rgba(255,154,60,.6);
+cursor:pointer;
+margin:6px 0;
 }
 
-.card h3{color:#ff7a00}
-.price{font-size:22px;margin:10px 0}
+.preview-btn.playing{animation:pulse 1s infinite alternate;}
+@keyframes pulse{from{box-shadow:0 0 20px #ff9a3c;}to{box-shadow:0 0 45px #ffbf7a;}}
 
-.card button{
-  background:#ff7a00;
-  color:#000;
-  border:none;
-  border-radius:10px;
-  padding:10px 22px;
-  cursor:pointer;
+#faq{
+max-width:900px;margin:120px auto;padding:50px;
+background:rgba(0,0,0,.7);border-radius:30px;
 }
 
-/* WHATSAPP FLOAT */
-#whatsapp-float{
-  position:fixed;
-  right:22px;
-  bottom:22px;
-  width:66px;
-  height:66px;
-  background:#25D366;
-  border-radius:50%;
-  box-shadow:0 0 30px rgba(37,211,102,.7);
-  z-index:99999;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  animation:zapFloat 1.6s infinite;
+#faq h2{color:var(--accent)}
+
+.whats-wrap{
+position:fixed;bottom:20px;right:20px;z-index:9999;
+display:flex;align-items:center;gap:10px;
 }
-#whatsapp-float img{
-  width:38px;
-  height:38px;
+.whats-balloon{
+background:linear-gradient(135deg,#ff9a3c,#ff7a00);
+padding:10px 18px;border-radius:22px;font-size:13px;color:#000;font-weight:bold;
 }
-@keyframes zapFloat{
-  0%{transform:translateY(0)}
-  50%{transform:translateY(-6px)}
-  100%{transform:translateY(0)}
+.whats-btn{
+width:62px;height:62px;background:#25D366;border-radius:50%;
+display:flex;align-items:center;justify-content:center;
+box-shadow:0 0 25px rgba(37,211,102,.7);
 }
+.whats-btn img{width:34px}
+footer{opacity:.7;margin:60px 0}
 </style>
 </head>
 
 <body>
 
-<div id="bg-logo"></div>
+<h1>TB-BASS IR Store</h1>
+<p>IR premium direto na pedaleira • PIX e Cartão</p>
 
-<div id="conteudo">
-  <h1 style="color:#ff7a00">TB-BASS IR Store</h1>
-  <p>IR premium direto na pedaleira • PIX e Cartão</p>
+<div id="produtos" class="grid"></div>
 
-  <div class="grid">
+<section id="faq">
+<h2>Dúvidas Frequentes</h2>
 
-    <div class="card">
-      <h3>Bass Mods IR</h3>
-      <p>Grave definido, ataque rápido e presença moderna.</p>
-      <div class="price">R$ 49,00</div>
-      <button onclick="window.open('https://mpago.la/1cvainu')">Comprar agora</button>
-    </div>
+<details open>
+<summary><b>Teve qualquer dificuldade com o timbre após a compra?</b></summary>
+<p>Fique tranquilo. Nosso suporte pós-venda é real, humano e dedicado. Se o timbre não ficar como você esperava, nós te ajudamos a ajustar, configurar e extrair o máximo do seu instrumento — até ele soar do jeito certo. Recomendamos o uso de <b>cordas novas ou semi-novas</b>.</p>
+</details>
 
-    <div class="card">
-      <h3>Fender Ultra 2 IR</h3>
-      <p>Timbre limpo, quente e equilibrado.</p>
-      <div class="price">R$ 49,00</div>
-      <button onclick="window.open('https://mpago.la/1pqvu5J')">Comprar agora</button>
-    </div>
-
-    <div class="card">
-      <h3>Sadowsky M5 IR</h3>
-      <p>Grave cheio, médios polidos e definição premium.</p>
-      <div class="price">R$ 49,00</div>
-      <button onclick="window.open('https://mpago.la/2nGQqmt')">Comprar agora</button>
-    </div>
-
-    <div class="card">
-      <h3>Sadowsky Metroline IR</h3>
-      <p>Timbre clássico, suave e musical.</p>
-      <div class="price">R$ 39,00</div>
-      <button onclick="window.open('https://pagamento.sejaefi.com.br/42719b9c-8306-46ab-af6a-b8fac28e5c79')">Comprar agora</button>
-    </div>
-
-    <div class="card">
-      <h3>Warwick Corvette IR</h3>
-      <p>Médio encorpado e ataque metálico.</p>
-      <div class="price">R$ 69,00</div>
-      <button onclick="window.open('https://mpago.la/234okPL')">Comprar agora</button>
-    </div>
-
-    <div class="card">
-      <h3>Ken Smith IR</h3>
-      <p>Resposta hi-fi, ultra definição e sustain perfeito.</p>
-      <div class="price">R$ 69,00</div>
-      <button onclick="window.open('https://mpago.la/1WpXcYY')">Comprar agora</button>
-    </div>
-
-    <div class="card">
-      <h3>Mayones Jabba 5 IR</h3>
-      <p>Flagship: profundo, cristalino e profissional.</p>
-      <div class="price">R$ 89,00</div>
-      <b style="color:#ffcc00">LANÇAMENTO EM BREVE</b>
-    </div>
-
-  </div>
-</div>
-
-<section id="faq" style="max-width:1100px;margin:80px auto 60px;padding:40px;border-radius:20px;background:rgba(0,0,0,.7);box-shadow:0 0 30px rgba(255,120,0,.4)">
-<h2 style="color:#ff7a00">Dúvidas Frequentes</h2>
-
-<details><summary>📦 O que é um IR?</summary>
-<p>IR (Impulse Response) é uma captura real de instrumentos, profissional que transforma o timbre da sua pedaleira em nível de estúdio.</p></details>
-
-<details><summary>🎸 Em quais pedaleiras funciona?</summary>
-<p>Funciona em: Tank-B / Tank-B V2, Cuvave Cube Baby, Mooer GE, Valeton, Headrush, Hotone, Zoom, Line 6, Ampero e todas que aceitam IR WAV.</p></details>
-
-<details><summary>💻 Funciona em Windows e Mac?</summary>
-<p>Sim! Funciona em Windows, Mac e celulares Android/iOS.</p></details>
-
-<details><summary>📁 Qual o formato?</summary>
-<p>Arquivos WAV 24bit / 44.1kHz e 48kHz.</p></details>
-
-<details><summary>⚡ É plug & play?</summary>
-<p>Sim, é só importar o IR e tocar.</p></details>
-
+<details><summary>O que é um IR?</summary><p>É uma captura real de instrumentos e caixas que transforma seu timbre em nível de estúdio.</p></details>
+<details><summary>Funciona em quais pedaleiras?</summary><p>Mooer, Tank-B, Headrush, Ampero, Zoom, Line6, Valeton, Hotone e outras.</p></details>
+<details><summary>Formato?</summary><p>WAV 24bit 44.1kHz e 48kHz.</p></details>
+<details><summary>Entrega?</summary><p>Imediata após pagamento.</p></details>
 </section>
+
+<footer>© TB-BASS IR</footer>
+
+<div class="whats-wrap">
+  <div class="whats-balloon">
+    📲 Atendimento:<br>
+    <a href="https://wa.me/message/3QND546Y75L3M1" target="_blank">👤 Elbs</a><br>
+    <a href="https://wa.me/qr/LG6FOBKIZD5QC1" target="_blank">👤 Silas</a>
+  </div>
+
+  <a class="whats-btn" href="https://wa.me/message/3QND546Y75L3M1" target="_blank">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">
+  </a>
+</div>
+<script src="js/store.js"></script>
+</body>
+</html>
