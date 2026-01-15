@@ -14,31 +14,14 @@
   --text-main:#f5eaea;
 }
 
-/* BASE */
-html,body{
-  margin:0;
-  padding:0;
-  width:100%;
-  height:100%;
-  overscroll-behavior: none;
-}
+html,body{margin:0;padding:0;width:100%;height:100%;overscroll-behavior:none}
+body{font-family:Arial,sans-serif;color:var(--text-main);text-align:center;background:#000}
 
-body{
-  font-family:Arial,sans-serif;
-  color:var(--text-main);
-  text-align:center;
-  background:#000;
-}
-
-/* CAMADA DE FUNDO MOBILE SAFE */
+/* FUNDO MOBILE SAFE */
 #bg-layer{
   position:fixed;
   inset:0;
-  background:
-    linear-gradient(rgba(0,0,0,.65),rgba(0,0,0,.95)),
-    url("bg-hero.jpg") center/cover no-repeat;
-  transform:translateZ(0);
-  will-change:transform;
+  background:linear-gradient(rgba(0,0,0,.65),rgba(0,0,0,.95)),url("bg-hero.jpg") center/cover no-repeat;
   z-index:-1;
 }
 
@@ -46,56 +29,28 @@ body{
 h1{color:var(--accent);margin-top:36px}
 
 /* GRID */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-  gap:26px;
-  padding:48px 26px;
-}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:26px;padding:48px 26px}
 
 /* CARDS */
-.card{
-  background:var(--bg-card);
-  border-radius:22px;
-  padding:26px;
-  box-shadow:0 18px 40px rgba(0,0,0,.75);
-  transition:.35s ease;
-}
-.card:hover{transform:translateY(-6px) scale(1.02);}
+.card{background:var(--bg-card);border-radius:22px;padding:26px;box-shadow:0 18px 40px rgba(0,0,0,.75);transition:.35s ease}
+.card:hover{transform:translateY(-6px) scale(1.02)}
 
 /* PREÇO */
 .price{font-size:22px;margin:14px 0;color:var(--accent-soft)}
 
 /* BOTÃO */
-button{
-  border:none;border-radius:14px;padding:12px 26px;
-  background:linear-gradient(135deg,#ff9a3c,#ff7a00);
-  color:#2a0f16;font-weight:bold;cursor:pointer;
-}
+button{border:none;border-radius:14px;padding:12px 26px;background:linear-gradient(135deg,#ff9a3c,#ff7a00);color:#2a0f16;font-weight:bold;cursor:pointer}
 
 /* FAQ */
-#faq{
-  max-width:900px;margin:80px auto;padding:36px;border-radius:26px;
-  background:rgba(15,10,8,.92);
-}
+#faq{max-width:900px;margin:80px auto;padding:36px;border-radius:26px;background:rgba(15,10,8,.92)}
 
 /* WHATS */
-#silas-wrap,#elbs-wrap{
-  position:fixed;bottom:22px;display:flex;align-items:center;gap:10px;z-index:999;
-}
+#silas-wrap,#elbs-wrap{position:fixed;bottom:22px;display:flex;align-items:center;gap:10px;z-index:999}
 #silas-wrap{left:16px} #elbs-wrap{right:16px}
 .whats-balloon{background:#ff9a3c;color:#2a0f16;padding:8px 16px;border-radius:20px;font-weight:bold}
 .whats-btn{width:58px;height:58px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center}
 .whats-btn img{width:32px}
-
-/* FOOTER */
 footer{opacity:.7;margin:40px 0}
-
-/* MOBILE FIX */
-@media(max-width:768px){
-  body{overflow-x:hidden;}
-  #bg-layer{background-attachment:scroll;}
-}
 </style>
 </head>
 
@@ -124,16 +79,25 @@ footer{opacity:.7;margin:40px 0}
 
 <script src="js/store.js"></script>
 
-<!-- DESTRAVAR AUDIO MOBILE -->
+<!-- DESBLOQUEIO GLOBAL DE AUDIO MOBILE -->
 <script>
-window.addEventListener("touchstart", unlockAudio, {once:true});
-window.addEventListener("click", unlockAudio, {once:true});
-function unlockAudio(){
-  const a = document.createElement("audio");
-  a.src = "https://storage.googleapis.com/tb-bass-video/video.mp4";
-  a.muted = true;
-  a.play().then(()=>{a.pause();a.remove();});
+let audioUnlocked=false;
+function unlockAllAudio(){
+ if(audioUnlocked) return;
+ audioUnlocked=true;
+ const a=document.createElement("audio");
+ a.src="https://storage.googleapis.com/tb-bass-video/video.mp4";
+ a.muted=true;
+ a.play().then(()=>{
+   a.pause();
+   document.querySelectorAll("audio").forEach(el=>{
+     el.muted=false;
+     el.play().catch(()=>{});
+   });
+ });
 }
+window.addEventListener("touchstart", unlockAllAudio,{once:true});
+window.addEventListener("click", unlockAllAudio,{once:true});
 </script>
 
 </body>
