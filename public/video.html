@@ -44,10 +44,19 @@ margin:20px 0;
 <h1>O timbre de baixo que sua pedaleira nunca conseguiu tirar — até agora.</h1>
 <p>IRs capturados de baixos boutique reais. Plugou, virou outro instrumento.</p>
 
-<video autoplay muted playsinline loop preload="auto"
+<video id="heroVideo" autoplay muted playsinline loop preload="auto"
 style="width:100%;border-radius:20px;box-shadow:0 0 40px rgba(244,176,94,.4);pointer-events:none;">
   <source src="https://storage.googleapis.com/tb-bass-video/video.mp4" type="video/mp4">
 </video>
+
+<script>
+const v = document.getElementById("heroVideo");
+document.body.addEventListener("click", () => {
+  v.muted = false;
+  v.volume = 1;
+  v.play();
+},{ once:true });
+</script>
 
 <a class="btn" href="/index.html">🔥 QUERO MEU TIMBRE PROFISSIONAL AGORA</a>
 
