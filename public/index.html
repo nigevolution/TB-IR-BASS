@@ -13,7 +13,7 @@
   --text-main:#fff;
 }
 
-/* HERO CINEMATOGRÁFICO COM SUA IMAGEM */
+/* HERO CINEMATOGRÁFICO */
 body{
   margin:0;
   font-family:Arial,sans-serif;
@@ -83,8 +83,9 @@ button{
   border-radius:30px;
   backdrop-filter:blur(10px);
 }
+.faq{margin-bottom:18px}
 
-/* WHATSAPP */
+/* WHATS */
 #silas-wrap,#elbs-wrap{
   position:fixed;
   bottom:22px;
@@ -123,10 +124,12 @@ button{
   100%{transform:translateY(0)}
 }
 
-/* MOBILE WHATS FIX */
-@media(max-width:768px){
-  #silas-wrap{left:16px;bottom:20px}
-  #elbs-wrap{right:16px;bottom:96px}
+/* MOBILE FIX DEFINITIVO */
+@media (max-width: 768px){
+  #silas-wrap{left:14px;bottom:18px}
+  #elbs-wrap{right:14px;bottom:92px}
+  .whats-btn{width:56px;height:56px}
+  .whats-btn img{width:30px}
   .whats-balloon{display:none}
 }
 </style>
@@ -141,13 +144,47 @@ button{
 
 <section id="faq">
   <h2>Dúvidas Frequentes</h2>
-  <details><summary>O que é IR?</summary><p>Captura real de instrumentos e caixas.</p></details>
-  <details><summary>Em quais pedaleiras funciona?</summary><p>Todas que aceitam IR.</p></details>
+
+  <p style="max-width:700px;margin:0 auto 28px;opacity:.9;font-size:18px">
+    <b>Teve qualquer dificuldade com o timbre após a compra?</b><br>
+    Fique tranquilo. Nosso suporte pós-venda é real, humano e dedicado.
+    Se você sentir que o timbre não ficou como esperava, nós te ajudamos a ajustar,
+    configurar e extrair o máximo do seu instrumento — até ele soar do jeito certo.
+  </p>
+
+  <details class="faq">
+    <summary>O que é um IR?</summary>
+    <p>IR (Impulse Response) é uma captura real de instrumentos e caixas que transforma o timbre da sua pedaleira.</p>
+  </details>
+
+  <details class="faq">
+    <summary>Em quais pedaleiras funciona?</summary>
+    <p>Mooer, Valeton, Hotone, HeadRush, Zoom, Line6, Ampero, Tank-B e similares.</p>
+  </details>
+
+  <details class="faq">
+    <summary>Funciona em Windows, Mac e celular?</summary>
+    <p>Sim. Windows, macOS, Android e iOS.</p>
+  </details>
+
+  <details class="faq">
+    <summary>Formato dos arquivos</summary>
+    <p>WAV 24 bits • 44.1 kHz e 48 kHz.</p>
+  </details>
+
+  <details class="faq">
+    <summary>É só baixar e usar?</summary>
+    <p>Sim. Basta importar o IR na sua pedaleira e tocar. É 100% plug & play.</p>
+  </details>
+
+  <details class="faq">
+    <summary>Recebo atualizações?</summary>
+    <p>Sim. Clientes recebem melhorias e atualizações futuras sem custo adicional.</p>
+  </details>
 </section>
 
 <footer>© TB-BASS IR</footer>
 
-<!-- WHATS -->
 <div id="silas-wrap">
   <div class="whats-balloon">Dúvidas? Fale com Silas</div>
   <a class="whats-btn" href="https://wa.me/qr/LG6FOBKIZD5QC1" target="_blank">
