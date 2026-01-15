@@ -1,4 +1,3 @@
-/* ================== PRODUTOS ================== */
 const produtos = [
   {
     nome: "Bass Mods IR",
@@ -72,58 +71,97 @@ const produtos = [
     nome: "Ken Smith IR",
     preco: 69,
     link: "https://pay.cakto.com.br/zy8esjf_719715",
-    desc: "Resposta hi-fi e ultra definição.",
+    desc: "Resposta hi-fi, ultra definição.",
     audio: "/audio/ken-smith.mp3"
   }
 ];
 
 const grid = document.getElementById("produtos");
 
-/* ================== ÁUDIO ================== */
-function stopAllAudios(){
-  document.querySelectorAll("audio").forEach(a=>{
+/* ===== AUDIO ===== */
+function stopAllAudios() {
+  document.querySelectorAll("audio").forEach(a => {
     a.pause();
-    a.currentTime=0;
+    a.currentTime = 0;
   });
 }
 
-/* ================== RENDER ================== */
-produtos.forEach(p=>{
-  const card=document.createElement("div");
-  card.className="card";
-  let html=`<h3>${p.nome}</h3><p>${p.desc}</p>`;
+/* ===== RENDER ===== */
+produtos.forEach(p => {
+  const card = document.createElement("div");
+  card.className = "card";
+  let html = `<h3>${p.nome}</h3><p>${p.desc}</p>`;
 
-  if(p.audio){
-    html+=`
-      <audio preload="none" ontimeupdate="if(this.currentTime>=30){this.pause();this.currentTime=0}">
-        <source src="${p.audio}">
+  if (p.audio) {
+    html += `
+      <audio preload="metadata">
+        <source src="${p.audio}" type="audio/mpeg">
       </audio>
-      <button onclick="stopAllAudios();this.previousElementSibling.play()">▶ Preview 30s</button>
+      <button onclick="
+        stopAllAudios();
+        const a = this.previousElementSibling;
+        a.currentTime=0; a.play();
+        this.classList.add('playing');
+      ">▶ Preview 30s</button>
     `;
   }
 
-  if(p.release){
-    html+=`<div class="countdown" data-date="${p.release}">⏳ carregando...</div>`;
+  if (p.release) {
+    html += `<div class="countdown" data-date="${p.release}" data-link="${p.link}" data-price="${p.preco}">⏳ 00d 00h 00m 00s</div>`;
   }
 
-  if(p.preco && !p.release){
-    html+=`<div class="price">R$ ${p.preco.toFixed(2).replace(".",",")}</div>
-    <button onclick="window.open('${p.link}')">Comprar agora</button>`;
+  if (p.link && !p.release) {
+    html += `<button onclick="window.open('${p.link}')">Comprar agora</button>
+             <div class="price">R$ ${p.preco.toFixed(2).replace(".",",")}</div>`;
   }
 
-  card.innerHTML=html;
+  if (p.status) html += `<div class="status">${p.status}</div>`;
+
+  card.innerHTML = html;
   grid.appendChild(card);
 });
 
-/* ================== CRONÔMETRO ================== */
-setInterval(()=>{
+/* ===== COUNTDOWN ===== */
+function startCountdown(){
   document.querySelectorAll(".countdown").forEach(el=>{
-    const diff=new Date(el.dataset.date)-Date.now();
-    if(diff<=0){el.innerHTML="🔥 DISPONÍVEL";return;}
-    const d=Math.floor(diff/86400000);
-    const h=Math.floor(diff/3600000)%24;
-    const m=Math.floor(diff/60000)%60;
-    const s=Math.floor(diff/1000)%60;
-    el.innerHTML=`⏳ ${d}d ${h}h ${m}m ${s}s`;
+    const t=new Date(el.dataset.date).getTime();
+    const i=setInterval(()=>{
+      const d=t-Date.now();
+      if(d<=0){
+        el.outerHTML=`<button onclick="window.open('${el.dataset.link}')">Comprar agora</button>
+                      <div class="price">R$ ${Number(el.dataset.price).toFixed(2).replace(".",",")}</div>`;
+        clearInterval(i);
+      } else {
+        const dd=Math.floor(d/86400000),
+              h=Math.floor(d/3600000)%24,
+              m=Math.floor(d/60000)%60,
+              s=Math.floor(d/1000)%60;
+        el.innerHTML=`⏳ ${dd}d ${h}h ${m}m ${s}s`;
+      }
+    },1000);
   });
-},1000);
+}
+startCountdown();
+
+/* ===== HIGHLIGHT VISUAL ===== */
+const css = document.createElement("style");
+css.innerHTML = `
+.card{position:relative}
+.card::after{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  border-radius:inherit;
+  background:linear-gradient(120deg,#ff9a3c,#ff6a00,#ff9a3c);
+  opacity:.18;
+  filter:blur(18px);
+  animation:pulse 3s infinite;
+  pointer-events:none;
+}
+@keyframes pulse{
+  0%,100%{opacity:.15}
+  50%{opacity:.35}
+}
+button.playing{box-shadow:0 0 25px #ff9a3c}
+`;
+document.head.appendChild(css);
