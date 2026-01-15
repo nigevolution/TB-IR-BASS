@@ -17,45 +17,45 @@
 html,body{margin:0;padding:0;width:100%;height:100%;overscroll-behavior:none}
 body{font-family:Arial,sans-serif;color:var(--text-main);text-align:center;background:#000}
 
-/* FUNDO MOBILE SAFE */
 #bg-layer{
-  position:fixed;
-  inset:0;
+  position:fixed;inset:0;
   background:linear-gradient(rgba(0,0,0,.65),rgba(0,0,0,.95)),url("bg-hero.jpg") center/cover no-repeat;
   z-index:-1;
 }
 
-/* TÍTULO */
 h1{color:var(--accent);margin-top:36px}
 
-/* GRID */
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:26px;padding:48px 26px}
 
-/* CARDS */
-.card{background:var(--bg-card);border-radius:22px;padding:26px;box-shadow:0 18px 40px rgba(0,0,0,.75);transition:.35s ease}
+.card{background:var(--bg-card);border-radius:22px;padding:26px;box-shadow:0 18px 40px rgba(0,0,0,.75);transition:.35s}
 .card:hover{transform:translateY(-6px) scale(1.02)}
 
-/* PREÇO */
 .price{font-size:22px;margin:14px 0;color:var(--accent-soft)}
 
-/* BOTÃO */
 button{border:none;border-radius:14px;padding:12px 26px;background:linear-gradient(135deg,#ff9a3c,#ff7a00);color:#2a0f16;font-weight:bold;cursor:pointer}
 
-/* FAQ */
-#faq{max-width:900px;margin:80px auto;padding:36px;border-radius:26px;background:rgba(15,10,8,.92)}
+/* PREVIEW ANIMADO */
+.preview-btn{position:relative;overflow:hidden}
+.preview-btn::after{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(circle,rgba(255,154,60,.45),transparent 60%);
+  opacity:0;animation:pulseGlow 2s infinite;pointer-events:none
+}
+.preview-btn.playing{box-shadow:0 0 35px rgba(255,154,60,.85)}
+.preview-btn.playing::after{opacity:1}
 
-/* WHATS */
-#silas-wrap,#elbs-wrap{position:fixed;bottom:22px;display:flex;align-items:center;gap:10px;z-index:999}
-#silas-wrap{left:16px} #elbs-wrap{right:16px}
-.whats-balloon{background:#ff9a3c;color:#2a0f16;padding:8px 16px;border-radius:20px;font-weight:bold}
-.whats-btn{width:58px;height:58px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center}
-.whats-btn img{width:32px}
+@keyframes pulseGlow{
+  0%{transform:scale(.8);opacity:.6}
+  70%{transform:scale(1.6);opacity:0}
+  100%{opacity:0}
+}
+
+#faq{max-width:900px;margin:80px auto;padding:36px;border-radius:26px;background:rgba(15,10,8,.92)}
 footer{opacity:.7;margin:40px 0}
 </style>
 </head>
 
 <body>
-
 <div id="bg-layer"></div>
 
 <h1>TB-BASS IR Store</h1>
@@ -63,42 +63,8 @@ footer{opacity:.7;margin:40px 0}
 
 <div id="produtos" class="grid"></div>
 
-<section id="faq">
-<h2>Dúvidas Frequentes</h2>
-<details class="faq"><summary>O que é um IR?</summary><p>É uma captura real de instrumentos e caixas que transforma o timbre do seu baixo em nível de estúdio.</p></details>
-<details class="faq"><summary>Em quais pedaleiras funciona?</summary><p>Tank-B, Mooer, Valeton, HeadRush, Hotone, Zoom, Line6, Ampero e outras.</p></details>
-<details class="faq"><summary>Funciona em Windows e Mac?</summary><p>Sim. Windows, Mac, Android e iOS.</p></details>
-<details class="faq"><summary>Formato?</summary><p>WAV 24bit • 44.1kHz e 48kHz.</p></details>
-<details class="faq"><summary>É plug & play?</summary><p>Sim, basta importar e tocar.</p></details>
-</section>
-
-<footer>© TB-BASS IR • Cuiabá-MT</footer>
-
-<div id="silas-wrap"><div class="whats-balloon">Silas</div><a class="whats-btn" href="https://wa.me/qr/LG6FOBKIZD5QC1" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"></a></div>
-<div id="elbs-wrap"><div class="whats-balloon">Elbs</div><a class="whats-btn" href="https://wa.me/message/3QND546Y75L3M1" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"></a></div>
+<footer>© TB-BASS IR</footer>
 
 <script src="js/store.js"></script>
-
-<!-- DESBLOQUEIO GLOBAL DE AUDIO MOBILE -->
-<script>
-let audioUnlocked=false;
-function unlockAllAudio(){
- if(audioUnlocked) return;
- audioUnlocked=true;
- const a=document.createElement("audio");
- a.src="https://storage.googleapis.com/tb-bass-video/video.mp4";
- a.muted=true;
- a.play().then(()=>{
-   a.pause();
-   document.querySelectorAll("audio").forEach(el=>{
-     el.muted=false;
-     el.play().catch(()=>{});
-   });
- });
-}
-window.addEventListener("touchstart", unlockAllAudio,{once:true});
-window.addEventListener("click", unlockAllAudio,{once:true});
-</script>
-
 </body>
 </html>
