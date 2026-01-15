@@ -13,125 +13,109 @@
   --text-main:#fff;
 }
 
-/* HERO CINEMATOGRÁFICO */
+/* FUNDO CINEMA */
 body{
   margin:0;
   font-family:Arial,sans-serif;
   color:var(--text-main);
   text-align:center;
   background:
-    radial-gradient(ellipse at center,rgba(0,0,0,.35),rgba(0,0,0,.92)),
+    radial-gradient(circle at center,rgba(0,0,0,.35),rgba(0,0,0,.95)),
     url("bg-hero.jpg") center/cover no-repeat fixed;
 }
-
-/* VINHETA */
-body::after{
-  content:"";
-  position:fixed;
-  inset:0;
-  background:radial-gradient(circle at center,transparent 40%,rgba(0,0,0,.85));
-  pointer-events:none;
-  z-index:-1;
+@media(max-width:768px){
+  body{ background-attachment:scroll }
 }
 
-/* TÍTULO */
-h1{color:var(--accent);margin-top:60px}
+h1{color:var(--accent);margin:60px 0 10px}
+p{opacity:.85}
 
-/* GRID */
 .grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
   gap:30px;
-  padding:80px;
+  padding:60px 40px;
 }
 
-/* CARDS */
 .card{
   background:rgba(15,10,8,.85);
   backdrop-filter:blur(8px);
   border-radius:24px;
   padding:28px;
   box-shadow:0 25px 70px rgba(0,0,0,.9);
-  transition:.35s ease;
+  transition:.35s;
 }
-.card:hover{
-  transform:translateY(-12px) scale(1.03);
-  box-shadow:0 40px 100px rgba(0,0,0,1);
-}
+.card:hover{transform:translateY(-10px) scale(1.03)}
 
-/* PREÇO */
-.price{color:var(--accent-soft);font-size:22px}
+.price{color:var(--accent-soft);font-size:22px;margin:10px 0}
 
-/* BOTÕES */
 button{
-  width:100%;
-  margin-top:12px;
   border:none;
-  border-radius:20px;
-  padding:14px 28px;
+  border-radius:18px;
+  padding:14px;
+  width:100%;
   background:linear-gradient(135deg,#ff9a3c,#ff7a00);
+  color:#2a0f16;
   font-weight:bold;
-  box-shadow:0 0 30px rgba(255,154,60,.7);
+  margin-top:10px;
+  cursor:pointer;
+  box-shadow:0 0 30px rgba(255,154,60,.6);
+}
+
+.preview-btn.playing{
+  background:linear-gradient(135deg,#fff,#ff9a3c);
+  animation:pulse 1s infinite;
+}
+
+@keyframes pulse{
+  0%{box-shadow:0 0 0 rgba(255,154,60,.9)}
+  50%{box-shadow:0 0 25px rgba(255,154,60,.9)}
+  100%{box-shadow:0 0 0 rgba(255,154,60,.9)}
 }
 
 /* FAQ */
 #faq{
   max-width:900px;
   margin:120px auto;
-  padding:50px;
-  background:rgba(0,0,0,.7);
-  border-radius:30px;
-  backdrop-filter:blur(10px);
+  padding:40px;
+  background:rgba(0,0,0,.75);
+  border-radius:28px;
 }
-.faq{margin-bottom:18px}
+.faq{margin-bottom:14px}
+.faq summary{cursor:pointer;font-weight:bold}
 
-/* WHATS */
-#silas-wrap,#elbs-wrap{
+/* WHATS FLOAT */
+#whats-float{
   position:fixed;
+  right:22px;
   bottom:22px;
-  display:flex;
-  align-items:center;
-  gap:10px;
-  z-index:9999;
+  z-index:99999;
 }
-#silas-wrap{left:22px}
-#elbs-wrap{right:22px}
-
-.whats-balloon{
-  background:linear-gradient(135deg,#ff9a3c,#ff7a00);
-  padding:8px 16px;
-  border-radius:20px;
-  font-size:13px;
-  font-weight:bold;
-  color:#2a0f16;
+.whats-menu{
+  position:absolute;
+  right:70px;
+  bottom:0;
+  background:rgba(0,0,0,.85);
+  border-radius:18px;
+  padding:12px;
+  display:none;
 }
-
+.whats-menu a{
+  display:block;
+  color:#fff;
+  padding:8px 12px;
+  text-decoration:none;
+}
+#whats-float:hover .whats-menu{display:block}
 .whats-btn{
-  width:62px;
-  height:62px;
+  width:60px;height:60px;border-radius:50%;
   background:#25D366;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  animation:zapFloat 1.5s infinite;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 20px #25D366;
 }
-.whats-btn img{width:34px}
+.whats-btn img{width:32px}
 
-@keyframes zapFloat{
-  0%{transform:translateY(0)}
-  50%{transform:translateY(-6px)}
-  100%{transform:translateY(0)}
-}
-
-/* MOBILE FIX DEFINITIVO */
-@media (max-width: 768px){
-  #silas-wrap{left:14px;bottom:18px}
-  #elbs-wrap{right:14px;bottom:92px}
-  .whats-btn{width:56px;height:56px}
-  .whats-btn img{width:30px}
-  .whats-balloon{display:none}
-}
+footer{opacity:.6;margin:60px 0}
 </style>
 </head>
 
@@ -143,60 +127,40 @@ button{
 <div id="produtos" class="grid"></div>
 
 <section id="faq">
-  <h2>Dúvidas Frequentes</h2>
+<h2>Dúvidas Frequentes</h2>
 
-  <p style="max-width:700px;margin:0 auto 28px;opacity:.9;font-size:18px">
-    <b>Teve qualquer dificuldade com o timbre após a compra?</b><br>
-    Fique tranquilo. Nosso suporte pós-venda é real, humano e dedicado.
-    Se você sentir que o timbre não ficou como esperava, nós te ajudamos a ajustar,
-    configurar e extrair o máximo do seu instrumento — até ele soar do jeito certo.
-  </p>
+<details class="faq">
+<summary>Tenho suporte pós-venda?</summary>
+<p>Sim! Se após a compra você tiver qualquer dificuldade com o timbre, instalação ou configuração, nosso suporte técnico te acompanha até o som ficar perfeito.</p>
+</details>
 
-  <details class="faq">
-    <summary>O que é um IR?</summary>
-    <p>IR (Impulse Response) é uma captura real de instrumentos e caixas que transforma o timbre da sua pedaleira.</p>
-  </details>
+<details class="faq">
+<summary>O que é um IR?</summary>
+<p>É uma captura real de instrumentos e caixas boutique que transforma o timbre do seu baixo em nível de estúdio.</p>
+</details>
 
-  <details class="faq">
-    <summary>Em quais pedaleiras funciona?</summary>
-    <p>Mooer, Valeton, Hotone, HeadRush, Zoom, Line6, Ampero, Tank-B e similares.</p>
-  </details>
+<details class="faq">
+<summary>Funciona em quais pedaleiras?</summary>
+<p>Tank-B, Mooer, Valeton, HeadRush, Hotone, Zoom, Line6, Ampero e qualquer pedaleira que aceite IR.</p>
+</details>
 
-  <details class="faq">
-    <summary>Funciona em Windows, Mac e celular?</summary>
-    <p>Sim. Windows, macOS, Android e iOS.</p>
-  </details>
-
-  <details class="faq">
-    <summary>Formato dos arquivos</summary>
-    <p>WAV 24 bits • 44.1 kHz e 48 kHz.</p>
-  </details>
-
-  <details class="faq">
-    <summary>É só baixar e usar?</summary>
-    <p>Sim. Basta importar o IR na sua pedaleira e tocar. É 100% plug & play.</p>
-  </details>
-
-  <details class="faq">
-    <summary>Recebo atualizações?</summary>
-    <p>Sim. Clientes recebem melhorias e atualizações futuras sem custo adicional.</p>
-  </details>
+<details class="faq">
+<summary>Formato dos arquivos</summary>
+<p>WAV 24bit • 44.1kHz e 48kHz.</p>
+</details>
 </section>
 
 <footer>© TB-BASS IR</footer>
 
-<div id="silas-wrap">
-  <div class="whats-balloon">Dúvidas? Fale com Silas</div>
-  <a class="whats-btn" href="https://wa.me/qr/LG6FOBKIZD5QC1" target="_blank">
+<!-- WHATS -->
+<div id="whats-float">
+  <div class="whats-menu">
+    <a href="https://wa.me/qr/LG6FOBKIZD5QC1" target="_blank">Silas</a>
+    <a href="https://wa.me/message/3QND546Y75L3M1" target="_blank">Elbs</a>
+  </div>
+  <div class="whats-btn">
     <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">
-  </a>
-</div>
-
-<div id="elbs-wrap">
-  <div class="whats-balloon">Dúvidas? Fale com Elbs</div>
-  <a class="whats-btn" href="https://wa.me/message/3QND546Y75L3M1" target="_blank">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">
-  </a>
+  </div>
 </div>
 
 <script src="js/store.js"></script>
