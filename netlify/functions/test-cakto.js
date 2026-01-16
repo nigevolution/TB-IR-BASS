@@ -6,7 +6,7 @@ async function getAccessToken() {
   const data = await res.json();
 
   if (!data.access_token) {
-    throw new Error("Não foi possível obter access_token");
+    throw new Error("Access token não retornado");
   }
 
   return data.access_token;
