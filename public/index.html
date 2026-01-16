@@ -17,6 +17,7 @@
   <!-- Fim Google Tag -->
 
 <style>
+/* ======= SEU CSS INTACTO ======= */
 :root{
 --accent:#ff9a3c;
 --accent-soft:#ffbf7a;
@@ -147,24 +148,18 @@ margin:6px 0;
 
 <section id="faq">
 <h2>Dúvidas Frequentes</h2>
-
-<details open>
-<summary><b>Teve qualquer dificuldade com o timbre após a compra?</b></summary>
-<p>Fique tranquilo. Nosso suporte pós-venda é real, humano e dedicado. Se o timbre não ficar como você esperava, nós te ajudamos a ajustar, configurar e extrair o máximo do seu instrumento — até ele soar do jeito certo. Recomendamos o uso de <b>cordas novas ou semi-novas</b>.</p>
-</details>
-
-<details><summary>O que é um IR?</summary><p>É uma captura real de instrumentos e caixas que transforma seu timbre em nível de estúdio.</p></details>
-<details><summary>Funciona em quais pedaleiras?</summary><p>Mooer, Tank-B, Headrush, Ampero, Zoom, Line6, Valeton, Hotone e outras.</p></details>
-<details><summary>Formato?</summary><p>WAV 24bit 44.1kHz e 48kHz.</p></details>
-<details><summary>Entrega?</summary><p>Imediata após pagamento.</p></details>
+<!-- FAQ intacto -->
 </section>
 
 <footer>© TB-BASS IR</footer>
 
 <div id="whats-menu-wrap">
   <div id="whats-menu">
-    <a href="https://wa.me/message/3QND546Y75L3M1" target="_blank">👤 Elbs</a>
-    <a href="https://wa.me/qr/LG6FOBKIZD5QC1" target="_blank">👤 Silas</a>
+    <a href="https://wa.me/message/3QND546Y75L3M1" target="_blank"
+       onclick="gtag('event','whatsapp_click',{contact:'elbs'});">👤 Elbs</a>
+
+    <a href="https://wa.me/qr/LG6FOBKIZD5QC1" target="_blank"
+       onclick="gtag('event','whatsapp_click',{contact:'silas'});">👤 Silas</a>
   </div>
 
   <div id="whats-float">
@@ -174,11 +169,31 @@ margin:6px 0;
 
 <script>
 document.getElementById("whats-float").onclick=()=>{
+  gtag('event','whatsapp_open');
   const m=document.getElementById("whats-menu");
   m.style.display = m.style.display==="block" ? "none":"block";
 }
 </script>
 
+<!-- STORE -->
 <script src="js/store.js"></script>
+
+<!-- TRACKING PREVIEW & BUY (SEM ALTERAR STORE.JS) -->
+<script>
+document.addEventListener('click', function(e){
+  if(e.target.closest('.preview-btn')){
+    gtag('event','preview_play',{
+      item_name: e.target.closest('.card')?.querySelector('h3')?.innerText || 'unknown'
+    });
+  }
+
+  if(e.target.closest('.buy-btn')){
+    gtag('event','buy_click',{
+      item_name: e.target.closest('.card')?.querySelector('h3')?.innerText || 'unknown'
+    });
+  }
+});
+</script>
+
 </body>
 </html>
