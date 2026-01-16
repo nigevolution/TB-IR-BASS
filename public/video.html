@@ -5,6 +5,16 @@
 <title>TB Bass IR – Timbre Profissional</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<!-- Google Tag (GA4) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FNRVG1V5MC"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-FNRVG1V5MC');
+</script>
+<!-- Fim Google Tag -->
+
 <style>
 body{
 margin:0;
@@ -69,11 +79,41 @@ cursor:pointer;">
 <script>
 const v = document.getElementById("heroVideo");
 const overlay = document.getElementById("tapToSound");
+
+let sent50 = false;
+let sent100 = false;
+
 overlay.addEventListener("click", () => {
   v.muted = false;
   v.volume = 1;
   v.play();
   overlay.style.display="none";
+
+  // EVENTO: VIDEO START
+  gtag('event', 'video_start', {
+    video_title: 'TB Bass IR Hero Video',
+    video_url: window.location.href
+  });
+});
+
+v.addEventListener("timeupdate", () => {
+  if (v.duration) {
+    const percent = (v.currentTime / v.duration) * 100;
+
+    if (percent >= 50 && !sent50) {
+      sent50 = true;
+      gtag('event', 'video_50', {
+        video_title: 'TB Bass IR Hero Video'
+      });
+    }
+
+    if (percent >= 95 && !sent100) {
+      sent100 = true;
+      gtag('event', 'video_complete', {
+        video_title: 'TB Bass IR Hero Video'
+      });
+    }
+  }
 });
 </script>
 
