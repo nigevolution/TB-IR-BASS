@@ -1,5 +1,17 @@
 export async function handler() {
   try {
+    // Verificação defensiva das variáveis
+    if (!process.env.CAKTO_CLIENT_ID || !process.env.CAKTO_CLIENT_SECRET) {
+      return {
+        statusCode: 500,
+        body: JSON.stringify({
+          error: "Variáveis de ambiente não configuradas",
+          hasClientId: !!process.env.CAKTO_CLIENT_ID,
+          hasClientSecret: !!process.env.CAKTO_CLIENT_SECRET
+        })
+      };
+    }
+
     const params = new URLSearchParams();
     params.append("grant_type", "client_credentials");
     params.append("client_id", process.env.CAKTO_CLIENT_ID);
@@ -15,12 +27,11 @@ export async function handler() {
 
     const text = await response.text();
 
-    // 🔎 Debug defensivo
     if (!response.ok) {
       return {
         statusCode: response.status,
         body: JSON.stringify({
-          error: "Erro ao obter token",
+          error: "Erro ao obter token da Cakto",
           response: text
         })
       };
