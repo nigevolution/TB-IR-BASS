@@ -12,13 +12,13 @@ const produtos = [
   {
     nome:"Fodera IR",
     preco:79,
-    link:null,
+    link:"https://pay.cakto.com.br/8pw23r3_733800",
     desc:"Referência absoluta em boutique bass. Grave profundo, médios tridimensionais e definição de estúdio.", audio:"/audio/fodera.mp3"
   },
   {
     nome:"TRB JP2 IR",
     preco:59,
-    link:null,
+    link:"https://pay.cakto.com.br/ebr74qa_733818",
     desc:"Assinatura japonesa moderna. Grave firme, ataque rápido e equilíbrio perfeito para palco e estúdio.", audio:"/audio/trb-jp2.mp3"
   },
 
