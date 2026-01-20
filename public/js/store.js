@@ -7,12 +7,26 @@ const produtos = [
   { nome:"Sadowsky Metroline IR", preco:39, link:"https://pay.cakto.com.br/yaueq45_665688", desc:"Timbre clássico, suave e musical.", audio:"/audio/sadowsky-metroline.mp3" },
   { nome:"Lakland SS44-75 IR", preco:59, link:"https://pay.cakto.com.br/wgonjnx_723722", desc:"Boutique americano com punch absurdo, slap cristalino e médios vivos.", audio:"/audio/lakland-sl-44-75.mp3", release:"2026-01-13T19:00:00" },
   { nome:"Sadowsky NYC IR", preco:59, link:"https://pay.cakto.com.br/EXEMPLO", desc:"Flagship nova-iorquino com graves profundos e brilho cristalino.", audio:"/audio/sadowsky-nyc.mp3", release:"2026-01-20T12:00:00" },
+
+  /* === NOVOS TIMBRES (APENAS ISSO FOI ADICIONADO) === */
+  {
+    nome:"Fodera IR",
+    preco:79,
+    link:null,
+    desc:"Referência absoluta em boutique bass. Grave profundo, médios tridimensionais e definição de estúdio."
+  },
+  {
+    nome:"TRB JP2 IR",
+    preco:59,
+    link:null,
+    desc:"Assinatura japonesa moderna. Grave firme, ataque rápido e equilíbrio perfeito para palco e estúdio."
+  },
+
   { nome:"Mayones Jabba 5 IR", preco:null, link:null, desc:"Flagship europeu com profundidade e definição profissional.", release:"2026-01-23T19:00:00" },
   { nome:"MTD 535-24 IR", preco:null, link:null, desc:"Boutique luthier com dinâmica extrema e médios orgânicos." },
   { nome:"Warwick Corvette IR", preco:69, link:"https://pay.cakto.com.br/3frq3qm_719724", desc:"Médio encorpado e ataque metálico.", audio:"/audio/warwick-corvette.mp3" },
   { nome:"Ken Smith IR", preco:69, link:"https://pay.cakto.com.br/zy8esjf_719715", desc:"Resposta hi-fi, ultra definição e sustain perfeito.", audio:"/audio/ken-smith.mp3" }
 ];
-
 const grid = document.getElementById("produtos");
 
 /* ================== ÁUDIO ================== */
