@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>TB Bass IR – Timbre Profissional</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Google Tag (GA4) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FNRVG1V5MC"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-FNRVG1V5MC');
+</script>
+<!-- Fim Google Tag -->
+
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1147738740851849');
+fbq('track', 'PageView');
+fbq('track', 'ViewContent');
+</script>
+<noscript>
+<img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1147738740851849&ev=PageView&noscript=1"/>
+</noscript>
+<!-- End Meta Pixel Code -->
+
+<style>
+body{
+margin:0;
+font-family:Arial,Helvetica,sans-serif;
+background:#0b0606;
+color:#fff;
+text-align:center;
+}
+.container{max-width:900px;margin:auto;padding:40px 20px;}
+h1{font-size:36px;color:#f4b05e;}
+p{font-size:18px;opacity:.85}
+.btn{
+display:inline-block;
+margin:30px 0;
+padding:18px 35px;
+background:linear-gradient(135deg,#f4b05e,#ff8c2a);
+color:#000;
+border-radius:40px;
+font-size:20px;
+font-weight:bold;
+text-decoration:none;
+box-shadow:0 0 20px rgba(244,176,94,.6);
+}
+.review{
+background:rgba(255,255,255,.05);
+border:1px solid rgba(255,255,255,.08);
+border-radius:20px;
+padding:20px;
+margin:20px 0;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<h1>O timbre de baixo que sua pedaleira nunca conseguiu tirar — até agora.</h1>
+<p>IRs capturados de baixos boutique reais. Plugou, virou outro instrumento.</p>
+
+<!-- VIDEO -->
+<div id="videoWrap" style="position:relative;">
+<video id="heroVideo" autoplay muted playsinline loop preload="auto"
+style="width:100%;border-radius:20px;box-shadow:0 0 40px rgba(244,176,94,.4);">
+  <source src="https://storage.googleapis.com/tb-bass-video/timbre%20trb%20jp2.MP4" type="video/mp4">
+</video>
+
+<div id="tapToSound" style="
+position:absolute;
+top:0;left:0;width:100%;height:100%;
+display:flex;
+align-items:center;
+justify-content:center;
+background:linear-gradient(transparent,rgba(0,0,0,.5));
+font-size:22px;
+font-weight:bold;
+color:#f4b05e;
+cursor:pointer;">
+▶ TOQUE PARA OUVIR O SOM
+</div>
+</div>
+
+<script>
+const v = document.getElementById("heroVideo");
+const overlay = document.getElementById("tapToSound");
+
+let sent50 = false;
+let sent100 = false;
+
+overlay.addEventListener("click", () => {
+  v.muted = false;
+  v.volume = 1;
+  v.play();
+  overlay.style.display="none";
+
+  gtag('event', 'video_start', {
+    video_title: 'TB Bass IR Hero Video',
+    video_url: window.location.href
+  });
+});
+
+v.addEventListener("timeupdate", () => {
+  if (v.duration) {
+    const percent = (v.currentTime / v.duration) * 100;
+
+    if (percent >= 50 && !sent50) {
+      sent50 = true;
+      gtag('event', 'video_50', {
+        video_title: 'TB Bass IR Hero Video'
+      });
+    }
+
+    if (percent >= 95 && !sent100) {
+      sent100 = true;
+      gtag('event', 'video_complete', {
+        video_title: 'TB Bass IR Hero Video'
+      });
+    }
+  }
+});
+</script>
+
+<a class="btn" href="/index.html">🔥 QUERO MEU TIMBRE PROFISSIONAL AGORA</a>
+
+<div class="review">
+⭐⭐⭐⭐⭐<br>
+“Eu já testei IR de tudo quanto é marca…  
+Mas esses aqui mudaram meu baixo de verdade.  
+Grave ficou firme, definido, sem embolar.  
+Hoje eu uso em TODOS os shows.”  
+<br><b>— Rafael • Baixista Profissional</b>
+</div>
+
+<div class="review">
+⭐⭐⭐⭐⭐<br>
+“Gravei um EP inteiro usando esses IRs.  
+Quando ouvi a mix pronta eu não acreditei.  
+Meu produtor perguntou o que eu tinha mudado no instrumento.”  
+<br><b>— Lucas • Estúdio Home / Ao Vivo</b>
+</div>
+
+<div class="review">
+⭐⭐⭐⭐⭐<br>
+“O slap ficou limpo, estalado e com peso.  
+O pizzicato ficou cheio sem embolar.  
+Nunca mais consegui tocar sem esses IRs.”  
+<br><b>— Bruno • Worship / Pop / Rock</b>
+</div>
+
+<a class="btn" href="/index.html">VER OS IRs DISPONÍVEIS</a>
+
+</div>
+</body>
+</html>
