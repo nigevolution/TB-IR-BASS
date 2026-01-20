@@ -13,13 +13,13 @@ const produtos = [
     nome:"Fodera IR",
     preco:79,
     link:null,
-    desc:"Referência absoluta em boutique bass. Grave profundo, médios tridimensionais e definição de estúdio."
+    desc:"Referência absoluta em boutique bass. Grave profundo, médios tridimensionais e definição de estúdio.", audio:"/audio/fodera.mp3"
   },
   {
     nome:"TRB JP2 IR",
     preco:59,
     link:null,
-    desc:"Assinatura japonesa moderna. Grave firme, ataque rápido e equilíbrio perfeito para palco e estúdio."
+    desc:"Assinatura japonesa moderna. Grave firme, ataque rápido e equilíbrio perfeito para palco e estúdio.", audio:"/audio/trb-jp2.mp3"
   },
 
   { nome:"Mayones Jabba 5 IR", preco:null, link:null, desc:"Flagship europeu com profundidade e definição profissional.", release:"2026-01-23T19:00:00" },
