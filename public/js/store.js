@@ -24,7 +24,7 @@ const produtos = [
 
   { nome:"Mayones Jabba 5 IR", preco:null, link:null, desc:"Flagship europeu com profundidade e definição profissional.", release:"2026-01-23T19:00:00" },
    
-  nome:"MTD 535-24 IR",
+ { nome:"MTD 535-24 IR",
   preco:89,
   link:"https://pay.cakto.com.br/3bgf2sv_735157",
   desc:"Boutique luthier com dinâmica extrema e médios orgânicos.",
