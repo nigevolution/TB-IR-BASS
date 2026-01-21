@@ -22,7 +22,7 @@ const produtos = [
     desc:"Assinatura japonesa moderna. Grave firme, ataque rápido e equilíbrio perfeito para palco e estúdio.", audio:"/audio/trb-jp2.mp3"
   },
 
-  { nome:"Mayones Jabba 5 IR", preco:null, link:null, desc:"Flagship europeu com profundidade e definição profissional.", release:"2026-01-23T19:00:00" },
+  { nome:"Mayones Jabba 5 IR", preco:89, link:"https://pay.cakto.com.br/388nbge_735148", desc:"Flagship europeu com profundidade e definição profissional.", release:"2026-01-23T19:00:00" },
    
  { nome:"MTD 535-24 IR",
   preco:89,
