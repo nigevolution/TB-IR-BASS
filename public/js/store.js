@@ -28,7 +28,7 @@ const produtos = [
   preco:89,
   link:"https://pay.cakto.com.br/3bgf2sv_735157",
   desc:"Boutique luthier com dinâmica extrema e médios orgânicos.", audio:"/audio/mtd-535-24",
-  release:"2026-01-30T19:00:00"
+  release:"2026-01-23T19:00:00"
 },
   { nome:"Warwick Corvette IR", preco:69, link:"https://pay.cakto.com.br/3frq3qm_719724", desc:"Médio encorpado e ataque metálico.", audio:"/audio/warwick-corvette.mp3" },
   { nome:"Ken Smith IR", preco:69, link:"https://pay.cakto.com.br/zy8esjf_719715", desc:"Resposta hi-fi, ultra definição e sustain perfeito.", audio:"/audio/ken-smith.mp3" }
