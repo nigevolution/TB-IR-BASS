@@ -95,9 +95,14 @@ produtos.forEach(p=>{
   }
 
   /* LANÇAMENTO */
-  if(p.release){
-    html += `<div class="countdown" data-date="${p.release}" data-link="${p.link}" data-price="${p.preco}">⏳ 00d 00h 00m 00s</div>`;
-  }
+if(p.release){
+  html += `
+    <div class="status">LANÇAMENTO EM BREVE</div>
+    <div class="countdown" data-date="${p.release}" data-link="${p.link}" data-price="${p.preco}">
+      ⏳ 00d 00h 00m 00s
+    </div>
+  `;
+}
 
   card.innerHTML = html;
   grid.appendChild(card);
