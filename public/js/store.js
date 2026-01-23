@@ -16,6 +16,14 @@ const produtos = [
     desc:"Referência absoluta em boutique bass. Grave profundo, médios tridimensionais e definição de estúdio.", audio:"/audio/fodera.mp3"
   },
   {
+  nome:"Swing Guitars IR",
+  preco:79,
+  link:null,
+  desc:"Timbre vintage com personalidade. Graves macios, médios encorpados e dinâmica musical perfeita para grooves, jazz, soul e bases orgânicas.",
+  release:"2026-01-27T19:00:00",
+  status:"LANÇAMENTO EM BREVE"
+},
+  {
     nome:"TRB JP2 IR",
     preco:59,
     link:"https://pay.cakto.com.br/ebr74qa_733818",
