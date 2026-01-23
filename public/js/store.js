@@ -42,14 +42,6 @@ const produtos = [
   { nome:"Warwick Corvette IR", preco:69, link:"https://pay.cakto.com.br/3frq3qm_719724", desc:"Médio encorpado e ataque metálico.", audio:"/audio/warwick-corvette.mp3" },
   { nome:"Ken Smith IR", preco:69, link:"https://pay.cakto.com.br/zy8esjf_719715", desc:"Resposta hi-fi, ultra definição e sustain perfeito.", audio:"/audio/ken-smith.mp3" }
 ];
-{
-  nome:"Swing Guitars IR",
-  preco:79,
-  link:null,
-  desc:"Timbre vintage com personalidade. Graves macios, médios encorpados e dinâmica musical perfeita para grooves, jazz, soul e bases orgânicas.",
-  release:"2026-01-27T19:00:00",
-  status:"LANÇAMENTO EM BREVE"
-},
 const grid = document.getElementById("produtos");
 
 /* ================== ÁUDIO ================== */
