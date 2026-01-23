@@ -21,7 +21,7 @@ const produtos = [
   link:null,
   desc:"Timbre vintage com personalidade. Graves macios, médios encorpados e dinâmica musical perfeita para grooves, jazz, soul e bases orgânicas.",
   release:"2026-02-02T19:00:00",
-  status:"LANÇAMENTO EM BREVE"
+  status:"LANÇAMENTO"
 },
   {
     nome:"TRB JP2 IR",
@@ -70,9 +70,10 @@ produtos.forEach(p=>{
   card.className = "card";
 
   let html = `
-    <h3>${p.nome}</h3>
-    <p>${p.desc}</p>
-  `;
+  <h3>${p.nome}</h3>
+  <p>${p.desc}</p>
+  ${p.status ? `<div class="status">${p.status}</div>` : ``}
+`;
 
   /* PREVIEW */
   if(p.audio){
