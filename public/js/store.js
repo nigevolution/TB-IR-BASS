@@ -18,7 +18,7 @@ const produtos = [
   {
   nome:"Swing Guitars IR",
   preco:79,
-  link:null,
+  link:"https://pay.cakto.com.br/3ff2d5r_750130",
   desc:"Timbre vintage com personalidade. Graves macios, médios encorpados e dinâmica musical perfeita para grooves, jazz, soul e bases orgânicas.",
   release:"2026-02-02T19:00:00",
   status:"LANCAMENTO"
