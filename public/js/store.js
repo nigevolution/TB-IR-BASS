@@ -6,7 +6,7 @@ const produtos = [
   { nome:"Sadowsky M5 IR", preco:59, link:"https://pay.cakto.com.br/36243of_6", desc:"Grave cheio, médios polidos e definição premium.", audio:"/audio/sadowsky-m5.mp3" },
   { nome:"Sadowsky Metroline IR", preco:39, link:"https://pay.cakto.com.br/yaueq45_665688", desc:"Timbre clássico, suave e musical.", audio:"/audio/sadowsky-metroline.mp3" },
   { nome:"Lakland SS44-75 IR", preco:59, link:"https://pay.cakto.com.br/wgonjnx_723722", desc:"Boutique americano com punch absurdo, slap cristalino e médios vivos.", audio:"/audio/lakland-sl-44-75.mp3", release:"2026-01-13T19:00:00" },
-  { nome:"Sadowsky NYC IR", preco:59, link:"https://pay.cakto.com.br/EXEMPLO", desc:"Flagship nova-iorquino com graves profundos e brilho cristalino.", audio:"/audio/sadowsky-nyc.mp3", release:"2026-01-20T12:00:00" },
+  { nome:"Sadowsky NYC IR", preco:59, link:"https://pay.cakto.com.br/3k2ofxi_750123", desc:"Flagship nova-iorquino com graves profundos e brilho cristalino.", audio:"/audio/sadowsky-nyc.mp3", release:"2026-01-20T12:00:00" },
 
   /* === NOVOS TIMBRES (APENAS ISSO FOI ADICIONADO) === */
   {
