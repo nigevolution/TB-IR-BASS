@@ -176,17 +176,35 @@ function ensureVideoModal(){
     #videoModal{position:fixed;inset:0;display:none;z-index:999999}
     #videoModal.open{display:block}
     #videoModal .vm-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.72)}
+
+    /* DESKTOP / PC */
     #videoModal .vm-card{
       position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
-      width:min(920px,92vw);background:rgba(10,10,10,.92);
-      border-radius:18px;padding:14px;box-shadow:0 30px 90px rgba(0,0,0,.8)
+      width:min(920px,92vw);
+      max-height:90vh;
+      background:rgba(10,10,10,.92);
+      border-radius:18px;
+      padding:14px;
+      box-shadow:0 30px 90px rgba(0,0,0,.8);
+      overflow:hidden;
     }
+
     #videoModal .vm-close{
       position:absolute;right:10px;top:8px;border:none;cursor:pointer;
       width:38px;height:38px;border-radius:12px;background:rgba(255,255,255,.10);
-      color:#fff;font-size:18px
+      color:#fff;font-size:18px;z-index:2
     }
-    #videoModal .vm-video{width:100%;border-radius:14px;outline:none}
+
+    #videoModal .vm-video{
+      width:100%;
+      height:auto;
+      max-height:78vh;
+      object-fit:contain;
+      border-radius:14px;
+      outline:none;
+      background:#000;
+    }
+
     .video-btn{
       border:none;border-radius:18px;
       padding:14px 28px;
@@ -195,6 +213,33 @@ function ensureVideoModal(){
       box-shadow:0 0 25px rgba(255,154,60,.6);
       cursor:pointer;
       margin:6px 0;
+    }
+
+    /* MOBILE: tela cheia */
+    @media (max-width: 768px){
+      #videoModal .vm-card{
+        left:0;top:0;transform:none;
+        width:100vw;height:100vh;max-height:none;
+        border-radius:0;
+        padding:0;
+        background:#000;
+        box-shadow:none;
+      }
+
+      #videoModal .vm-close{
+        right:14px;top:14px;
+        width:42px;height:42px;border-radius:14px;
+        background:rgba(255,255,255,.14);
+        backdrop-filter: blur(6px);
+      }
+
+      #videoModal .vm-video{
+        width:100vw;height:100vh;max-height:none;
+        border-radius:0;
+        object-fit:contain;
+      }
+
+      #videoModal .vm-backdrop{background:#000}
     }
   `;
   document.head.appendChild(css);
@@ -220,7 +265,7 @@ produtos.forEach(p=>{
     ${p.status ? `<div class="status">${p.status}</div>` : ``}
   `;
 
-  /* VÍDEO PREVIEW (NOVO) */
+  /* VÍDEO PREVIEW */
   if(p.video){
     html += `<button class="video-btn" data-video="${p.video}">▶ Ver vídeo</button>`;
   }
