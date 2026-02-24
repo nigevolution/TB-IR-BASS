@@ -75,8 +75,7 @@ const produtos = [
     desc:"Timbre vintage com personalidade. Graves macios, médios encorpados e dinâmica musical perfeita para grooves, jazz, soul e bases orgânicas.",
     release:"2026-02-02T19:00:00",
     audio:"/audio/swing-guitars-jazz-deluxe.mp3",
-    video:"/videos/swing-guitars-jazz-deluxe.mp4",
-    status:"LANCAMENTO"
+    video:"/videos/swing-guitars-jazz-deluxe.mp4"
   },
   {
     nome:"TRB JP2 IR",
