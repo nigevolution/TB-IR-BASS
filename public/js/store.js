@@ -76,13 +76,23 @@ produtos.forEach(p=>{
 `;
 
   /* PREVIEW */
-  if(p.audio){
-    html += `
-    <div class="audio-wrap">
-      <audio preload="metadata" src="${p.audio}"></audio>
-      <button class="preview-btn">▶ Preview 30s</button>
-    </div>`;
-  }
+if(p.video){
+  html += `
+  <div class="video-wrap">
+    <video class="product-video" muted loop playsinline preload="metadata">
+      <source src="${p.video}" type="video/mp4">
+    </video>
+  </div>`;
+}
+
+/* ÁUDIO EM STAND-BY (oculto) */
+if(p.audio){
+  html += `
+  <div class="audio-wrap" style="display:none">
+    <audio preload="metadata" src="${p.audio}"></audio>
+    <button class="preview-btn">▶ Preview 30s</button>
+  </div>`;
+}
 
   /* BOTÃO COMPRAR */
   if(p.link && !p.release){
