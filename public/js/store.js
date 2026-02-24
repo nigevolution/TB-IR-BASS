@@ -153,15 +153,24 @@ function ensureVideoModal(){
   `;
   document.body.appendChild(modal);
 
-   const close = () => {
-    modal.classList.remove("open");
-    const v = modal.querySelector(".vm-video");
-    v.pause();
-    v.removeAttribute("src");
-    v.load();
-  };
+   const close = () => {const close = () => {
+  modal.classList.remove("open");
+  const v = modal.querySelector(".vm-video");
+  v.pause();
+  v.removeAttribute("src");
+  v.load();
+};
 
-  // ✅ FECHAR AUTOMATICAMENTE QUANDO O VÍDEO TERMINAR
+// X fecha (e para o vídeo)
+modal.querySelector(".vm-close").addEventListener("click", close);
+
+// clique fora também fecha (opcional, mas recomendo)
+modal.addEventListener("click", (e) => {
+  if (e.target === modal) close();
+});
+
+// quando terminar, fecha automático
+modal.querySelector(".vm-video").addEventListener("ended", close);
   modal.querySelector(".vm-video").addEventListener("ended", close);
 
   modal.querySelector(".vm-backdrop").addEventListener("click", close);
