@@ -153,13 +153,16 @@ function ensureVideoModal(){
   `;
   document.body.appendChild(modal);
 
-  const close = () => {
+   const close = () => {
     modal.classList.remove("open");
     const v = modal.querySelector(".vm-video");
     v.pause();
     v.removeAttribute("src");
     v.load();
   };
+
+  // ✅ FECHAR AUTOMATICAMENTE QUANDO O VÍDEO TERMINAR
+  modal.querySelector(".vm-video").addEventListener("ended", close);
 
   modal.querySelector(".vm-backdrop").addEventListener("click", close);
   modal.querySelector(".vm-close").addEventListener("click", close);
