@@ -153,29 +153,23 @@ function ensureVideoModal(){
   `;
   document.body.appendChild(modal);
 
-   const close = () => {const close = () => {
-  modal.classList.remove("open");
   const v = modal.querySelector(".vm-video");
-  v.pause();
-  v.removeAttribute("src");
-  v.load();
-};
 
-// X fecha (e para o vídeo)
-modal.querySelector(".vm-close").addEventListener("click", close);
+  const close = () => {
+    modal.classList.remove("open");
+    v.pause();
+    v.removeAttribute("src");
+    v.load();
+  };
 
-// clique fora também fecha (opcional, mas recomendo)
-modal.addEventListener("click", (e) => {
-  if (e.target === modal) close();
-});
-
-// quando terminar, fecha automático
-modal.querySelector(".vm-video").addEventListener("ended", close);
-  modal.querySelector(".vm-video").addEventListener("ended", close);
-
+  // clique no fundo
   modal.querySelector(".vm-backdrop").addEventListener("click", close);
+  // clique no X
   modal.querySelector(".vm-close").addEventListener("click", close);
+  // ESC
   document.addEventListener("keydown", (e)=>{ if(e.key === "Escape") close(); });
+  // terminou o vídeo => fecha automático
+  v.addEventListener("ended", close);
 
   const css = document.createElement("style");
   css.innerHTML = `
@@ -212,7 +206,7 @@ function openVideo(url){
   const v = modal.querySelector(".vm-video");
   v.src = url;
   modal.classList.add("open");
-  v.play().catch(()=>{ /* ok: alguns browsers exigem click no play */ });
+  v.play().catch(()=>{ /* ok */ });
 }
 
 /* ================== RENDER ================== */
