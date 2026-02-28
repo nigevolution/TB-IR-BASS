@@ -35,6 +35,15 @@ const produtos = [
     video:"/videos/music-man.mp4"
   },
   {
+  nome:"G&L L-2500 Americano IR",
+  preco:null,
+  link:null,
+  desc:"Americano com punch e presença: graves firmes, médios agressivos e definição absurda — perfeito pra slap, rock e som moderno sem embolar.",
+  status:"EM BREVE",
+  audio:"/audio/gl-l2500.mp3",
+  video:"/videos/gl-l2500.mp4"
+  },
+  {
     nome:"Sadowsky M5 IR",
     preco:69,
     link:"https://pay.cakto.com.br/36243of_6",
