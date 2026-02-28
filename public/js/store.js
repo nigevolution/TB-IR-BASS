@@ -9,6 +9,16 @@ const produtos = [
     video:"/videos/bass-mods.mp4"
   },
   {
+  nome:"Fender 1978 IR",
+  preco:null,
+  link:null,
+  desc:"Vintage de verdade: grave redondo e cheio, médios orgânicos e aquele brilho antigo que encaixa perfeito na mix — ideal pra groove, rock, funk e worship.",
+  release:"2026-03-09T19:00:00",
+  status:"LANCAMENTO",
+  audio:"/audio/fender-1978.mp3",
+  video:"/videos/fender-1978.mp4"
+  },
+  {
     nome:"Fender Ultra 2 IR",
     preco:59,
     link:"https://pay.cakto.com.br/w3x2i3r_700686",
