@@ -1,3 +1,24 @@
+/* ================== PREÇOS DINÂMICOS ==================
+   ✅ MUDA AQUI e o site inteiro atualiza os valores
+   (fallback: se não tiver aqui, usa p.preco do produto)
+*/
+const precosCakto = {
+  "Bass Mods IR": 59,
+  "Fender Ultra 2 IR": 59,
+  "Music Man IR": 59,
+  "Sadowsky M5 IR": 69,
+  "Sadowsky Metroline IR": 39,
+  "Lakland SS44-75 IR": 69,
+  "Sadowsky NYC IR": 69,
+  "Fodera IR": 89,
+  "Swing Guitars Jazz Deluxe IR": 89,
+  "TRB JP2 IR": 69,
+  "Mayones Jabba 5 IR": 99,
+  "MTD 535-24 IR": 99,
+  "Warwick Corvette IR": 79,
+  "Ken Smith IR": 79
+};
+
 /* ================== PRODUTOS ================== */
 const produtos = [
   {
@@ -9,14 +30,14 @@ const produtos = [
     video:"/videos/bass-mods.mp4"
   },
   {
-  nome:"Fender 1978 IR",
-  preco:null,
-  link:null,
-  desc:"Vintage de verdade: grave redondo e cheio, médios orgânicos e aquele brilho antigo que encaixa perfeito na mix — ideal pra groove, rock, funk e worship.",
-  release:"2026-03-09T19:00:00",
-  status:"LANCAMENTO",
-  audio:"/audio/fender-1978.mp3",
-  video:"/videos/fender-1978.mp4"
+    nome:"Fender 1978 IR",
+    preco:null,
+    link:null,
+    desc:"Vintage de verdade: grave redondo e cheio, médios orgânicos e aquele brilho antigo que encaixa perfeito na mix — ideal pra groove, rock, funk e worship.",
+    release:"2026-03-09T19:00:00",
+    status:"LANCAMENTO",
+    audio:"/audio/fender-1978.mp3",
+    video:"/videos/fender-1978.mp4"
   },
   {
     nome:"Fender Ultra 2 IR",
@@ -35,13 +56,13 @@ const produtos = [
     video:"/videos/music-man.mp4"
   },
   {
-  nome:"G&L L-2500 Americano IR",
-  preco:null,
-  link:null,
-  desc:"Americano com punch e presença: graves firmes, médios agressivos e definição absurda — perfeito pra slap, rock e som moderno sem embolar.",
-  status:"EM BREVE",
-  audio:"/audio/gl-l2500.mp3",
-  video:"/videos/gl-l2500.mp4"
+    nome:"G&L L-2500 Americano IR",
+    preco:null,
+    link:null,
+    desc:"Americano com punch e presença: graves firmes, médios agressivos e definição absurda — perfeito pra slap, rock e som moderno sem embolar.",
+    status:"EM BREVE",
+    audio:"/audio/gl-l2500.mp3",
+    video:"/videos/gl-l2500.mp4"
   },
   {
     nome:"Sadowsky M5 IR",
@@ -277,6 +298,9 @@ produtos.forEach(p=>{
   const card = document.createElement("div");
   card.className = "card";
 
+  // ✅ PREÇO FINAL (vem do precosCakto; se não tiver, usa p.preco)
+  const precoFinal = (precosCakto[p.nome] ?? p.preco);
+
   let html = `
     <h3>${p.nome}</h3>
     <p>${p.desc}</p>
@@ -304,14 +328,17 @@ produtos.forEach(p=>{
   }
 
   /* PREÇO — abaixo do botão */
-  if(p.preco && !p.release){
-    html += `<div class="price">R$ ${p.preco.toFixed(2).replace(".",",")}</div>`;
+  if(precoFinal && !p.release){
+    html += `<div class="price">R$ ${Number(precoFinal).toFixed(2).replace(".",",")}</div>`;
   }
 
   /* LANÇAMENTO (cronômetro) */
   if(p.release){
     html += `
-      <div class="countdown" data-date="${p.release}" data-link="${p.link}" data-price="${p.preco}">
+      <div class="countdown"
+        data-date="${p.release}"
+        data-link="${p.link}"
+        data-price="${precoFinal}">
         ⏳ 00d 00h 00m 00s
       </div>
     `;
