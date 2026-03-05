@@ -12,6 +12,7 @@ const precosCakto = {
   "Sadowsky NYC IR": 69,
   "Fodera IR": 89,
   "Swing Guitars Jazz Deluxe IR": 69,
+  "Fender 1978 IR": 78,
   "TRB JP2 IR": 69,
   "Mayones Jabba 5 IR": 89,
   "MTD 535-24 IR": 89,
