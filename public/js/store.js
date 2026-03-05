@@ -9,14 +9,14 @@ const precosCakto = {
   "Sadowsky M5 IR": 59,
   "Sadowsky Metroline IR": 35,
   "Lakland SS44-75 IR": 59,
-  "Sadowsky NYC IR": 69
+  "Sadowsky NYC IR": 69,
   "Fodera IR": 89,
   "Swing Guitars Jazz Deluxe IR": 69,
   "TRB JP2 IR": 69,
   "Mayones Jabba 5 IR": 89,
   "MTD 535-24 IR": 89,
   "Warwick Corvette IR": 59,
-  "Ken Smith IR": 59,
+  "Ken Smith IR": 59
 };
 
 /* ================== PRODUTOS ================== */
@@ -163,6 +163,50 @@ const produtos = [
   }
 ];
 
+/* ================== CHECADOR DE PREÇOS ================== */
+function checarPrecos(produtos, precosCakto){
+  const nomesProdutos = new Set(produtos.map(p => p.nome));
+  const semPreco = [];
+  const divergentes = [];
+  const chavesSobrando = [];
+
+  produtos.forEach(p => {
+    const dyn = precosCakto[p.nome];
+    const base = p.preco;
+
+    if ((dyn == null || dyn === "") && (base == null || base === "")) {
+      semPreco.push(p.nome);
+    }
+
+    if (dyn != null && base != null && Number(dyn) !== Number(base)) {
+      divergentes.push({ nome: p.nome, precoNoProduto: base, precoDinamico: dyn });
+    }
+  });
+
+  Object.keys(precosCakto).forEach(nome => {
+    if (!nomesProdutos.has(nome)) chavesSobrando.push(nome);
+  });
+
+  console.group("🧾 Checador de Preços (Cakto x Site)");
+
+  if (semPreco.length) console.warn("⚠️ Produtos SEM preço:", semPreco);
+  else console.log("✅ Todos os produtos têm preço (dinâmico ou fallback).");
+
+  if (divergentes.length) {
+    console.warn("⚠️ Preços divergentes (p.preco != precosCakto):");
+    console.table(divergentes);
+  } else {
+    console.log("✅ Nenhuma divergência entre p.preco e precosCakto (quando ambos existem).");
+  }
+
+  if (chavesSobrando.length) console.warn("⚠️ Chaves sobrando em precosCakto:", chavesSobrando);
+  else console.log("✅ Nenhuma chave sobrando em precosCakto.");
+
+  console.groupEnd();
+}
+
+checarPrecos(produtos, precosCakto);
+
 const grid = document.getElementById("produtos");
 
 /* ================== ÁUDIO (stand-by) ================== */
@@ -201,13 +245,9 @@ function ensureVideoModal(){
     v.load();
   };
 
-  // clique no fundo
   modal.querySelector(".vm-backdrop").addEventListener("click", close);
-  // clique no X
   modal.querySelector(".vm-close").addEventListener("click", close);
-  // ESC
   document.addEventListener("keydown", (e)=>{ if(e.key === "Escape") close(); });
-  // terminou o vídeo => fecha automático
   v.addEventListener("ended", close);
 
   const css = document.createElement("style");
@@ -216,7 +256,6 @@ function ensureVideoModal(){
     #videoModal.open{display:block}
     #videoModal .vm-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.72)}
 
-    /* DESKTOP / PC */
     #videoModal .vm-card{
       position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
       width:min(920px,92vw);
@@ -254,7 +293,6 @@ function ensureVideoModal(){
       margin:6px 0;
     }
 
-    /* MOBILE: tela cheia */
     @media (max-width: 768px){
       #videoModal .vm-card{
         left:0;top:0;transform:none;
@@ -290,7 +328,7 @@ function openVideo(url){
   const v = modal.querySelector(".vm-video");
   v.src = url;
   modal.classList.add("open");
-  v.play().catch(()=>{ /* ok */ });
+  v.play().catch(()=>{});
 }
 
 /* ================== RENDER ================== */
@@ -298,7 +336,6 @@ produtos.forEach(p=>{
   const card = document.createElement("div");
   card.className = "card";
 
-  // ✅ PREÇO FINAL (vem do precosCakto; se não tiver, usa p.preco)
   const precoFinal = (precosCakto[p.nome] ?? p.preco);
 
   let html = `
@@ -307,12 +344,10 @@ produtos.forEach(p=>{
     ${p.status ? `<div class="status">${p.status}</div>` : ``}
   `;
 
-  /* VÍDEO PREVIEW */
   if(p.video){
     html += `<button class="video-btn" data-video="${p.video}">▶ Ver vídeo</button>`;
   }
 
-  /* ÁUDIO EM STAND-BY (oculto) */
   if(p.audio){
     html += `
       <div class="audio-wrap" style="display:none">
@@ -322,17 +357,14 @@ produtos.forEach(p=>{
     `;
   }
 
-  /* BOTÃO COMPRAR */
   if(p.link && !p.release){
     html += `<button class="buy-btn" onclick="window.open('${p.link}')">Comprar agora</button>`;
   }
 
-  /* PREÇO — abaixo do botão */
   if(precoFinal && !p.release){
     html += `<div class="price">R$ ${Number(precoFinal).toFixed(2).replace(".",",")}</div>`;
   }
 
-  /* LANÇAMENTO (cronômetro) */
   if(p.release){
     html += `
       <div class="countdown"
@@ -347,7 +379,6 @@ produtos.forEach(p=>{
   card.innerHTML = html;
   grid.appendChild(card);
 
-  /* Clique no botão de vídeo */
   const vb = card.querySelector(".video-btn");
   if(vb){
     vb.addEventListener("click", ()=>{
@@ -356,7 +387,6 @@ produtos.forEach(p=>{
     });
   }
 
-  /* ===== PLAY ANIMADO (mantido, mas oculto) ===== */
   if(p.audio){
     const audio = card.querySelector("audio");
     const btn = card.querySelector(".preview-btn");
