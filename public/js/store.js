@@ -16,7 +16,7 @@ const precosCakto = {
   "Mayones Jabba 5 IR": 89,
   "MTD 535-24 IR": 89,
   "Warwick Corvette IR": 59,
-  "Ken Smith IR": 59,
+  "Ken Smith IR": 59
 };
 
 /* ================== PRODUTOS ================== */
