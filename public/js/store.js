@@ -4,19 +4,19 @@
 */
 const precosCakto = {
   "Bass Mods IR": 49,
-  "Fender Ultra 2 IR": 39,90,
-  "Music Man IR": 49,90,
-  "Sadowsky M5 IR": 59,90,
-  "Sadowsky Metroline IR": 35,99,
-  "Lakland SS44-75 IR": 59,90,
-  "Sadowsky NYC IR": 69,90,
-  "Fodera IR": 89,90,
-  "Swing Guitars Jazz Deluxe IR": 69,90,
-  "TRB JP2 IR": 69,90
-  "Mayones Jabba 5 IR": 89,90,
-  "MTD 535-24 IR": 89,90,
-  "Warwick Corvette IR": 59,90,
-  "Ken Smith IR": 59,90
+  "Fender Ultra 2 IR": 39,
+  "Music Man IR": 49,
+  "Sadowsky M5 IR": 59,
+  "Sadowsky Metroline IR": 35,
+  "Lakland SS44-75 IR": 59,
+  "Sadowsky NYC IR": 69
+  "Fodera IR": 89,
+  "Swing Guitars Jazz Deluxe IR": 69,
+  "TRB JP2 IR": 69,
+  "Mayones Jabba 5 IR": 89,
+  "MTD 535-24 IR": 89,
+  "Warwick Corvette IR": 59,
+  "Ken Smith IR": 59,
 };
 
 /* ================== PRODUTOS ================== */
