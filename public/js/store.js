@@ -4,7 +4,7 @@
 */
 const precosCakto = {
   "Bass Mods IR": 49,
-  "Fender Ultra 2 IR": 39,
+  "Fender Ultra 2 IR": 45,
   "Music Man IR": 49,
   "Sadowsky M5 IR": 59,
   "Sadowsky Metroline IR": 35,
