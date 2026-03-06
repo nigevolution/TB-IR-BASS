@@ -4,7 +4,7 @@
 */
 const precosCakto = {
   "Bass Mods IR": 49,
-  "Fender Ultra 2 IR": 45,
+  "Fender Ultra 2 IR": 39,
   "Music Man IR": 49,
   "Sadowsky M5 IR": 59,
   "Sadowsky Metroline IR": 35,
@@ -12,7 +12,6 @@ const precosCakto = {
   "Sadowsky NYC IR": 69,
   "Fodera IR": 89,
   "Swing Guitars Jazz Deluxe IR": 69,
-  "Fender 1978 IR": 78,
   "TRB JP2 IR": 69,
   "Mayones Jabba 5 IR": 89,
   "MTD 535-24 IR": 89,
@@ -164,51 +163,27 @@ const produtos = [
   }
 ];
 
-/* ================== CHECADOR DE PREÇOS ================== */
-function checarPrecos(produtos, precosCakto){
-  const nomesProdutos = new Set(produtos.map(p => p.nome));
-  const semPreco = [];
-  const divergentes = [];
-  const chavesSobrando = [];
-
-  produtos.forEach(p => {
-    const dyn = precosCakto[p.nome];
-    const base = p.preco;
-
-    if ((dyn == null || dyn === "") && (base == null || base === "")) {
-      semPreco.push(p.nome);
-    }
-
-    if (dyn != null && base != null && Number(dyn) !== Number(base)) {
-      divergentes.push({ nome: p.nome, precoNoProduto: base, precoDinamico: dyn });
-    }
-  });
-
-  Object.keys(precosCakto).forEach(nome => {
-    if (!nomesProdutos.has(nome)) chavesSobrando.push(nome);
-  });
-
-  console.group("🧾 Checador de Preços (Cakto x Site)");
-
-  if (semPreco.length) console.warn("⚠️ Produtos SEM preço:", semPreco);
-  else console.log("✅ Todos os produtos têm preço (dinâmico ou fallback).");
-
-  if (divergentes.length) {
-    console.warn("⚠️ Preços divergentes (p.preco != precosCakto):");
-    console.table(divergentes);
-  } else {
-    console.log("✅ Nenhuma divergência entre p.preco e precosCakto (quando ambos existem).");
-  }
-
-  if (chavesSobrando.length) console.warn("⚠️ Chaves sobrando em precosCakto:", chavesSobrando);
-  else console.log("✅ Nenhuma chave sobrando em precosCakto.");
-
-  console.groupEnd();
-}
-
-checarPrecos(produtos, precosCakto);
-
 const grid = document.getElementById("produtos");
+
+/* ================== CSS DO DESCONTO (injeta sem quebrar) ================== */
+(function ensureDiscountCSS(){
+  if(document.getElementById("discountCSS")) return;
+  const css = document.createElement("style");
+  css.id = "discountCSS";
+  css.innerHTML = `
+    .price-wrap{display:flex;flex-direction:column;gap:6px;margin-top:10px}
+    .price-line{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+    .price-old{opacity:.65;text-decoration:line-through;font-size:14px}
+    .price-new{font-weight:800;font-size:18px}
+    .badge-off{
+      font-weight:800;font-size:12px;
+      padding:4px 10px;border-radius:999px;
+      background:rgba(0,255,140,.12);
+      border:1px solid rgba(0,255,140,.35);
+    }
+  `;
+  document.head.appendChild(css);
+})();
 
 /* ================== ÁUDIO (stand-by) ================== */
 function stopAllAudios(){
@@ -257,6 +232,7 @@ function ensureVideoModal(){
     #videoModal.open{display:block}
     #videoModal .vm-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.72)}
 
+    /* DESKTOP / PC */
     #videoModal .vm-card{
       position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
       width:min(920px,92vw);
@@ -294,6 +270,7 @@ function ensureVideoModal(){
       margin:6px 0;
     }
 
+    /* MOBILE: tela cheia */
     @media (max-width: 768px){
       #videoModal .vm-card{
         left:0;top:0;transform:none;
@@ -337,6 +314,7 @@ produtos.forEach(p=>{
   const card = document.createElement("div");
   card.className = "card";
 
+  // ✅ PREÇO FINAL (vem do precosCakto; se não tiver, usa p.preco)
   const precoFinal = (precosCakto[p.nome] ?? p.preco);
 
   let html = `
@@ -345,10 +323,12 @@ produtos.forEach(p=>{
     ${p.status ? `<div class="status">${p.status}</div>` : ``}
   `;
 
+  /* VÍDEO PREVIEW */
   if(p.video){
     html += `<button class="video-btn" data-video="${p.video}">▶ Ver vídeo</button>`;
   }
 
+  /* ÁUDIO EM STAND-BY (oculto) */
   if(p.audio){
     html += `
       <div class="audio-wrap" style="display:none">
@@ -358,20 +338,44 @@ produtos.forEach(p=>{
     `;
   }
 
+  /* BOTÃO COMPRAR */
   if(p.link && !p.release){
     html += `<button class="buy-btn" onclick="window.open('${p.link}')">Comprar agora</button>`;
   }
 
+  /* PREÇO + DESCONTO — abaixo do botão */
   if(precoFinal && !p.release){
-    html += `<div class="price">R$ ${Number(precoFinal).toFixed(2).replace(".",",")}</div>`;
+    const antigo = (p.preco != null ? Number(p.preco) : null);
+    const novo = Number(precoFinal);
+
+    const temDesconto = (antigo != null && antigo > 0 && novo < antigo);
+    const pct = temDesconto ? Math.round(((antigo - novo) / antigo) * 100) : 0;
+
+    html += `<div class="price-wrap">`;
+
+    if(temDesconto){
+      html += `
+        <div class="price-line">
+          <span class="price-old">R$ ${antigo.toFixed(2).replace(".",",")}</span>
+          <span class="badge-off">${pct}% OFF</span>
+        </div>
+        <div class="price-new">R$ ${novo.toFixed(2).replace(".",",")}</div>
+      `;
+    }else{
+      html += `<div class="price-new">R$ ${novo.toFixed(2).replace(".",",")}</div>`;
+    }
+
+    html += `</div>`;
   }
 
+  /* LANÇAMENTO (cronômetro) */
   if(p.release){
     html += `
       <div class="countdown"
         data-date="${p.release}"
         data-link="${p.link}"
-        data-price="${precoFinal}">
+        data-price="${precoFinal}"
+        data-old="${p.preco}">
         ⏳ 00d 00h 00m 00s
       </div>
     `;
@@ -380,6 +384,7 @@ produtos.forEach(p=>{
   card.innerHTML = html;
   grid.appendChild(card);
 
+  /* Clique no botão de vídeo */
   const vb = card.querySelector(".video-btn");
   if(vb){
     vb.addEventListener("click", ()=>{
@@ -388,6 +393,7 @@ produtos.forEach(p=>{
     });
   }
 
+  /* ===== PLAY ANIMADO (mantido, mas oculto) ===== */
   if(p.audio){
     const audio = card.querySelector("audio");
     const btn = card.querySelector(".preview-btn");
@@ -427,9 +433,22 @@ function startCountdown(){
     const timer = setInterval(()=>{
       const diff = target - Date.now();
       if(diff<=0){
+        const old = (el.dataset.old != null && el.dataset.old !== "null") ? Number(el.dataset.old) : null;
+        const cur = Number(el.dataset.price);
+        const tem = (old != null && old > 0 && cur < old);
+        const pct = tem ? Math.round(((old-cur)/old)*100) : 0;
+
         el.outerHTML = `
           <button class="buy-btn" onclick="window.open('${el.dataset.link}')">Comprar agora</button>
-          <div class="price">R$ ${Number(el.dataset.price).toFixed(2).replace(".",",")}</div>
+          <div class="price-wrap">
+            ${tem ? `
+              <div class="price-line">
+                <span class="price-old">R$ ${old.toFixed(2).replace(".",",")}</span>
+                <span class="badge-off">${pct}% OFF</span>
+              </div>
+            ` : ``}
+            <div class="price-new">R$ ${cur.toFixed(2).replace(".",",")}</div>
+          </div>
         `;
         clearInterval(timer);
         return;
