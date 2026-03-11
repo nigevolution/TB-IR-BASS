@@ -32,7 +32,6 @@ const produtos = [
   {
     nome:"Fender 1978 IR",
     preco:null,
-    link:null,
     desc:"Vintage de verdade: grave redondo e cheio, médios orgânicos e aquele brilho antigo que encaixa perfeito na mix — ideal pra groove, rock, funk e worship.",
     release:"2026-03-09T19:00:00",
     status:"EM BREVE",
