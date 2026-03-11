@@ -35,7 +35,7 @@ const produtos = [
     link:null,
     desc:"Vintage de verdade: grave redondo e cheio, médios orgânicos e aquele brilho antigo que encaixa perfeito na mix — ideal pra groove, rock, funk e worship.",
     release:"2026-03-09T19:00:00",
-    status:"LANCAMENTO",
+    status:"EM BREVE",
     audio:"/audio/fender-1978.mp3",
     video:"/videos/fender-1978.mp4"
   },
