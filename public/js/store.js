@@ -37,7 +37,8 @@ const produtos = [
     release:"2026-03-15T19:00:00",
     status:"EM BREVE",
     audio:"/audio/fender-1978.mp3",
-    video:"/videos/fender-1978.mp4"
+    video:"/videos/fender-1978.mp4",
+    showBuy:false // ✅ opcional: força esconder o botão "Comprar agora"
   },
   {
     nome:"Fender Ultra 2 IR",
@@ -62,7 +63,8 @@ const produtos = [
     desc:"Americano com punch e presença: graves firmes, médios agressivos e definição absurda — perfeito pra slap, rock e som moderno sem embolar.",
     status:"EM BREVE",
     audio:"/audio/gl-l2500.mp3",
-    video:"/videos/gl-l2500.mp4"
+    video:"/videos/gl-l2500.mp4",
+    showBuy:false // ✅ opcional
   },
   {
     nome:"Sadowsky M5 IR",
@@ -164,6 +166,16 @@ const produtos = [
 ];
 
 const grid = document.getElementById("produtos");
+
+/* ================== HELPERS ================== */
+function toNumberOrNull(v){
+  if (v === null || v === undefined) return null;
+  const n = Number(v);
+  return Number.isFinite(n) ? n : null;
+}
+function formatBRL(n){
+  return `R$ ${n.toFixed(2).replace(".",",")}`;
+}
 
 /* ================== CSS DO DESCONTO (injeta sem quebrar) ================== */
 (function ensureDiscountCSS(){
@@ -315,7 +327,11 @@ produtos.forEach(p=>{
   card.className = "card";
 
   // ✅ PREÇO FINAL (vem do precosCakto; se não tiver, usa p.preco)
-  const precoFinal = (precosCakto[p.nome] ?? p.preco);
+  const precoFinal = toNumberOrNull(precosCakto[p.nome] ?? p.preco);
+
+  // ✅ CONTROLE INDIVIDUAL DO BOTÃO COMPRAR
+  // Se você colocar showBuy:false no produto, o botão some mesmo que tenha link.
+  const showBuy = (p.showBuy !== false);
 
   let html = `
     <h3>${p.nome}</h3>
@@ -338,15 +354,15 @@ produtos.forEach(p=>{
     `;
   }
 
-  /* BOTÃO COMPRAR */
-  if(p.link && !p.release){
+  /* BOTÃO COMPRAR (controlável por produto) */
+  if(showBuy && p.link && !p.release){
     html += `<button class="buy-btn" onclick="window.open('${p.link}')">Comprar agora</button>`;
   }
 
-  /* PREÇO + DESCONTO — abaixo do botão */
+  /* PREÇO + DESCONTO — abaixo do botão (se tiver preço) */
   if(precoFinal && !p.release){
-    const antigo = (p.preco != null ? Number(p.preco) : null);
-    const novo = Number(precoFinal);
+    const antigo = toNumberOrNull(p.preco);
+    const novo = precoFinal;
 
     const temDesconto = (antigo != null && antigo > 0 && novo < antigo);
     const pct = temDesconto ? Math.round(((antigo - novo) / antigo) * 100) : 0;
@@ -356,13 +372,13 @@ produtos.forEach(p=>{
     if(temDesconto){
       html += `
         <div class="price-line">
-          <span class="price-old">R$ ${antigo.toFixed(2).replace(".",",")}</span>
+          <span class="price-old">${formatBRL(antigo)}</span>
           <span class="badge-off">${pct}% OFF</span>
         </div>
-        <div class="price-new">R$ ${novo.toFixed(2).replace(".",",")}</div>
+        <div class="price-new">${formatBRL(novo)}</div>
       `;
     }else{
-      html += `<div class="price-new">R$ ${novo.toFixed(2).replace(".",",")}</div>`;
+      html += `<div class="price-new">${formatBRL(novo)}</div>`;
     }
 
     html += `</div>`;
@@ -373,9 +389,10 @@ produtos.forEach(p=>{
     html += `
       <div class="countdown"
         data-date="${p.release}"
-        data-link="${p.link}"
-        data-price="${precoFinal}"
-        data-old="${p.preco}">
+        data-link="${p.link ?? ""}"
+        data-price="${precoFinal ?? ""}"
+        data-old="${p.preco ?? ""}"
+        data-showbuy="${showBuy ? "1" : "0"}">
         ⏳ 00d 00h 00m 00s
       </div>
     `;
@@ -432,27 +449,45 @@ function startCountdown(){
     const target = new Date(el.dataset.date).getTime();
     const timer = setInterval(()=>{
       const diff = target - Date.now();
+
       if(diff<=0){
-        const old = (el.dataset.old != null && el.dataset.old !== "null") ? Number(el.dataset.old) : null;
-        const cur = Number(el.dataset.price);
-        const tem = (old != null && old > 0 && cur < old);
+        const showBuy = (el.dataset.showbuy === "1");
+        const link = (el.dataset.link || "").trim();
+
+        const old = toNumberOrNull(el.dataset.old);
+        const cur = toNumberOrNull(el.dataset.price);
+
+        const tem = (old != null && old > 0 && cur != null && cur < old);
         const pct = tem ? Math.round(((old-cur)/old)*100) : 0;
 
-        el.outerHTML = `
-          <button class="buy-btn" onclick="window.open('${el.dataset.link}')">Comprar agora</button>
-          <div class="price-wrap">
-            ${tem ? `
-              <div class="price-line">
-                <span class="price-old">R$ ${old.toFixed(2).replace(".",",")}</span>
-                <span class="badge-off">${pct}% OFF</span>
-              </div>
-            ` : ``}
-            <div class="price-new">R$ ${cur.toFixed(2).replace(".",",")}</div>
-          </div>
-        `;
+        // ✅ monta o bloco final SEM quebrar: compra (opcional) + preço (opcional)
+        let out = "";
+
+        if(showBuy && link){
+          out += `<button class="buy-btn" onclick="window.open('${link}')">Comprar agora</button>`;
+        }
+
+        if(cur != null){
+          out += `
+            <div class="price-wrap">
+              ${tem ? `
+                <div class="price-line">
+                  <span class="price-old">${formatBRL(old)}</span>
+                  <span class="badge-off">${pct}% OFF</span>
+                </div>
+              ` : ``}
+              <div class="price-new">${formatBRL(cur)}</div>
+            </div>
+          `;
+        }
+
+        // se não tiver link e nem preço, só remove o cronômetro mesmo
+        el.outerHTML = out || ``;
+
         clearInterval(timer);
         return;
       }
+
       const d=Math.floor(diff/86400000);
       const h=Math.floor((diff/3600000)%24);
       const m=Math.floor((diff/60000)%60);
