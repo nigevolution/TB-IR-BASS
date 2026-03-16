@@ -5,6 +5,7 @@
 const precosCakto = {
   "Bass Mods IR": 49,
   "Fender Ultra 2 IR": 45,
+  "Fender 1978 IR": 78,
   "Music Man IR": 49,
   "Sadowsky M5 IR": 59,
   "Sadowsky Metroline IR": 35,
@@ -31,7 +32,7 @@ const produtos = [
   },
   {
     nome:"Fender 1978 IR",
-    preco:null,
+    preco:88,
     link:null,
     desc:"Vintage de verdade: grave redondo e cheio, médios orgânicos e aquele brilho antigo que encaixa perfeito na mix — ideal pra groove, rock, funk e worship.",
     release:"2026-03-15T19:00:00",
