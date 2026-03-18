@@ -37,112 +37,104 @@
   <!-- End Meta Pixel Code -->
 
 <style>
-/* ======= SEU CSS INTACTO ======= */
 :root{
---accent:#ff9a3c;
---accent-soft:#ffbf7a;
---text:#fff;
+  --accent:#ff9a3c;
+  --accent-soft:#ffbf7a;
+  --text:#fff;
 }
 
 html,body{scroll-behavior:smooth;}
 
 body{
-margin:0;
-font-family:Arial;
-color:var(--text);
-text-align:center;
-background:#000;
-position:relative;
+  margin:0;
+  font-family:Arial;
+  color:var(--text);
+  text-align:center;
+  background:#000;
+  position:relative;
 }
 
 /* FUNDO FIXO */
 .bg-layer{
-position:fixed;
-inset:0;
-z-index:-2;
-background:
-radial-gradient(ellipse at center,rgba(0,0,0,.35),rgba(0,0,0,.92)),
-url("bg-hero.jpg") center/cover no-repeat;
+  position:fixed;
+  inset:0;
+  z-index:-2;
+  background:
+    radial-gradient(ellipse at center,rgba(0,0,0,.35),rgba(0,0,0,.92)),
+    url("bg-hero.jpg") center/cover no-repeat;
 }
 
 /* VINHETA */
 .bg-layer::after{
-content:"";
-position:absolute;
-inset:0;
-background:radial-gradient(circle at center,transparent 40%,rgba(0,0,0,.85));
-pointer-events:none;
+  content:"";
+  position:absolute;
+  inset:0;
+  background:radial-gradient(circle at center,transparent 40%,rgba(0,0,0,.85));
+  pointer-events:none;
 }
 
 h1{color:var(--accent);margin:50px 0 10px;}
 .grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-gap:28px;
-padding:70px 25px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:28px;
+  padding:70px 25px;
 }
 
 .card{
-background:rgba(15,10,8,.85);
-border-radius:26px;
-padding:28px;
-box-shadow:0 25px 60px rgba(0,0,0,.9);
-transition:.35s;
+  background:rgba(15,10,8,.85);
+  border-radius:26px;
+  padding:28px;
+  box-shadow:0 25px 60px rgba(0,0,0,.9);
+  transition:.35s;
 }
 .card:hover{transform:translateY(-10px) scale(1.03)}
 
 .price{color:var(--accent-soft);font-size:22px;margin:14px 0}
 
 button{
-border:none;border-radius:18px;
-padding:14px 28px;
-background:linear-gradient(135deg,#ff9a3c,#ff7a00);
-font-weight:bold;
-box-shadow:0 0 25px rgba(255,154,60,.6);
-cursor:pointer;
-margin:6px 0;
+  border:none;border-radius:18px;
+  padding:14px 28px;
+  background:linear-gradient(135deg,#ff9a3c,#ff7a00);
+  font-weight:bold;
+  box-shadow:0 0 25px rgba(255,154,60,.6);
+  cursor:pointer;
+  margin:6px 0;
 }
 
 .preview-btn.playing{animation:pulse 1s infinite alternate;}
 @keyframes pulse{from{box-shadow:0 0 20px #ff9a3c;}to{box-shadow:0 0 45px #ffbf7a;}}
 
 #faq{
-max-width:900px;margin:120px auto;padding:50px;
-background:rgba(0,0,0,.7);border-radius:30px;
+  max-width:900px;margin:120px auto;padding:50px;
+  background:rgba(0,0,0,.7);border-radius:30px;
 }
 
 #faq h2{color:var(--accent)}
 
 footer{opacity:.7;margin:60px 0}
 
-/* ===== WHATS MENU ===== */
-#whats-menu-wrap{
-position:fixed;
-right:20px;
-bottom:20px;
-z-index:9999;
-}
-
-#whats-float{
-width:62px;
-height:62px;
-background:#25D366;
-border-radius:50%;
-display:flex;
-align-items:center;
-justify-content:center;
-box-shadow:0 0 25px rgba(37,211,102,.7);
-cursor:pointer;
-}
-
-#whats-float img{width:34px}
-
+/* ===== WHATS MENU (CORRIGIDO) ===== */
 #whats-menu-wrap{
   position:fixed;
   right:20px;
-  bottom:120px; /* sobe/desce o botão */
+  bottom:20px; /* canto inferior direito */
   z-index:9999;
 }
+
+#whats-float{
+  width:62px;
+  height:62px;
+  background:#25D366;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 0 25px rgba(37,211,102,.7);
+  cursor:pointer;
+}
+
+#whats-float img{width:34px}
 
 #whats-menu{
   position:absolute;
@@ -162,15 +154,17 @@ cursor:pointer;
   margin:6px 0;
 }
 </style>
+
   <!-- UTMify (UTMs) -->
-<script
-  src="https://cdn.utmify.com.br/scripts/utms/latest.js"
-  data-utmify-prevent-xcod-sck
-  data-utmify-prevent-subids
-  async
-  defer
-></script>
-<!-- /UTMify -->
+  <script
+    src="https://cdn.utmify.com.br/scripts/utms/latest.js"
+    data-utmify-prevent-xcod-sck
+    data-utmify-prevent-subids
+    async
+    defer
+  ></script>
+  <!-- /UTMify -->
+
 </head>
 
 <body>
@@ -206,7 +200,9 @@ cursor:pointer;
   <details>
     <summary>Funciona em quais pedaleiras?</summary>
     <p>
-      Mooer, Tank-B, Mk300, Mk20, Cuvave, Headrush, Ampero, Zoom, Line6, Valeton, Hotone e outras, Se você está em dúvida se a sua pedaleira tem suporte a Impulse Response (IR), faça uma pesquisa rápida no Google para confirmar se o seu modelo é compatível com IR Loader e carregamento de IR.
+      Mooer, Tank-B, Mk300, Mk20, Cuvave, Headrush, Ampero, Zoom, Line6, Valeton, Hotone e outras.
+      Se você está em dúvida se a sua pedaleira tem suporte a Impulse Response (IR),
+      faça uma pesquisa rápida no Google para confirmar se o seu modelo é compatível com IR Loader e carregamento de IR.
     </p>
   </details>
 
@@ -238,6 +234,7 @@ cursor:pointer;
   expressa do titular dos direitos.
 </footer>
 
+<!-- WhatsApp (CORRIGIDO) -->
 <div id="whats-menu-wrap">
   <div id="whats-menu">
     <a href="https://wa.me/message/3QND546Y75L3M1" target="_blank"
@@ -246,10 +243,9 @@ cursor:pointer;
     <a href="https://wa.me/5575988674964?text=Ol%C3%A1%20Silas!%20Vim%20pelo%20site%20TB-BASS%20IR." target="_blank"
        onclick="gtag('event','whatsapp_click',{contact:'silas'});">👤 Silas</a>
   </div>
-</div>
 
   <div id="whats-float">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
   </div>
 </div>
 
