@@ -165,7 +165,7 @@ const produtos = [
     preco:79,
     link:"https://pay.cakto.com.br/zy8esjf_719715",
     desc:"Resposta hi-fi, ultra definição e sustain perfeito.",
-    audio:"/audio/ken-smith.mp4",
+    audio:"/audio/ken-smith.mp3",
     video:"/videos/ken-smith.mp4"
   }
 ];
@@ -183,12 +183,12 @@ function formatBRL(n){
   return `R$ ${n.toFixed(2).replace(".",",")}`;
 }
 
-/* ================== CSS DO DESCONTO ================== */
-(function ensureDiscountCSS(){
-  if(document.getElementById("discountCSS")) return;
+/* ================== CSS EXTRA ================== */
+(function ensureExtraCSS(){
+  if(document.getElementById("extraStoreCSS")) return;
 
   const css = document.createElement("style");
-  css.id = "discountCSS";
+  css.id = "extraStoreCSS";
   css.innerHTML = `
     .price-wrap{display:flex;flex-direction:column;gap:6px;margin-top:10px}
     .price-line{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center}
@@ -199,6 +199,99 @@ function formatBRL(n){
       padding:4px 10px;border-radius:999px;
       background:rgba(0,255,140,.12);
       border:1px solid rgba(0,255,140,.35);
+    }
+
+    .trackpilot-feature{
+      grid-column:1 / -1;
+      min-height:320px;
+      border-radius:28px;
+      padding:42px;
+      background:
+        radial-gradient(circle at 18% 30%, rgba(0,140,255,.22), transparent 34%),
+        radial-gradient(circle at 82% 28%, rgba(255,122,0,.25), transparent 34%),
+        linear-gradient(135deg, rgba(255,122,0,.24), rgba(0,0,0,.82)),
+        rgba(0,0,0,.78);
+      border:1px solid rgba(255,122,0,.75);
+      box-shadow:
+        0 0 45px rgba(255,122,0,.32),
+        inset 0 0 40px rgba(255,122,0,.08);
+      position:relative;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+    }
+
+    .trackpilot-feature::before{
+      content:"NOVO";
+      position:absolute;
+      top:24px;
+      right:28px;
+      background:linear-gradient(135deg,#ff9a3c,#ff7a00);
+      color:#000;
+      font-weight:900;
+      font-size:13px;
+      padding:7px 14px;
+      border-radius:999px;
+      box-shadow:0 0 24px rgba(255,122,0,.65);
+    }
+
+    .trackpilot-feature::after{
+      content:"";
+      position:absolute;
+      left:8%;
+      right:8%;
+      bottom:26px;
+      height:2px;
+      background:linear-gradient(90deg, transparent, rgba(0,150,255,.85), rgba(255,122,0,.85), transparent);
+      opacity:.85;
+    }
+
+    .trackpilot-feature h3{
+      color:#ff9a3c;
+      font-size:38px;
+      margin-bottom:14px;
+      text-shadow:0 0 28px rgba(255,122,0,.45);
+    }
+
+    .trackpilot-feature p{
+      font-size:22px;
+      max-width:760px;
+      line-height:1.25;
+      margin-left:auto;
+      margin-right:auto;
+    }
+
+    .trackpilot-feature .video-btn,
+    .trackpilot-feature .buy-btn{
+      margin:10px 8px;
+      transform:scale(1.04);
+    }
+
+    .trackpilot-feature .price-new{
+      font-size:28px;
+    }
+
+    @media (max-width:768px){
+      .trackpilot-feature{
+        grid-column:span 1;
+        min-height:300px;
+        padding:32px 22px;
+      }
+
+      .trackpilot-feature h3{
+        font-size:26px;
+      }
+
+      .trackpilot-feature p{
+        font-size:17px;
+      }
+
+      .trackpilot-feature::before{
+        top:16px;
+        right:16px;
+      }
     }
   `;
   document.head.appendChild(css);
@@ -286,7 +379,7 @@ function ensureVideoModal(){
       cursor:pointer;
       margin:6px 0;
     }
-    @media (max-width: 768px){
+    @media (max-width:768px){
       #videoModal .vm-card{
         left:0;top:0;transform:none;
         width:100vw;height:100vh;max-height:none;
@@ -299,7 +392,7 @@ function ensureVideoModal(){
         right:14px;top:14px;
         width:42px;height:42px;border-radius:14px;
         background:rgba(255,255,255,.14);
-        backdrop-filter: blur(6px);
+        backdrop-filter:blur(6px);
       }
       #videoModal .vm-video{
         width:100vw;height:100vh;max-height:none;
@@ -329,7 +422,9 @@ if(grid){
 
   produtos.forEach(p=>{
     const card = document.createElement("div");
-    card.className = "card";
+    card.className = p.nome === "TrackPilot by TB-BASS IR"
+      ? "card trackpilot-feature"
+      : "card";
 
     const precoFinal = toNumberOrNull(precosCakto[p.nome] ?? p.preco);
     const showBuy = p.showBuy !== false;
@@ -398,7 +493,7 @@ if(grid){
 
     const vb = card.querySelector(".video-btn");
     if(vb){
-      vb.addEventListener("click", ()=>{
+      vb.addEventListener("click",()=>{
         openVideo(vb.getAttribute("data-video"));
       });
     }
