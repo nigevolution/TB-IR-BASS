@@ -183,6 +183,14 @@ function formatBRL(n){
   return `R$ ${n.toFixed(2).replace(".",",")}`;
 }
 
+function isTrackPilotName(nome){
+  return nome === "TrackPilot by TB-BASS IR";
+}
+
+function getPriceSuffix(nome){
+  return isTrackPilotName(nome) ? " / mês" : "";
+}
+
 /* ================== CSS EXTRA ================== */
 (function ensureExtraCSS(){
   if(document.getElementById("extraStoreCSS")) return;
@@ -422,12 +430,13 @@ if(grid){
 
   produtos.forEach(p=>{
     const card = document.createElement("div");
-    card.className = p.nome === "TrackPilot by TB-BASS IR"
+    card.className = isTrackPilotName(p.nome)
       ? "card trackpilot-feature"
       : "card";
 
     const precoFinal = toNumberOrNull(precosCakto[p.nome] ?? p.preco);
     const showBuy = p.showBuy !== false;
+    const priceSuffix = getPriceSuffix(p.nome);
 
     let html = `
       <h3>${p.nome}</h3>
@@ -466,10 +475,10 @@ if(grid){
             <span class="price-old">${formatBRL(antigo)}</span>
             <span class="badge-off">${pct}% OFF</span>
           </div>
-          <div class="price-new">${formatBRL(novo)}</div>
+          <div class="price-new">${formatBRL(novo)}${priceSuffix}</div>
         `;
       }else{
-        html += `<div class="price-new">${formatBRL(novo)}</div>`;
+        html += `<div class="price-new">${formatBRL(novo)}${priceSuffix}</div>`;
       }
 
       html += `</div>`;
@@ -482,6 +491,7 @@ if(grid){
           data-link="${p.link ?? ""}"
           data-price="${precoFinal ?? ""}"
           data-old="${p.preco ?? ""}"
+          data-name="${p.nome}"
           data-showbuy="${showBuy ? "1" : "0"}">
           ⏳ 00d 00h 00m 00s
         </div>
@@ -546,6 +556,7 @@ function startCountdown(){
 
         const old = toNumberOrNull(el.dataset.old);
         const cur = toNumberOrNull(el.dataset.price);
+        const priceSuffix = getPriceSuffix(el.dataset.name);
 
         const tem = old != null && old > 0 && cur != null && cur < old;
         const pct = tem ? Math.round(((old - cur) / old) * 100) : 0;
@@ -565,7 +576,7 @@ function startCountdown(){
                   <span class="badge-off">${pct}% OFF</span>
                 </div>
               ` : ``}
-              <div class="price-new">${formatBRL(cur)}</div>
+              <div class="price-new">${formatBRL(cur)}${priceSuffix}</div>
             </div>
           `;
         }
