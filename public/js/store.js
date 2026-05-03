@@ -1,7 +1,4 @@
-/* ================== PREÇOS DINÂMICOS ==================
-   ✅ MUDA AQUI e o site inteiro atualiza os valores
-   (fallback: se não tiver aqui, usa p.preco do produto)
-*/
+/* ================== PREÇOS DINÂMICOS ================== */
 const precosCakto = {
   "TrackPilot by TB-BASS IR": 49,
 
@@ -24,13 +21,13 @@ const precosCakto = {
 
 /* ================== PRODUTOS ================== */
 const produtos = [
-{
-  nome:"TrackPilot by TB-BASS IR",
-  preco:59,
-  link:"https://pay.cakto.com.br/p8ufknn_866145",
-  desc:"Importação inteligente para REAPER. Organize, adicione e importe seus áudios nas tracks certas em segundos.",
-  video:"/videos/demonstracao-script-trackpilot.mp4"
-},
+  {
+    nome:"TrackPilot by TB-BASS IR",
+    preco:59,
+    link:"https://pay.cakto.com.br/p8ufknn_866145",
+    desc:"Importação inteligente para REAPER. Organize, adicione e importe seus áudios nas tracks certas em segundos.",
+    video:"/videos/demonstracao-script-trackpilot.mp4"
+  },
   {
     nome:"Bass Mods IR",
     preco:59,
@@ -345,9 +342,11 @@ function ensureVideoModal(){
 
   modal.querySelector(".vm-backdrop").addEventListener("click", close);
   modal.querySelector(".vm-close").addEventListener("click", close);
+
   document.addEventListener("keydown", e=>{
     if(e.key === "Escape") close();
   });
+
   v.addEventListener("ended", close);
 
   const css = document.createElement("style");
