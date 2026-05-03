@@ -29,6 +29,7 @@ const produtos = [
     preco:59,
     link:"https://pay.cakto.com.br/p8ufknn_866145",
     desc:"Importação inteligente para REAPER. Organize, adicione e importe seus áudios nas tracks certas em segundos.",
+    video:"/videos/demonstraçao-script-trackpilot.mp4
   },
   {
     nome:"Bass Mods IR",
