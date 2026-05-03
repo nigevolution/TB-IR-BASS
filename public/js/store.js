@@ -3,6 +3,8 @@
    (fallback: se não tiver aqui, usa p.preco do produto)
 */
 const precosCakto = {
+  "TrackPilot by TB-BASS IR": 49,
+
   "Bass Mods IR": 49,
   "Fender Ultra 2 IR": 45,
   "Fender 1978 IR": 78,
@@ -23,6 +25,14 @@ const precosCakto = {
 /* ================== PRODUTOS ================== */
 const produtos = [
   {
+    nome:"TrackPilot by TB-BASS IR",
+    preco:59,
+    link:"https://pay.cakto.com.br/p8ufknn_866145",
+    desc:"Importação inteligente para REAPER. Organize, adicione e importe seus áudios nas tracks certas em segundos.",
+    video:"/videos/trackpilot.mp4"
+  },
+
+  {
     nome:"Bass Mods IR",
     preco:59,
     link:"https://pay.cakto.com.br/rtuwa88_720263",
@@ -39,7 +49,7 @@ const produtos = [
     status:"EM BREVE",
     audio:"/audio/fender-1978.mp3",
     video:"/videos/fender-1978.mp4",
-    showBuy:false // ✅ opcional: força esconder o botão "Comprar agora"
+    showBuy:false
   },
   {
     nome:"Fender Ultra 2 IR",
@@ -65,7 +75,7 @@ const produtos = [
     status:"EM BREVE",
     audio:"/audio/gl-l2500.mp3",
     video:"/videos/gl-l2500.mp4",
-    showBuy:false // ✅ opcional
+    showBuy:false
   },
   {
     nome:"Sadowsky M5 IR",
@@ -101,8 +111,6 @@ const produtos = [
     video:"/videos/sadowsky-nyc.mp4",
     release:"2026-01-20T12:00:00"
   },
-
-  /* === NOVOS TIMBRES === */
   {
     nome:"Fodera IR",
     preco:89,
@@ -128,7 +136,6 @@ const produtos = [
     audio:"/audio/trb-jp2.mp3",
     video:"/videos/trb-jp2.mp4"
   },
-
   {
     nome:"Mayones Jabba 5 IR",
     preco:99,
@@ -147,7 +154,6 @@ const produtos = [
     audio:"/audio/mtd-535-24.mp3",
     video:"/videos/mtd-535-24.mp4"
   },
-
   {
     nome:"Warwick Corvette IR",
     preco:79,
@@ -165,336 +171,3 @@ const produtos = [
     video:"/videos/ken-smith.mp4"
   }
 ];
-
-const grid = document.getElementById("produtos");
-
-/* ================== HELPERS ================== */
-function toNumberOrNull(v){
-  if (v === null || v === undefined) return null;
-  const n = Number(v);
-  return Number.isFinite(n) ? n : null;
-}
-function formatBRL(n){
-  return `R$ ${n.toFixed(2).replace(".",",")}`;
-}
-
-/* ================== CSS DO DESCONTO (injeta sem quebrar) ================== */
-(function ensureDiscountCSS(){
-  if(document.getElementById("discountCSS")) return;
-  const css = document.createElement("style");
-  css.id = "discountCSS";
-  css.innerHTML = `
-    .price-wrap{display:flex;flex-direction:column;gap:6px;margin-top:10px}
-    .price-line{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-    .price-old{opacity:.65;text-decoration:line-through;font-size:14px}
-    .price-new{font-weight:800;font-size:18px}
-    .badge-off{
-      font-weight:800;font-size:12px;
-      padding:4px 10px;border-radius:999px;
-      background:rgba(0,255,140,.12);
-      border:1px solid rgba(0,255,140,.35);
-    }
-  `;
-  document.head.appendChild(css);
-})();
-
-/* ================== ÁUDIO (stand-by) ================== */
-function stopAllAudios(){
-  document.querySelectorAll("audio").forEach(a=>{
-    a.pause();
-    a.currentTime = 0;
-  });
-  document.querySelectorAll(".preview-btn").forEach(b=>{
-    b.classList.remove("playing");
-    b.innerText = "▶ Preview 30s";
-  });
-}
-
-/* ================== MODAL DE VÍDEO ================== */
-function ensureVideoModal(){
-  if (document.getElementById("videoModal")) return;
-
-  const modal = document.createElement("div");
-  modal.id = "videoModal";
-  modal.innerHTML = `
-    <div class="vm-backdrop"></div>
-    <div class="vm-card" role="dialog" aria-modal="true">
-      <button class="vm-close" aria-label="Fechar">✕</button>
-      <video class="vm-video" controls playsinline preload="metadata"></video>
-    </div>
-  `;
-  document.body.appendChild(modal);
-
-  const v = modal.querySelector(".vm-video");
-
-  const close = () => {
-    modal.classList.remove("open");
-    v.pause();
-    v.removeAttribute("src");
-    v.load();
-  };
-
-  modal.querySelector(".vm-backdrop").addEventListener("click", close);
-  modal.querySelector(".vm-close").addEventListener("click", close);
-  document.addEventListener("keydown", (e)=>{ if(e.key === "Escape") close(); });
-  v.addEventListener("ended", close);
-
-  const css = document.createElement("style");
-  css.innerHTML = `
-    #videoModal{position:fixed;inset:0;display:none;z-index:999999}
-    #videoModal.open{display:block}
-    #videoModal .vm-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.72)}
-
-    /* DESKTOP / PC */
-    #videoModal .vm-card{
-      position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
-      width:min(920px,92vw);
-      max-height:90vh;
-      background:rgba(10,10,10,.92);
-      border-radius:18px;
-      padding:14px;
-      box-shadow:0 30px 90px rgba(0,0,0,.8);
-      overflow:hidden;
-    }
-
-    #videoModal .vm-close{
-      position:absolute;right:10px;top:8px;border:none;cursor:pointer;
-      width:38px;height:38px;border-radius:12px;background:rgba(255,255,255,.10);
-      color:#fff;font-size:18px;z-index:2
-    }
-
-    #videoModal .vm-video{
-      width:100%;
-      height:auto;
-      max-height:78vh;
-      object-fit:contain;
-      border-radius:14px;
-      outline:none;
-      background:#000;
-    }
-
-    .video-btn{
-      border:none;border-radius:18px;
-      padding:14px 28px;
-      background:linear-gradient(135deg,#ff9a3c,#ff7a00);
-      font-weight:bold;
-      box-shadow:0 0 25px rgba(255,154,60,.6);
-      cursor:pointer;
-      margin:6px 0;
-    }
-
-    /* MOBILE: tela cheia */
-    @media (max-width: 768px){
-      #videoModal .vm-card{
-        left:0;top:0;transform:none;
-        width:100vw;height:100vh;max-height:none;
-        border-radius:0;
-        padding:0;
-        background:#000;
-        box-shadow:none;
-      }
-
-      #videoModal .vm-close{
-        right:14px;top:14px;
-        width:42px;height:42px;border-radius:14px;
-        background:rgba(255,255,255,.14);
-        backdrop-filter: blur(6px);
-      }
-
-      #videoModal .vm-video{
-        width:100vw;height:100vh;max-height:none;
-        border-radius:0;
-        object-fit:contain;
-      }
-
-      #videoModal .vm-backdrop{background:#000}
-    }
-  `;
-  document.head.appendChild(css);
-}
-
-function openVideo(url){
-  ensureVideoModal();
-  const modal = document.getElementById("videoModal");
-  const v = modal.querySelector(".vm-video");
-  v.src = url;
-  modal.classList.add("open");
-  v.play().catch(()=>{});
-}
-
-/* ================== RENDER ================== */
-produtos.forEach(p=>{
-  const card = document.createElement("div");
-  card.className = "card";
-
-  // ✅ PREÇO FINAL (vem do precosCakto; se não tiver, usa p.preco)
-  const precoFinal = toNumberOrNull(precosCakto[p.nome] ?? p.preco);
-
-  // ✅ CONTROLE INDIVIDUAL DO BOTÃO COMPRAR
-  // Se você colocar showBuy:false no produto, o botão some mesmo que tenha link.
-  const showBuy = (p.showBuy !== false);
-
-  let html = `
-    <h3>${p.nome}</h3>
-    <p>${p.desc}</p>
-    ${p.status ? `<div class="status">${p.status}</div>` : ``}
-  `;
-
-  /* VÍDEO PREVIEW */
-  if(p.video){
-    html += `<button class="video-btn" data-video="${p.video}">▶ Ver vídeo</button>`;
-  }
-
-  /* ÁUDIO EM STAND-BY (oculto) */
-  if(p.audio){
-    html += `
-      <div class="audio-wrap" style="display:none">
-        <audio preload="metadata" src="${p.audio}"></audio>
-        <button class="preview-btn">▶ Preview 30s</button>
-      </div>
-    `;
-  }
-
-  /* BOTÃO COMPRAR (controlável por produto) */
-  if(showBuy && p.link && !p.release){
-    html += `<button class="buy-btn" onclick="window.open('${p.link}')">Comprar agora</button>`;
-  }
-
-  /* PREÇO + DESCONTO — abaixo do botão (se tiver preço) */
-  if(precoFinal && !p.release){
-    const antigo = toNumberOrNull(p.preco);
-    const novo = precoFinal;
-
-    const temDesconto = (antigo != null && antigo > 0 && novo < antigo);
-    const pct = temDesconto ? Math.round(((antigo - novo) / antigo) * 100) : 0;
-
-    html += `<div class="price-wrap">`;
-
-    if(temDesconto){
-      html += `
-        <div class="price-line">
-          <span class="price-old">${formatBRL(antigo)}</span>
-          <span class="badge-off">${pct}% OFF</span>
-        </div>
-        <div class="price-new">${formatBRL(novo)}</div>
-      `;
-    }else{
-      html += `<div class="price-new">${formatBRL(novo)}</div>`;
-    }
-
-    html += `</div>`;
-  }
-
-  /* LANÇAMENTO (cronômetro) */
-  if(p.release){
-    html += `
-      <div class="countdown"
-        data-date="${p.release}"
-        data-link="${p.link ?? ""}"
-        data-price="${precoFinal ?? ""}"
-        data-old="${p.preco ?? ""}"
-        data-showbuy="${showBuy ? "1" : "0"}">
-        ⏳ 00d 00h 00m 00s
-      </div>
-    `;
-  }
-
-  card.innerHTML = html;
-  grid.appendChild(card);
-
-  /* Clique no botão de vídeo */
-  const vb = card.querySelector(".video-btn");
-  if(vb){
-    vb.addEventListener("click", ()=>{
-      const url = vb.getAttribute("data-video");
-      openVideo(url);
-    });
-  }
-
-  /* ===== PLAY ANIMADO (mantido, mas oculto) ===== */
-  if(p.audio){
-    const audio = card.querySelector("audio");
-    const btn = card.querySelector(".preview-btn");
-    if(audio && btn){
-      btn.addEventListener("click",()=>{
-        if(!audio.paused){
-          audio.pause();
-          audio.currentTime = 0;
-          btn.classList.remove("playing");
-          btn.innerText = "▶ Preview 30s";
-          return;
-        }
-
-        stopAllAudios();
-        audio.currentTime = 0;
-        audio.play();
-        btn.classList.add("playing");
-        btn.innerText = "⏸ Tocando…";
-      });
-
-      audio.addEventListener("timeupdate",()=>{
-        if(audio.currentTime >= 30){
-          audio.pause();
-          audio.currentTime = 0;
-          btn.classList.remove("playing");
-          btn.innerText = "▶ Preview 30s";
-        }
-      });
-    }
-  }
-});
-
-/* ================== CRONÔMETRO ================== */
-function startCountdown(){
-  document.querySelectorAll(".countdown").forEach(el=>{
-    const target = new Date(el.dataset.date).getTime();
-    const timer = setInterval(()=>{
-      const diff = target - Date.now();
-
-      if(diff<=0){
-        const showBuy = (el.dataset.showbuy === "1");
-        const link = (el.dataset.link || "").trim();
-
-        const old = toNumberOrNull(el.dataset.old);
-        const cur = toNumberOrNull(el.dataset.price);
-
-        const tem = (old != null && old > 0 && cur != null && cur < old);
-        const pct = tem ? Math.round(((old-cur)/old)*100) : 0;
-
-        // ✅ monta o bloco final SEM quebrar: compra (opcional) + preço (opcional)
-        let out = "";
-
-        if(showBuy && link){
-          out += `<button class="buy-btn" onclick="window.open('${link}')">Comprar agora</button>`;
-        }
-
-        if(cur != null){
-          out += `
-            <div class="price-wrap">
-              ${tem ? `
-                <div class="price-line">
-                  <span class="price-old">${formatBRL(old)}</span>
-                  <span class="badge-off">${pct}% OFF</span>
-                </div>
-              ` : ``}
-              <div class="price-new">${formatBRL(cur)}</div>
-            </div>
-          `;
-        }
-
-        // se não tiver link e nem preço, só remove o cronômetro mesmo
-        el.outerHTML = out || ``;
-
-        clearInterval(timer);
-        return;
-      }
-
-      const d=Math.floor(diff/86400000);
-      const h=Math.floor((diff/3600000)%24);
-      const m=Math.floor((diff/60000)%60);
-      const s=Math.floor((diff/1000)%60);
-      el.innerHTML=`⏳ ${d}d ${h}h ${m}m ${s}s`;
-    },1000);
-  });
-}
-startCountdown();
