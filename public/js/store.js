@@ -1,6 +1,6 @@
 /* ================== PREÇOS DINÂMICOS ================== */
 const precosCakto = {
-  "TrackPilot by TB-BASS IR": 49,
+  "TrackPilot by TB-BASS IR": 39,
 
   "Bass Mods IR": 49,
   "Fender Ultra 2 IR": 45,
@@ -23,7 +23,7 @@ const precosCakto = {
 const produtos = [
   {
     nome:"TrackPilot by TB-BASS IR",
-    preco:59,
+    preco:49,
     link:"https://pay.cakto.com.br/p8ufknn_866145",
     desc:"Importação inteligente para REAPER. Organize, adicione e importe seus áudios nas tracks certas em segundos.",
     video:"/videos/trackpilot.mp4"
