@@ -1,3 +1,11 @@
+Sim. Aqui está o código completo já ajustado para o TrackPilot aparecer como:
+
+**R$ 49,00 no primeiro mês**  
+**Depois R$ 59,00 / mês**
+
+Importante: o checkout da Cakto também precisa estar configurado assim.
+
+```js
 /* ================== PREÇOS DINÂMICOS ================== */
 const precosCakto = {
   "TrackPilot by TB-BASS IR": 49,
@@ -186,7 +194,19 @@ function isTrackPilotName(nome){
 }
 
 function getPriceSuffix(nome){
-  return isTrackPilotName(nome) ? " / mês" : "";
+  return isTrackPilotName(nome) ? " no primeiro mês" : "";
+}
+
+function getPriceNote(nome, oldPrice, newPrice){
+  if(!isTrackPilotName(nome)) return "";
+  if(oldPrice == null || newPrice == null) return "";
+  if(newPrice >= oldPrice) return "";
+
+  return `<div class="price-note">Depois ${formatBRL(oldPrice)} / mês</div>`;
+}
+
+function getDiscountBadge(nome, pct){
+  return isTrackPilotName(nome) ? `${pct}% OFF no 1º mês` : `${pct}% OFF`;
 }
 
 /* ================== CSS EXTRA ================== */
@@ -200,6 +220,7 @@ function getPriceSuffix(nome){
     .price-line{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center}
     .price-old{opacity:.65;text-decoration:line-through;font-size:14px}
     .price-new{font-weight:800;font-size:18px}
+    .price-note{font-size:13px;opacity:.82;font-weight:700}
     .badge-off{
       font-weight:800;font-size:12px;
       padding:4px 10px;border-radius:999px;
@@ -277,6 +298,10 @@ function getPriceSuffix(nome){
 
     .trackpilot-feature .price-new{
       font-size:28px;
+    }
+
+    .trackpilot-feature .price-note{
+      font-size:15px;
     }
 
     @media (max-width:768px){
@@ -424,6 +449,38 @@ function openVideo(url){
   v.play().catch(()=>{});
 }
 
+/* ================== PREÇO ================== */
+function renderPriceHTML(nome, precoOriginal, precoFinal){
+  const antigo = toNumberOrNull(precoOriginal);
+  const novo = toNumberOrNull(precoFinal);
+
+  if(novo == null) return "";
+
+  const temDesconto = antigo != null && antigo > 0 && novo < antigo;
+  const pct = temDesconto ? Math.round(((antigo - novo) / antigo) * 100) : 0;
+  const priceSuffix = getPriceSuffix(nome);
+
+  let html = `<div class="price-wrap">`;
+
+  if(temDesconto){
+    html += `
+      <div class="price-line">
+        <span class="price-old">${formatBRL(antigo)}${isTrackPilotName(nome) ? " / mês" : ""}</span>
+        <span class="badge-off">${getDiscountBadge(nome, pct)}</span>
+      </div>
+      <div class="price-new">${formatBRL(novo)}${priceSuffix}</div>
+      ${getPriceNote(nome, antigo, novo)}
+    `;
+  }else{
+    html += `
+      <div class="price-new">${formatBRL(novo)}${isTrackPilotName(nome) ? " / mês" : ""}</div>
+    `;
+  }
+
+  html += `</div>`;
+  return html;
+}
+
 /* ================== RENDER ================== */
 if(grid){
   grid.innerHTML = "";
@@ -436,7 +493,6 @@ if(grid){
 
     const precoFinal = toNumberOrNull(precosCakto[p.nome] ?? p.preco);
     const showBuy = p.showBuy !== false;
-    const priceSuffix = getPriceSuffix(p.nome);
 
     let html = `
       <h3>${p.nome}</h3>
@@ -462,26 +518,7 @@ if(grid){
     }
 
     if(precoFinal && !p.release){
-      const antigo = toNumberOrNull(p.preco);
-      const novo = precoFinal;
-      const temDesconto = antigo != null && antigo > 0 && novo < antigo;
-      const pct = temDesconto ? Math.round(((antigo - novo) / antigo) * 100) : 0;
-
-      html += `<div class="price-wrap">`;
-
-      if(temDesconto){
-        html += `
-          <div class="price-line">
-            <span class="price-old">${formatBRL(antigo)}</span>
-            <span class="badge-off">${pct}% OFF</span>
-          </div>
-          <div class="price-new">${formatBRL(novo)}${priceSuffix}</div>
-        `;
-      }else{
-        html += `<div class="price-new">${formatBRL(novo)}${priceSuffix}</div>`;
-      }
-
-      html += `</div>`;
+      html += renderPriceHTML(p.nome, p.preco, precoFinal);
     }
 
     if(p.release){
@@ -556,10 +593,7 @@ function startCountdown(){
 
         const old = toNumberOrNull(el.dataset.old);
         const cur = toNumberOrNull(el.dataset.price);
-        const priceSuffix = getPriceSuffix(el.dataset.name);
-
-        const tem = old != null && old > 0 && cur != null && cur < old;
-        const pct = tem ? Math.round(((old - cur) / old) * 100) : 0;
+        const nome = el.dataset.name;
 
         let out = "";
 
@@ -567,19 +601,7 @@ function startCountdown(){
           out += `<button class="buy-btn" onclick="window.open('${link}')">Comprar agora</button>`;
         }
 
-        if(cur != null){
-          out += `
-            <div class="price-wrap">
-              ${tem ? `
-                <div class="price-line">
-                  <span class="price-old">${formatBRL(old)}</span>
-                  <span class="badge-off">${pct}% OFF</span>
-                </div>
-              ` : ``}
-              <div class="price-new">${formatBRL(cur)}${priceSuffix}</div>
-            </div>
-          `;
-        }
+        out += renderPriceHTML(nome, old, cur);
 
         el.outerHTML = out || ``;
         clearInterval(timer);
@@ -597,3 +619,4 @@ function startCountdown(){
 }
 
 startCountdown();
+```
