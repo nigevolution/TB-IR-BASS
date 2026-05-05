@@ -1,6 +1,6 @@
 /* ================== PREÇOS DINÂMICOS ================== */
 const precosCakto = {
-  "TrackPilot by TB-BASS IR": 39,
+  "TrackPilot by TB-BASS IR": 49,
 
   "Bass Mods IR": 49,
   "Fender Ultra 2 IR": 45,
@@ -23,9 +23,10 @@ const precosCakto = {
 const produtos = [
   {
     nome:"TrackPilot by TB-BASS IR",
-    preco:49,
+    preco:59,
     link:"https://pay.cakto.com.br/p8ufknn_866145",
-    desc:"Importação inteligente para REAPER. Organize, adicione e importe seus áudios nas tracks certas em segundos.",
+    desc:"Automação inteligente para REAPER criada para acelerar seu fluxo de trabalho. O TrackPilot organiza, adiciona e importa seus áudios diretamente nas tracks certas em poucos segundos, reduzindo erros manuais e deixando sua sessão pronta com muito mais agilidade.",
+    cupom:"TRACKPILOT20",
     video:"/videos/trackpilot.mp4"
   },
   {
@@ -217,6 +218,19 @@ function getDiscountText(nome, pct){
       padding:4px 10px;border-radius:999px;
       background:rgba(0,255,140,.12);
       border:1px solid rgba(0,255,140,.35);
+    }
+
+    .coupon-badge{
+      margin:10px auto 12px;
+      display:inline-block;
+      padding:7px 14px;
+      border-radius:999px;
+      font-weight:900;
+      font-size:13px;
+      letter-spacing:1px;
+      color:#000;
+      background:linear-gradient(135deg,#ffdf8a,#d4af37,#ffbf3c);
+      box-shadow:0 0 22px rgba(212,175,55,.45);
     }
 
     .trackpilot-feature{
@@ -457,6 +471,7 @@ if(grid){
     let html = `
       <h3>${p.nome}</h3>
       <p>${p.desc}</p>
+      ${p.cupom ? `<div class="coupon-badge">Cupom: ${p.cupom}</div>` : ``}
       ${p.status ? `<div class="status">${p.status}</div>` : ``}
     `;
 
