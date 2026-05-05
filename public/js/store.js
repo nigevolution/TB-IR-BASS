@@ -1,9 +1,6 @@
-Sim. Aqui está o código completo já ajustado para o TrackPilot aparecer como:
+Sim. Substitua o arquivo inteiro por este abaixo.
 
-**R$ 49,00 no primeiro mês**  
-**Depois R$ 59,00 / mês**
-
-Importante: o checkout da Cakto também precisa estar configurado assim.
+Importante: **não cole as linhas ```js nem ```** se estiver colocando no GitHub/editor. Cole só o conteúdo do código.
 
 ```js
 /* ================== PREÇOS DINÂMICOS ================== */
@@ -201,11 +198,10 @@ function getPriceNote(nome, oldPrice, newPrice){
   if(!isTrackPilotName(nome)) return "";
   if(oldPrice == null || newPrice == null) return "";
   if(newPrice >= oldPrice) return "";
-
   return `<div class="price-note">Depois ${formatBRL(oldPrice)} / mês</div>`;
 }
 
-function getDiscountBadge(nome, pct){
+function getDiscountText(nome, pct){
   return isTrackPilotName(nome) ? `${pct}% OFF no 1º mês` : `${pct}% OFF`;
 }
 
@@ -449,38 +445,6 @@ function openVideo(url){
   v.play().catch(()=>{});
 }
 
-/* ================== PREÇO ================== */
-function renderPriceHTML(nome, precoOriginal, precoFinal){
-  const antigo = toNumberOrNull(precoOriginal);
-  const novo = toNumberOrNull(precoFinal);
-
-  if(novo == null) return "";
-
-  const temDesconto = antigo != null && antigo > 0 && novo < antigo;
-  const pct = temDesconto ? Math.round(((antigo - novo) / antigo) * 100) : 0;
-  const priceSuffix = getPriceSuffix(nome);
-
-  let html = `<div class="price-wrap">`;
-
-  if(temDesconto){
-    html += `
-      <div class="price-line">
-        <span class="price-old">${formatBRL(antigo)}${isTrackPilotName(nome) ? " / mês" : ""}</span>
-        <span class="badge-off">${getDiscountBadge(nome, pct)}</span>
-      </div>
-      <div class="price-new">${formatBRL(novo)}${priceSuffix}</div>
-      ${getPriceNote(nome, antigo, novo)}
-    `;
-  }else{
-    html += `
-      <div class="price-new">${formatBRL(novo)}${isTrackPilotName(nome) ? " / mês" : ""}</div>
-    `;
-  }
-
-  html += `</div>`;
-  return html;
-}
-
 /* ================== RENDER ================== */
 if(grid){
   grid.innerHTML = "";
@@ -493,6 +457,7 @@ if(grid){
 
     const precoFinal = toNumberOrNull(precosCakto[p.nome] ?? p.preco);
     const showBuy = p.showBuy !== false;
+    const priceSuffix = getPriceSuffix(p.nome);
 
     let html = `
       <h3>${p.nome}</h3>
@@ -518,7 +483,27 @@ if(grid){
     }
 
     if(precoFinal && !p.release){
-      html += renderPriceHTML(p.nome, p.preco, precoFinal);
+      const antigo = toNumberOrNull(p.preco);
+      const novo = precoFinal;
+      const temDesconto = antigo != null && antigo > 0 && novo < antigo;
+      const pct = temDesconto ? Math.round(((antigo - novo) / antigo) * 100) : 0;
+
+      html += `<div class="price-wrap">`;
+
+      if(temDesconto){
+        html += `
+          <div class="price-line">
+            <span class="price-old">${formatBRL(antigo)}${isTrackPilotName(p.nome) ? " / mês" : ""}</span>
+            <span class="badge-off">${getDiscountText(p.nome, pct)}</span>
+          </div>
+          <div class="price-new">${formatBRL(novo)}${priceSuffix}</div>
+          ${getPriceNote(p.nome, antigo, novo)}
+        `;
+      }else{
+        html += `<div class="price-new">${formatBRL(novo)}${isTrackPilotName(p.nome) ? " / mês" : ""}</div>`;
+      }
+
+      html += `</div>`;
     }
 
     if(p.release){
@@ -593,7 +578,10 @@ function startCountdown(){
 
         const old = toNumberOrNull(el.dataset.old);
         const cur = toNumberOrNull(el.dataset.price);
-        const nome = el.dataset.name;
+        const priceSuffix = getPriceSuffix(el.dataset.name);
+
+        const tem = old != null && old > 0 && cur != null && cur < old;
+        const pct = tem ? Math.round(((old - cur) / old) * 100) : 0;
 
         let out = "";
 
@@ -601,7 +589,20 @@ function startCountdown(){
           out += `<button class="buy-btn" onclick="window.open('${link}')">Comprar agora</button>`;
         }
 
-        out += renderPriceHTML(nome, old, cur);
+        if(cur != null){
+          out += `
+            <div class="price-wrap">
+              ${tem ? `
+                <div class="price-line">
+                  <span class="price-old">${formatBRL(old)}${isTrackPilotName(el.dataset.name) ? " / mês" : ""}</span>
+                  <span class="badge-off">${getDiscountText(el.dataset.name, pct)}</span>
+                </div>
+              ` : ``}
+              <div class="price-new">${formatBRL(cur)}${tem ? priceSuffix : (isTrackPilotName(el.dataset.name) ? " / mês" : "")}</div>
+              ${getPriceNote(el.dataset.name, old, cur)}
+            </div>
+          `;
+        }
 
         el.outerHTML = out || ``;
         clearInterval(timer);
