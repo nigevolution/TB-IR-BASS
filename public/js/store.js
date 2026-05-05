@@ -27,7 +27,7 @@ const produtos = [
     link:"https://pay.cakto.com.br/p8ufknn_866145",
     desc:"Automação inteligente para REAPER criada para acelerar seu fluxo de trabalho. O TrackPilot organiza, adiciona e importa seus áudios diretamente nas tracks certas em poucos segundos, reduzindo erros manuais e deixando sua sessão pronta com muito mais agilidade.",
     cupom:"TRACKPILOT20",
-    video:"/videos/trackpilot.mp4"
+    video:"/videos/trackpilot.mp4",
     showBuy:false
   },
   {
