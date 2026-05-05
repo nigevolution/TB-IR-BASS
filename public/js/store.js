@@ -1,15 +1,10 @@
-Sim. Substitua o arquivo inteiro por este abaixo.
-
-Importante: **não cole as linhas ```js nem ```** se estiver colocando no GitHub/editor. Cole só o conteúdo do código.
-
-```js
 /* ================== PREÇOS DINÂMICOS ================== */
 const precosCakto = {
   "TrackPilot by TB-BASS IR": 49,
 
   "Bass Mods IR": 49,
   "Fender Ultra 2 IR": 45,
-  "Fender 1978 IR": 78,
+  "Fender 1978 IR": null,
   "Music Man IR": 49,
   "Sadowsky M5 IR": 59,
   "Sadowsky Metroline IR": 35,
@@ -43,7 +38,7 @@ const produtos = [
   },
   {
     nome:"Fender 1978 IR",
-    preco:88,
+    preco:null,
     link:null,
     desc:"Vintage de verdade: grave redondo e cheio, médios orgânicos e aquele brilho antigo que encaixa perfeito na mix — ideal pra groove, rock, funk e worship.",
     release:"2026-03-15T19:00:00",
@@ -177,7 +172,7 @@ const grid = document.getElementById("produtos");
 
 /* ================== HELPERS ================== */
 function toNumberOrNull(v){
-  if (v === null || v === undefined) return null;
+  if (v === null || v === undefined || v === "") return null;
   const n = Number(v);
   return Number.isFinite(n) ? n : null;
 }
@@ -482,7 +477,7 @@ if(grid){
       html += `<button class="buy-btn" onclick="window.open('${p.link}')">Comprar agora</button>`;
     }
 
-    if(precoFinal && !p.release){
+    if(precoFinal != null && !p.release){
       const antigo = toNumberOrNull(p.preco);
       const novo = precoFinal;
       const temDesconto = antigo != null && antigo > 0 && novo < antigo;
@@ -620,4 +615,3 @@ function startCountdown(){
 }
 
 startCountdown();
-```
