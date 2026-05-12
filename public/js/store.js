@@ -25,7 +25,7 @@ const produtos = [
     nome:"TrackPilot by TB-BASS IR",
     preco:49,
     link:"https://pay.cakto.com.br/p8ufknn_866145",
-    desc:"Automação inteligente para REAPER criada para acelerar seu fluxo de trabalho. O TrackPilot organiza, adiciona e importa seus áudios diretamente nas tracks certas em poucos segundos, reduzindo erros manuais e deixando sua sessão pronta com muito mais agilidade.",
+    desc:"Automação inteligente para REAPER criada para acelerar seu fluxo de trabalho. O TrackPilot organiza, adiciona e importa seus áudios diretamente nas tracks certas em poucos segundos. Após a compra, o acesso é enviado para o Gmail cadastrado na Cakto, com os arquivos disponibilizados via Google Drive para facilitar o download, a instalação e o uso.",
     cupom:null,
     video:"/videos/trackpilot.mp4"
   },
