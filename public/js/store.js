@@ -1,64 +1,63 @@
 /* ================== PREÇOS DINÂMICOS ================== */
 const precosCakto = {
-"TrackPilot por TB-BASS IR": 49,
+  "TrackPilot by TB-BASS IR": 49,
 
-"Baixo IR Mods": 49,
-Fender Ultra 2 IR: 45,
-"Fender 1978 IR": null,
-"Music Man IR": 49,
-"Sadowsky M5 IR": 59,
-"IR da Linha de Metrô Sadowsky": 35,
-"Lakland SS44-75 IR": 59,
-"Sadowsky NYC IR": 69,
-"Fodera IR": 89,
-"Swing Guitars Jazz Deluxe IR": 69,
-"TRB JP2 IR": 59,
-"Mayones Jabba 5 IR": 89,
-"MTD 535-24 IR": 89,
-"Warwick Corvette IR": 59,
-"Ken Smith IR": 59
+  "Bass Mods IR": 49,
+  "Fender Ultra 2 IR": 45,
+  "Fender 1978 IR": null,
+  "Music Man IR": 49,
+  "Sadowsky M5 IR": 59,
+  "Sadowsky Metroline IR": 35,
+  "Lakland SS44-75 IR": 59,
+  "Sadowsky NYC IR": 69,
+  "Fodera IR": 89,
+  "Swing Guitars Jazz Deluxe IR": 69,
+  "TRB JP2 IR": 59,
+  "Mayones Jabba 5 IR": 89,
+  "MTD 535-24 IR": 89,
+  "Warwick Corvette IR": 59,
+  "Ken Smith IR": 59
 };
 
 /* ================== PRODUTOS ================== */
 const produtos = [
-{
-nome:"TrackPilot por TB-BASS IR",
-preco:49,
-link: "https://pay.cakto.com.br/p8ufknn_866145",
-desc:"Automação inteligente para REAPER criada para acelerar seu fluxo de trabalho. O TrackPilot organiza, adiciona e importa seus áudios diretamente nas tracks certas em poucos segundos, reduzindo erros manuais e deixando sua sessão pronta com muito mais agilidade.",
-cupom:null,
-video:"/videos/trackpilot.mp4",
-showBuy:true
-},
-{
-nome:"Bass Mods IR",
-preco:59,
-link:"https://pay.cakto.com.br/rtuwa88_720263",
-desc:"Grave definido, ataque rápido e presença moderna.",
-audio:"/audio/bass-mods.mp3",
-video:"/videos/bass-mods.mp4"
-},
-{
-nome:"Fender 1978 IR",
-preco:null,
-link:null,
-desc:"Vintage de verdade: grave redondo e cheio, médios orgânicos e aquele brilho antigo que encaixa perfeito na mix — ideal pra groove, rock, funk e worship.",
-release:"2026-03-15T19:00:00",
-status:"EM BREVE",
-audio:"/audio/fender-1978.mp3",
-video:"/videos/fender-1978.mp4",
-showBuy:false
-},
-{
-nome:"Fender Ultra 2 IR",
-preco:59,
-link:"https://pay.cakto.com.br/w3x2i3r_700686",
-desc:"Timbre limpo, quente e equilibrado.",
-audio:"/audio/fender-ultra-ii.mp3",
-video:"/videos/fender-ultra-2.mp4"
-},
-{
-nome:"Music Man IR",
+  {
+    nome:"TrackPilot by TB-BASS IR",
+    preco:49,
+    link:"https://pay.cakto.com.br/p8ufknn_866145",
+    desc:"Automação inteligente para REAPER criada para acelerar seu fluxo de trabalho. O TrackPilot organiza, adiciona e importa seus áudios diretamente nas tracks certas em poucos segundos, reduzindo erros manuais e deixando sua sessão pronta com muito mais agilidade.",
+    cupom:null,
+    video:"/videos/trackpilot.mp4"
+  },
+  {
+    nome:"Bass Mods IR",
+    preco:59,
+    link:"https://pay.cakto.com.br/rtuwa88_720263",
+    desc:"Grave definido, ataque rápido e presença moderna.",
+    audio:"/audio/bass-mods.mp3",
+    video:"/videos/bass-mods.mp4"
+  },
+  {
+    nome:"Fender 1978 IR",
+    preco:null,
+    link:null,
+    desc:"Vintage de verdade: grave redondo e cheio, médios orgânicos e aquele brilho antigo que encaixa perfeito na mix — ideal pra groove, rock, funk e worship.",
+    release:"2026-03-15T19:00:00",
+    status:"EM BREVE",
+    audio:"/audio/fender-1978.mp3",
+    video:"/videos/fender-1978.mp4",
+    showBuy:false
+  },
+  {
+    nome:"Fender Ultra 2 IR",
+    preco:59,
+    link:"https://pay.cakto.com.br/w3x2i3r_700686",
+    desc:"Timbre limpo, quente e equilibrado.",
+    audio:"/audio/fender-ultra-ii.mp3",
+    video:"/videos/fender-ultra-2.mp4"
+  },
+  {
+    nome:"Music Man IR",
     preco:59,
     link:"https://pay.cakto.com.br/n9ji2mm_700692",
     desc:"Punch agressivo, slap estalado e presença absurda.",
