@@ -1,10 +1,10 @@
 /* ================== PREÇOS DINÂMICOS ================== */
 const precosCakto = {
-"TrackPilot por TB-BASS IR": null,
+"TrackPilot por TB-BASS IR": 49,
 
 "Baixo IR Mods": 49,
 Fender Ultra 2 IR: 45,
-"Fender 1978 IR": nulo,
+"Fender 1978 IR": null,
 "Music Man IR": 49,
 "Sadowsky M5 IR": 59,
 "IR da Linha de Metrô Sadowsky": 35,
