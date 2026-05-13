@@ -1,6 +1,6 @@
 /* ================== PREÇOS DINÂMICOS ================== */
 const precosCakto = {
-  "TrackPilot": 49,
+  "TrackPilot by TB-BASS IR": 49,
 
   "Bass Mods IR": 49,
   "Fender Ultra 2 IR": 45,
@@ -22,7 +22,7 @@ const precosCakto = {
 /* ================== PRODUTOS ================== */
 const produtos = [
   {
-    nome:"TrackPilot",
+    nome:"TrackPilot by TB-BASS IR",
     preco:49,
     link:"https://pay.cakto.com.br/p8ufknn_866145",
     desc:"Automação inteligente para REAPER criada para acelerar seu fluxo de trabalho. O TrackPilot organiza, adiciona e importa seus áudios diretamente nas tracks certas em poucos segundos. Após a compra, o acesso é enviado para o Gmail cadastrado na Cakto, com os arquivos disponibilizados via Google Drive para facilitar o download, a instalação e o uso.",
