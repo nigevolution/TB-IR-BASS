@@ -639,7 +639,7 @@ function ensureIRTestModal(){
         sem brilho e sem definição.
       </div>
 
-      <input id="irTestFile" class="ir-file" type="file" accept=".wav,.mp3,.m4a,.aif,.aiff,audio/wav,audio/mpeg,audio/mp4,audio/x-m4a,audio/aiff">
+      <input id="irTestFile" class="ir-file" type="file" accept=".wav,.mp3,.m4a,.aif,.aiff">
       <button id="irTestGenerate" class="ir-generate">Gerar prévia fiel de 10s</button>
       <div id="irTestStatus" class="ir-status"></div>
       <audio id="irTestPlayer" controls playsinline></audio>
