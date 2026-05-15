@@ -31,6 +31,7 @@ const produtos = [
   },
   {
     nome:"Bass Mods IR",
+    irId:"bass-mods",
     preco:59,
     link:"https://pay.cakto.com.br/rtuwa88_720263",
     desc:"Grave definido, ataque rápido e presença moderna.",
@@ -50,6 +51,7 @@ const produtos = [
   },
   {
     nome:"Fender Ultra 2 IR",
+    irId:"fender-ultra-2",
     preco:59,
     link:"https://pay.cakto.com.br/w3x2i3r_700686",
     desc:"Timbre limpo, quente e equilibrado.",
@@ -58,6 +60,7 @@ const produtos = [
   },
   {
     nome:"Music Man IR",
+    irId:"music-man",
     preco:59,
     link:"https://pay.cakto.com.br/n9ji2mm_700692",
     desc:"Punch agressivo, slap estalado e presença absurda.",
@@ -76,6 +79,7 @@ const produtos = [
   },
   {
     nome:"Sadowsky M5 IR",
+    irId:"sadowsky-m5",
     preco:69,
     link:"https://pay.cakto.com.br/36243of_6",
     desc:"Grave cheio, médios polidos e definição premium.",
@@ -84,6 +88,7 @@ const produtos = [
   },
   {
     nome:"Sadowsky Metroline IR",
+    irId:"sadowsky-metroline",
     preco:39,
     link:"https://pay.cakto.com.br/yaueq45_665688",
     desc:"Timbre clássico, suave e musical.",
@@ -92,6 +97,7 @@ const produtos = [
   },
   {
     nome:"Lakland SS44-75 IR",
+    irId:"lakland-ss44-75",
     preco:69,
     link:"https://pay.cakto.com.br/wgonjnx_723722",
     desc:"Boutique americano com punch absurdo, slap cristalino e médios vivos.",
@@ -101,6 +107,7 @@ const produtos = [
   },
   {
     nome:"Sadowsky NYC IR",
+    irId:"sadowsky-nyc",
     preco:69,
     link:"https://pay.cakto.com.br/3k2ofxi_750123",
     desc:"Flagship nova-iorquino com graves profundos e brilho cristalino.",
@@ -110,6 +117,7 @@ const produtos = [
   },
   {
     nome:"Fodera IR",
+    irId:"fodera",
     preco:89,
     link:"https://pay.cakto.com.br/8pw23r3_733800",
     desc:"Referência absoluta em boutique bass. Grave profundo, médios tridimensionais e definição de estúdio.",
@@ -118,6 +126,7 @@ const produtos = [
   },
   {
     nome:"Swing Guitars Jazz Deluxe IR",
+    irId:"swing",
     preco:89,
     link:"https://pay.cakto.com.br/3ff2d5r_750130",
     desc:"Timbre vintage com personalidade. Graves macios, médios encorpados e dinâmica musical perfeita para grooves, jazz, soul e bases orgânicas.",
@@ -127,6 +136,7 @@ const produtos = [
   },
   {
     nome:"TRB JP2 IR",
+    irId:"trb-jp2",
     preco:69,
     link:"https://pay.cakto.com.br/ebr74qa_733818",
     desc:"Assinatura japonesa moderna. Grave firme, ataque rápido e equilíbrio perfeito para palco e estúdio.",
@@ -135,6 +145,7 @@ const produtos = [
   },
   {
     nome:"Mayones Jabba 5 IR",
+    irId:"mayones",
     preco:99,
     link:"https://pay.cakto.com.br/388nbge_735148",
     desc:"Flagship europeu com profundidade e definição profissional.",
@@ -144,6 +155,7 @@ const produtos = [
   },
   {
     nome:"MTD 535-24 IR",
+    irId:"mtd",
     preco:99,
     link:"https://pay.cakto.com.br/3bgf2sv_735157",
     desc:"Boutique luthier com dinâmica extrema e médios orgânicos.",
@@ -153,6 +165,7 @@ const produtos = [
   },
   {
     nome:"Warwick Corvette IR",
+    irId:"warwick-corvette",
     preco:79,
     link:"https://pay.cakto.com.br/3frq3qm_719724",
     desc:"Médio encorpado e ataque metálico.",
@@ -161,6 +174,7 @@ const produtos = [
   },
   {
     nome:"Ken Smith IR",
+    irId:"ken-smith",
     preco:79,
     link:"https://pay.cakto.com.br/zy8esjf_719715",
     desc:"Resposta hi-fi, ultra definição e sustain perfeito.",
@@ -309,6 +323,135 @@ function getDiscountText(nome, pct){
       font-size:15px;
     }
 
+
+    .try-ir-btn{
+      border:none;
+      border-radius:18px;
+      padding:14px 28px;
+      background:linear-gradient(135deg,#1fd38a,#0ea96b);
+      color:#06130d;
+      font-weight:900;
+      box-shadow:0 0 25px rgba(31,211,138,.38);
+      cursor:pointer;
+      margin:6px 0;
+    }
+    .try-ir-btn:hover{filter:brightness(1.08)}
+    #irTestModal{position:fixed;inset:0;display:none;z-index:999999}
+    #irTestModal.open{display:block}
+    #irTestModal .ir-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.76)}
+    #irTestModal .ir-card{
+      position:absolute;
+      left:50%;
+      top:50%;
+      transform:translate(-50%,-50%);
+      width:min(620px,92vw);
+      background:rgba(12,10,8,.96);
+      border:1px solid rgba(255,154,60,.35);
+      border-radius:24px;
+      padding:24px;
+      box-shadow:0 30px 90px rgba(0,0,0,.85);
+      text-align:left;
+    }
+    #irTestModal h3{color:#ff9a3c;margin:0 42px 10px 0}
+    #irTestModal p{line-height:1.45;opacity:.9}
+    #irTestModal .ir-close{
+      position:absolute;
+      right:14px;
+      top:12px;
+      width:38px;
+      height:38px;
+      border:none;
+      border-radius:12px;
+      color:#fff;
+      background:rgba(255,255,255,.12);
+      cursor:pointer;
+      font-size:18px;
+    }
+    #irTestModal .ir-version-box{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      margin:14px 0 12px;
+    }
+    #irTestModal .ir-version-option{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      padding:12px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.06);
+      cursor:pointer;
+    }
+    #irTestModal .ir-version-option input{
+      margin-top:3px;
+      accent-color:#ff9a3c;
+    }
+    #irTestModal .ir-version-option b{
+      display:block;
+      color:#fff;
+      margin-bottom:4px;
+    }
+    #irTestModal .ir-version-option small{
+      display:block;
+      opacity:.74;
+      line-height:1.35;
+    }
+
+    #irTestModal .ir-guidance{
+      margin:12px 0 12px;
+      padding:12px 14px;
+      border-radius:16px;
+      background:rgba(255,154,60,.08);
+      border:1px solid rgba(255,154,60,.22);
+      font-size:13px;
+      line-height:1.45;
+      color:#fff;
+      opacity:.9;
+    }
+    #irTestModal .ir-guidance b{
+      color:#ffbf7a;
+    }
+
+    #irTestModal .ir-file{
+      width:100%;
+      padding:14px;
+      border-radius:14px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.16);
+      color:#fff;
+      box-sizing:border-box;
+      margin:10px 0;
+    }
+    #irTestModal .ir-generate{
+      width:100%;
+      margin-top:12px;
+      border:none;
+      border-radius:16px;
+      padding:15px 22px;
+      background:linear-gradient(135deg,#ff9a3c,#ff7a00);
+      color:#000;
+      font-weight:900;
+      cursor:pointer;
+    }
+    #irTestModal .ir-generate:disabled{opacity:.55;cursor:not-allowed}
+    #irTestModal .ir-status{
+      margin-top:12px;
+      font-size:14px;
+      opacity:.86;
+      min-height:20px;
+    }
+    #irTestModal audio{
+      width:100%;
+      margin-top:14px;
+      display:none;
+    }
+    #irTestModal .ir-privacy{
+      font-size:13px;
+      opacity:.72;
+      margin-top:12px;
+    }
+
     @media (max-width:768px){
       .trackpilot-feature{
         grid-column:span 1;
@@ -454,6 +597,208 @@ function openVideo(url){
   v.play().catch(()=>{});
 }
 
+
+/* ================== TESTE DE TIMBRE COM CLOUD RUN ================== */
+const TB_BASS_PREVIEW_API = "https://tb-bass-ir-preview-5sieyq2o4a-uc.a.run.app";
+
+function ensureIRTestModal(){
+  if(document.getElementById("irTestModal")) return;
+
+  const modal = document.createElement("div");
+  modal.id = "irTestModal";
+  modal.innerHTML = `
+    <div class="ir-backdrop"></div>
+    <div class="ir-card" role="dialog" aria-modal="true">
+      <button class="ir-close" aria-label="Fechar">✕</button>
+      <h3>Teste este IR com seu próprio baixo</h3>
+      <p id="irTestProduct">Selecione um produto para testar.</p>
+
+      <div class="ir-version-box">
+        <label class="ir-version-option">
+          <input type="radio" name="irTestVersion" value="immediate" checked>
+          <span>
+            <b>Versão que recebo na hora</b>
+            <small>É o timbre entregue imediatamente após a compra.</small>
+          </span>
+        </label>
+
+        <label class="ir-version-option">
+          <input type="radio" name="irTestVersion" value="updated-7-days">
+          <span>
+            <b>Versão melhorada de 7 dias</b>
+            <small>É a atualização refinada que o cliente recebe depois.</small>
+          </span>
+        </label>
+      </div>
+
+      <div class="ir-guidance">
+        <b>Para um teste fiel:</b> envie um áudio seco do baixo, gravado direto na interface ou placa de som,
+        sem caixa, sem amp, sem compressor, sem efeitos e sem som ambiente.<br>
+        Evite áudio gravado pelo celular, com ruído, eco ou ambiência, porque isso altera o resultado do timbre.<br>
+        Cordas novas ou semi-novas fazem muita diferença. Cordas muito velhas podem deixar o som apagado,
+        sem brilho e sem definição.
+      </div>
+
+      <input id="irTestFile" class="ir-file" type="file" accept="audio/*,.wav,.mp3,.m4a,.aif,.aiff">
+      <button id="irTestGenerate" class="ir-generate">Gerar prévia fiel de 10s</button>
+      <div id="irTestStatus" class="ir-status"></div>
+      <audio id="irTestPlayer" controls playsinline></audio>
+      <div class="ir-privacy">
+        O áudio original é usado apenas para gerar a prévia e é apagado após o processamento.
+        Os IRs ficam protegidos no servidor.
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+  modal.dataset.version = "immediate";
+
+  modal.querySelectorAll('input[name="irTestVersion"]').forEach(input => {
+    input.addEventListener("change", () => {
+      modal.dataset.version = input.value;
+
+      const status = document.getElementById("irTestStatus");
+      const player = document.getElementById("irTestPlayer");
+      const fileInput = document.getElementById("irTestFile");
+      const generateBtn = document.getElementById("irTestGenerate");
+
+      if(player){
+        player.pause();
+        player.removeAttribute("src");
+        player.style.display = "none";
+        player.load();
+      }
+
+      if(status){
+        status.textContent = input.value === "updated-7-days"
+          ? "Versão melhorada de 7 dias selecionada."
+          : "Versão que recebe na hora selecionada.";
+      }
+
+      if(fileInput?.files?.[0] && generateBtn && !generateBtn.disabled){
+        status.textContent += " Gerando nova prévia automaticamente...";
+        setTimeout(() => generateBtn.click(), 120);
+      }else if(status){
+        status.textContent += " Escolha um áudio para gerar a prévia.";
+      }
+    });
+  });
+
+  modal.querySelectorAll(".ir-version-option").forEach(label => {
+    label.addEventListener("click", () => {
+      const input = label.querySelector('input[name="irTestVersion"]');
+      if(input && !input.checked){
+        input.checked = true;
+        input.dispatchEvent(new Event("change", { bubbles:true }));
+      }
+    });
+  });
+
+  const close = () => {
+    modal.classList.remove("open");
+    const player = document.getElementById("irTestPlayer");
+    if(player){
+      player.pause();
+      player.removeAttribute("src");
+      player.style.display = "none";
+    }
+  };
+
+  modal.querySelector(".ir-backdrop").addEventListener("click", close);
+  modal.querySelector(".ir-close").addEventListener("click", close);
+
+  document.getElementById("irTestGenerate").addEventListener("click", async () => {
+    const fileInput = document.getElementById("irTestFile");
+    const status = document.getElementById("irTestStatus");
+    const player = document.getElementById("irTestPlayer");
+    const btn = document.getElementById("irTestGenerate");
+    const product = modal.dataset.product;
+
+    try{
+      const file = fileInput.files && fileInput.files[0];
+
+      if(!file){
+        alert("Escolha um áudio seco do baixo primeiro.");
+        return;
+      }
+
+      if(file.size > 40 * 1024 * 1024){
+        alert("Arquivo muito grande. Use um áudio menor que 40 MB.");
+        return;
+      }
+
+      const selectedVersion = modal.dataset.version || "immediate";
+      const selectedVersionLabel = selectedVersion === "updated-7-days"
+        ? "versão melhorada de 7 dias"
+        : "versão que recebe na hora";
+
+      btn.disabled = true;
+      btn.textContent = "Processando...";
+      status.textContent = `Enviando áudio e aplicando a ${selectedVersionLabel} no servidor...`;
+      player.style.display = "none";
+
+      const form = new FormData();
+      form.append("product", product);
+      form.append("version", selectedVersion);
+      form.append("audio", file);
+
+      const response = await fetch(`${TB_BASS_PREVIEW_API}/api/preview`, {
+        method: "POST",
+        body: form
+      });
+
+      const data = await response.json();
+
+      if(!response.ok || !data.ok){
+        throw new Error(data.error || "Falha ao gerar prévia.");
+      }
+
+      player.src = TB_BASS_PREVIEW_API + data.preview_url + "?t=" + Date.now();
+      player.style.display = "block";
+      status.textContent = `Prévia fiel pronta: 10 segundos, 100% wet, sem dry misturado. Versão: ${data.version_label || selectedVersionLabel}.`;
+
+      if(typeof gtag === "function"){
+        gtag("event","custom_ir_preview_generated",{ item_id: product });
+      }
+    }catch(err){
+      console.error(err);
+      status.textContent = "Erro: " + err.message;
+      alert("Não consegui gerar a prévia: " + err.message);
+    }finally{
+      btn.disabled = false;
+      btn.textContent = "Gerar prévia fiel de 10s";
+    }
+  });
+}
+
+function openIRTest(productId, productName){
+  ensureIRTestModal();
+
+  const modal = document.getElementById("irTestModal");
+  modal.dataset.product = productId;
+  modal.dataset.version = "immediate";
+
+  document.getElementById("irTestProduct").innerHTML =
+    `<b>${productName}</b><br>Envie um áudio seco do baixo para ouvir este IR aplicado em uma prévia de 10 segundos.`;
+
+  document.getElementById("irTestFile").value = "";
+  document.getElementById("irTestStatus").textContent = "";
+
+  const immediateOption = modal.querySelector('input[name="irTestVersion"][value="immediate"]');
+  if(immediateOption) immediateOption.checked = true;
+
+  const player = document.getElementById("irTestPlayer");
+  player.pause();
+  player.removeAttribute("src");
+  player.style.display = "none";
+  player.load();
+
+  modal.classList.add("open");
+
+  if(typeof gtag === "function"){
+    gtag("event","custom_ir_preview_open",{ item_id: productId, item_name: productName });
+  }
+}
+
 /* ================== RENDER ================== */
 if(grid){
   grid.innerHTML = "";
@@ -487,6 +832,11 @@ if(grid){
         </div>
       `;
     }
+
+    if(p.irId){
+      html += `<button class="try-ir-btn" data-ir-id="${p.irId}" data-ir-name="${p.nome}">🎛 Testar meu áudio</button>`;
+    }
+
 
     if(showBuy && p.link && !p.release){
       html += `<button class="buy-btn" onclick="window.open('${p.link}')">Comprar agora</button>`;
@@ -539,6 +889,14 @@ if(grid){
         openVideo(vb.getAttribute("data-video"));
       });
     }
+
+    const tryBtn = card.querySelector(".try-ir-btn");
+    if(tryBtn){
+      tryBtn.addEventListener("click",()=>{
+        openIRTest(tryBtn.dataset.irId, tryBtn.dataset.irName);
+      });
+    }
+
 
     if(p.audio){
       const audio = card.querySelector("audio");
