@@ -413,6 +413,36 @@ function getDiscountText(nome, pct){
       color:#ffbf7a;
     }
 
+    #irTestModal .ir-file-picker{
+      width:100%;
+      display:flex;
+      gap:10px;
+      align-items:center;
+      padding:12px;
+      border-radius:14px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.16);
+      box-sizing:border-box;
+      margin:10px 0;
+    }
+    #irTestModal .ir-file-btn{
+      border:none;
+      border-radius:10px;
+      padding:10px 14px;
+      background:rgba(255,255,255,.18);
+      color:#fff;
+      font-weight:800;
+      cursor:pointer;
+      white-space:nowrap;
+    }
+    #irTestModal .ir-file-name{
+      font-size:13px;
+      opacity:.82;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+    }
+
     #irTestModal .ir-file{
       width:100%;
       padding:14px;
@@ -639,7 +669,11 @@ function ensureIRTestModal(){
         sem brilho e sem definição.
       </div>
 
-      <input id="irTestFile" class="ir-file" type="file">
+            <div class="ir-file-picker">
+        <button id="irChooseFileBtn" class="ir-file-btn" type="button">Escolher arquivo pelo gerenciador</button>
+        <span id="irChosenFileName" class="ir-file-name">Nenhum arquivo escolhido</span>
+      </div>
+      <input id="irTestFile" type="file" style="display:none">
       <button id="irTestGenerate" class="ir-generate">Gerar prévia fiel de 10s</button>
       <div id="irTestStatus" class="ir-status"></div>
       <audio id="irTestPlayer" controls playsinline></audio>
@@ -674,7 +708,7 @@ function ensureIRTestModal(){
           : "Versão que recebe na hora selecionada.";
       }
 
-      if(fileInput?.files?.[0] && generateBtn && !generateBtn.disabled){
+      if((modal._selectedIRTestFile || fileInput?.files?.[0]) && generateBtn && !generateBtn.disabled){
         status.textContent += " Gerando nova prévia automaticamente...";
         setTimeout(() => generateBtn.click(), 120);
       }else if(status){
@@ -692,6 +726,49 @@ function ensureIRTestModal(){
       }
     });
   });
+
+  modal._selectedIRTestFile = null;
+
+  const chooseFileBtn = document.getElementById("irChooseFileBtn");
+  const hiddenFileInput = document.getElementById("irTestFile");
+  const chosenFileName = document.getElementById("irChosenFileName");
+
+  function setChosenIRFile(file){
+    modal._selectedIRTestFile = file || null;
+    if(chosenFileName){
+      chosenFileName.textContent = file ? file.name : "Nenhum arquivo escolhido";
+    }
+  }
+
+  if(chooseFileBtn && hiddenFileInput){
+    chooseFileBtn.addEventListener("click", async () => {
+      try{
+        if(window.showOpenFilePicker){
+          const handles = await window.showOpenFilePicker({
+            multiple:false,
+            excludeAcceptAllOption:false
+          });
+
+          if(handles && handles[0]){
+            const file = await handles[0].getFile();
+            hiddenFileInput.value = "";
+            setChosenIRFile(file);
+            return;
+          }
+        }
+      }catch(err){
+        if(err && err.name === "AbortError") return;
+        console.warn("Falha no seletor nativo de arquivos, usando fallback.", err);
+      }
+
+      hiddenFileInput.click();
+    });
+
+    hiddenFileInput.addEventListener("change", () => {
+      const file = hiddenFileInput.files && hiddenFileInput.files[0];
+      setChosenIRFile(file || null);
+    });
+  }
 
   const close = () => {
     modal.classList.remove("open");
@@ -714,7 +791,7 @@ function ensureIRTestModal(){
     const product = modal.dataset.product;
 
     try{
-      const file = fileInput.files && fileInput.files[0];
+      const file = modal._selectedIRTestFile || (fileInput.files && fileInput.files[0]);
 
       if(!file){
         alert("Escolha um áudio seco do baixo primeiro.");
@@ -791,6 +868,9 @@ function openIRTest(productId, productName){
 
   document.getElementById("irTestFile").value = "";
   document.getElementById("irTestStatus").textContent = "";
+  modal._selectedIRTestFile = null;
+  const chosenFileName = document.getElementById("irChosenFileName");
+  if(chosenFileName) chosenFileName.textContent = "Nenhum arquivo escolhido";
 
   const immediateOption = modal.querySelector('input[name="irTestVersion"][value="immediate"]');
   if(immediateOption) immediateOption.checked = true;
