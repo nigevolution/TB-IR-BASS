@@ -398,6 +398,21 @@ function getDiscountText(nome, pct){
       line-height:1.35;
     }
 
+    #irTestModal .ir-guidance{
+      margin:12px 0 12px;
+      padding:12px 14px;
+      border-radius:16px;
+      background:rgba(255,154,60,.08);
+      border:1px solid rgba(255,154,60,.22);
+      font-size:13px;
+      line-height:1.45;
+      color:#fff;
+      opacity:.9;
+    }
+    #irTestModal .ir-guidance b{
+      color:#ffbf7a;
+    }
+
     #irTestModal .ir-file{
       width:100%;
       padding:14px;
@@ -614,6 +629,14 @@ function ensureIRTestModal(){
             <small>É a atualização refinada que o cliente recebe depois.</small>
           </span>
         </label>
+      </div>
+
+      <div class="ir-guidance">
+        <b>Para um teste fiel:</b> envie um áudio seco do baixo, gravado direto na interface ou placa de som,
+        sem caixa, sem amp, sem compressor, sem efeitos e sem som ambiente.<br>
+        Evite áudio gravado pelo celular, com ruído, eco ou ambiência, porque isso altera o resultado do timbre.<br>
+        Cordas novas ou semi-novas fazem muita diferença. Cordas muito velhas podem deixar o som apagado,
+        sem brilho e sem definição.
       </div>
 
       <input id="irTestFile" class="ir-file" type="file" accept="audio/*,.wav,.mp3,.m4a,.aif,.aiff">
