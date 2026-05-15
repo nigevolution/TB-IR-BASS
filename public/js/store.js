@@ -639,7 +639,7 @@ function ensureIRTestModal(){
         sem brilho e sem definição.
       </div>
 
-      <input id="irTestFile" class="ir-file" type="file" accept=".wav,.mp3,.m4a,.aif,.aiff">
+      <input id="irTestFile" class="ir-file" type="file">
       <button id="irTestGenerate" class="ir-generate">Gerar prévia fiel de 10s</button>
       <div id="irTestStatus" class="ir-status"></div>
       <audio id="irTestPlayer" controls playsinline></audio>
@@ -718,6 +718,15 @@ function ensureIRTestModal(){
 
       if(!file){
         alert("Escolha um áudio seco do baixo primeiro.");
+        return;
+      }
+
+      const allowedAudioExts = [".wav", ".mp3", ".m4a", ".aif", ".aiff"];
+      const fileName = (file.name || "").toLowerCase();
+      const isAllowedAudio = allowedAudioExts.some(ext => fileName.endsWith(ext));
+
+      if(!isAllowedAudio){
+        alert("Escolha um arquivo de áudio seco em WAV, MP3, M4A, AIF ou AIFF. Não grave pelo celular.");
         return;
       }
 
