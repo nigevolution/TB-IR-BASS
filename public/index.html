@@ -259,17 +259,45 @@ document.getElementById("whats-float").onclick=()=>{
 
 <!-- TRACKING PREVIEW & BUY (SEM ALTERAR STORE.JS) -->
 <script>
+function getGA4CardItem(target){
+  const card = target.closest('.card');
+  const itemName = card?.dataset?.itemName || card?.querySelector('h3')?.innerText || 'unknown';
+  const itemId = card?.dataset?.itemId || itemName.toLowerCase().replace(/[^a-z0-9]+/g,'-');
+  const priceRaw = card?.dataset?.price;
+  const price = priceRaw ? Number(priceRaw) : null;
+
+  const item = {
+    item_id: itemId,
+    item_name: itemName,
+    currency: 'BRL'
+  };
+
+  if(Number.isFinite(price)){
+    item.price = price;
+  }
+
+  const payload = {
+    item_id: item.item_id,
+    item_name: item.item_name,
+    currency: 'BRL',
+    items: [item]
+  };
+
+  if(Number.isFinite(price)){
+    payload.price = price;
+    payload.value = price;
+  }
+
+  return payload;
+}
+
 document.addEventListener('click', function(e){
   if(e.target.closest('.preview-btn')){
-    gtag('event','preview_play',{
-      item_name: e.target.closest('.card')?.querySelector('h3')?.innerText || 'unknown'
-    });
+    gtag('event','preview_play', getGA4CardItem(e.target));
   }
 
   if(e.target.closest('.buy-btn')){
-    gtag('event','buy_click',{
-      item_name: e.target.closest('.card')?.querySelector('h3')?.innerText || 'unknown'
-    });
+    gtag('event','buy_click', getGA4CardItem(e.target));
   }
 });
 </script>

@@ -863,9 +863,11 @@ function ensureIRTestModal(){
       player.style.display = "block";
       status.textContent = `Prévia fiel pronta: 10 segundos, 100% wet, sem dry misturado. Versão: ${data.version_label || selectedVersionLabel}.`;
 
-      if(typeof gtag === "function"){
-        gtag("event","custom_ir_preview_generated",{ item_id: product });
-      }
+      const analyticsProduct = getAnalyticsProductById(product);
+      trackGA4ProductEvent("custom_ir_preview_generated", analyticsProduct, {
+        ir_version: selectedVersion,
+        ir_version_label: data.version_label || selectedVersionLabel
+      });
     }catch(err){
       console.error(err);
       status.textContent = "Erro: " + err.message;
@@ -882,6 +884,7 @@ function openIRTest(productId, productName){
 
   const modal = document.getElementById("irTestModal");
   modal.dataset.product = productId;
+  modal.dataset.productName = productName;
   modal.dataset.version = "immediate";
 
   document.getElementById("irTestProduct").innerHTML =
@@ -904,10 +907,60 @@ function openIRTest(productId, productName){
 
   modal.classList.add("open");
 
-  if(typeof gtag === "function"){
-    gtag("event","custom_ir_preview_open",{ item_id: productId, item_name: productName });
-  }
+  trackGA4ProductEvent("custom_ir_preview_open", getAnalyticsProductById(productId), {
+    ir_version: "immediate"
+  });
 }
+
+
+/* ================== GA4 PRODUTO ================== */
+function getAnalyticsItemId(p){
+  return p.irId || String(p.nome || "")
+    .toLowerCase()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g,"")
+    .replace(/[^a-z0-9]+/g,"-")
+    .replace(/^-+|-+$/g,"");
+}
+
+function getAnalyticsProductById(itemId){
+  return produtos.find(p => getAnalyticsItemId(p) === itemId) || null;
+}
+
+function getAnalyticsItem(p){
+  const price = toNumberOrNull(precosCakto[p.nome] ?? p.preco);
+  const item = {
+    item_id: getAnalyticsItemId(p),
+    item_name: p.nome,
+    currency: "BRL"
+  };
+
+  if(price != null){
+    item.price = price;
+  }
+
+  return item;
+}
+
+function trackGA4ProductEvent(eventName, p, extra = {}){
+  if(typeof gtag !== "function" || !p) return;
+
+  const item = getAnalyticsItem(p);
+  const payload = {
+    item_id: item.item_id,
+    item_name: item.item_name,
+    currency: "BRL",
+    items: [item],
+    ...extra
+  };
+
+  if(item.price != null){
+    payload.price = item.price;
+    payload.value = item.price;
+  }
+
+  gtag("event", eventName, payload);
+}
+
 
 /* ================== RENDER ================== */
 if(grid){
@@ -920,6 +973,13 @@ if(grid){
       : "card";
 
     const precoFinal = toNumberOrNull(precosCakto[p.nome] ?? p.preco);
+    const analyticsItem = getAnalyticsItem(p);
+    card.dataset.itemId = analyticsItem.item_id;
+    card.dataset.itemName = analyticsItem.item_name;
+    if(analyticsItem.price != null){
+      card.dataset.price = String(analyticsItem.price);
+    }
+
     const showBuy = p.showBuy !== false;
     const priceSuffix = getPriceSuffix(p.nome);
 
