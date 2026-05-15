@@ -733,11 +733,35 @@ function ensureIRTestModal(){
   const hiddenFileInput = document.getElementById("irTestFile");
   const chosenFileName = document.getElementById("irChosenFileName");
 
+  function isAllowedIRAudioFile(file){
+    const allowedAudioExts = [".wav", ".mp3", ".m4a", ".aif", ".aiff"];
+    const fileName = (file?.name || "").toLowerCase();
+    return allowedAudioExts.some(ext => fileName.endsWith(ext));
+  }
+
   function setChosenIRFile(file){
+    if(file && !isAllowedIRAudioFile(file)){
+      modal._selectedIRTestFile = null;
+
+      if(hiddenFileInput){
+        hiddenFileInput.value = "";
+      }
+
+      if(chosenFileName){
+        chosenFileName.textContent = "Nenhum arquivo escolhido";
+      }
+
+      alert("Escolha um arquivo de áudio seco em WAV, MP3, M4A, AIF ou AIFF. Fotos, vídeos e imagens não são aceitos.");
+      return false;
+    }
+
     modal._selectedIRTestFile = file || null;
+
     if(chosenFileName){
       chosenFileName.textContent = file ? file.name : "Nenhum arquivo escolhido";
     }
+
+    return true;
   }
 
   if(chooseFileBtn && hiddenFileInput){
@@ -752,8 +776,9 @@ function ensureIRTestModal(){
           if(handles && handles[0]){
             const file = await handles[0].getFile();
             hiddenFileInput.value = "";
-            setChosenIRFile(file);
-            return;
+            if(setChosenIRFile(file)){
+              return;
+            }
           }
         }
       }catch(err){
@@ -798,12 +823,8 @@ function ensureIRTestModal(){
         return;
       }
 
-      const allowedAudioExts = [".wav", ".mp3", ".m4a", ".aif", ".aiff"];
-      const fileName = (file.name || "").toLowerCase();
-      const isAllowedAudio = allowedAudioExts.some(ext => fileName.endsWith(ext));
-
-      if(!isAllowedAudio){
-        alert("Escolha um arquivo de áudio seco em WAV, MP3, M4A, AIF ou AIFF. Não grave pelo celular.");
+      if(!isAllowedIRAudioFile(file)){
+        alert("Escolha um arquivo de áudio seco em WAV, MP3, M4A, AIF ou AIFF. Fotos, vídeos e imagens não são aceitos.");
         return;
       }
 
