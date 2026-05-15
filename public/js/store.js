@@ -634,12 +634,12 @@ function ensureIRTestModal(){
       <div class="ir-guidance">
         <b>Para um teste fiel:</b> envie um áudio seco do baixo, gravado direto na interface ou placa de som,
         sem caixa, sem amp, sem compressor, sem efeitos e sem som ambiente.<br>
-        Evite áudio gravado pelo celular, com ruído, eco ou ambiência, porque isso altera o resultado do timbre.<br>
+        Não grave pelo celular. Selecione um arquivo de áudio seco já gravado. Áudio com ruído, eco ou ambiência altera o resultado do timbre.<br>
         Cordas novas ou semi-novas fazem muita diferença. Cordas muito velhas podem deixar o som apagado,
         sem brilho e sem definição.
       </div>
 
-      <input id="irTestFile" class="ir-file" type="file" accept="audio/*,.wav,.mp3,.m4a,.aif,.aiff">
+      <input id="irTestFile" class="ir-file" type="file" accept=".wav,.mp3,.m4a,.aif,.aiff,audio/wav,audio/mpeg,audio/mp4,audio/x-m4a,audio/aiff">
       <button id="irTestGenerate" class="ir-generate">Gerar prévia fiel de 10s</button>
       <div id="irTestStatus" class="ir-status"></div>
       <audio id="irTestPlayer" controls playsinline></audio>
