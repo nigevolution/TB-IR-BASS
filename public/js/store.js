@@ -286,6 +286,34 @@ function getBuyButtonLabel(nome){
   return isTrackPilotName(nome) ? "Comprar TrackPilot Agente" : "Comprar agora";
 }
 
+function getDisplayProductName(p){
+  if(isTrackPilotName(p.nome)){
+    return "TrackPilot Agente";
+  }
+  return p.nome;
+}
+
+
+function applyTrackPilotCampaignHeader(){
+  if(!isTrackPilotCampaignPage()) return;
+
+  const title = document.querySelector("h1");
+  if(title){
+    title.textContent = "TrackPilot Agente";
+  }
+
+  const allTextNodes = Array.from(document.querySelectorAll("p, span, div, small"));
+  const subtitle = allTextNodes.find(el =>
+    (el.textContent || "").trim() === "IR premium direto na pedaleira • PIX e Cartão"
+  );
+
+  if(subtitle){
+    subtitle.textContent = "Automação para REAPER";
+  }
+
+  document.title = "TrackPilot Agente | TB-BASS IR";
+}
+
 function getPriceSuffix(nome){
   return isTrackPilotName(nome) ? " no primeiro mês" : "";
 }
@@ -1220,6 +1248,8 @@ function trackGA4ProductEvent(eventName, p, extra = {}){
 
 /* ================== RENDER ================== */
 if(grid){
+  applyTrackPilotCampaignHeader();
+
   grid.innerHTML = "";
 
   getVisibleProducts().forEach(p=>{
@@ -1240,7 +1270,7 @@ if(grid){
     const priceSuffix = getPriceSuffix(p.nome);
 
     let html = `
-      <h3>${p.nome}</h3>
+      <h3>${getDisplayProductName(p)}</h3>
       <p>${p.desc}</p>
       ${p.cupom ? `<div class="coupon-badge">Cupom: ${p.cupom}</div>` : ``}
       ${p.status ? `<div class="status">${p.status}</div>` : ``}
