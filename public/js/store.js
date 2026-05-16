@@ -223,6 +223,50 @@ function getVisibleProducts(){
   return produtos.filter(p => isTrackPilotName(p.nome));
 }
 
+function trackTrackPilotCheckoutEvent(eventName){
+  const product = produtos.find(p => isTrackPilotName(p.nome));
+  const price = product ? toNumberOrNull(precosCakto[product.nome] ?? product.preco) : 49;
+
+  if(typeof gtag === "function"){
+    gtag("event", eventName, {
+      item_id: "trackpilot-by-tb-bass-ir",
+      item_name: "TrackPilot Agente",
+      currency: "BRL",
+      price: price,
+      value: price,
+      source: isTrackPilotCampaignPage() ? "trackpilot_campaign" : "store_grid",
+      items: [{
+        item_id: "trackpilot-by-tb-bass-ir",
+        item_name: "TrackPilot Agente",
+        currency: "BRL",
+        price: price
+      }]
+    });
+  }
+
+  if(typeof fbq === "function"){
+    if(eventName === "trackpilot_checkout_modal_open"){
+      fbq("track", "InitiateCheckout", {
+        content_name: "TrackPilot Agente",
+        content_ids: ["trackpilot-by-tb-bass-ir"],
+        content_type: "product",
+        currency: "BRL",
+        value: price
+      });
+    }
+
+    if(eventName === "trackpilot_checkout_confirm"){
+      fbq("track", "Lead", {
+        content_name: "TrackPilot Agente",
+        content_ids: ["trackpilot-by-tb-bass-ir"],
+        content_type: "product",
+        currency: "BRL",
+        value: price
+      });
+    }
+  }
+}
+
 function confirmTrackPilotCheckout(link){
   openTrackPilotCheckoutModal(link);
 }
@@ -265,11 +309,13 @@ function openTrackPilotCheckoutModal(link){
   const primary = modal.querySelector(".trackpilot-checkout-primary");
   if(primary){
     primary.onclick = ()=>{
+      trackTrackPilotCheckoutEvent("trackpilot_checkout_confirm");
       closeTrackPilotCheckoutModal();
       window.open(link, "_blank");
     };
   }
 
+  trackTrackPilotCheckoutEvent("trackpilot_checkout_modal_open");
   modal.classList.add("open");
   document.body.classList.add("trackpilot-modal-open");
 }
@@ -312,6 +358,61 @@ function applyTrackPilotCampaignHeader(){
   }
 
   document.title = "TrackPilot Agente | TB-BASS IR";
+}
+
+function applyTrackPilotCampaignFAQ(){
+  if(!isTrackPilotCampaignPage()) return;
+
+  const headings = Array.from(document.querySelectorAll("h2, h3"));
+  const faqTitle = headings.find(el =>
+    (el.textContent || "").trim().toLowerCase().includes("dúvidas frequentes") ||
+    (el.textContent || "").trim().toLowerCase().includes("duvidas frequentes")
+  );
+
+  if(!faqTitle) return;
+
+  const faqBox = faqTitle.parentElement;
+  if(!faqBox) return;
+
+  faqTitle.textContent = "Dúvidas sobre o TrackPilot";
+
+  const details = Array.from(faqBox.querySelectorAll("details"));
+  if(!details.length) return;
+
+  const faqItems = [
+    {
+      q: "O que é o TrackPilot Agente?",
+      a: "É uma automação para REAPER criada para acelerar seu fluxo de trabalho, organizando, adicionando e importando seus áudios nas tracks certas em poucos segundos."
+    },
+    {
+      q: "Preciso usar REAPER?",
+      a: "Sim. O TrackPilot foi criado para trabalhar com REAPER. Antes de comprar, confirme que você usa ou pretende usar o REAPER no seu fluxo de gravação, edição ou produção."
+    },
+    {
+      q: "O TrackPilot é um produto de timbre?",
+      a: "Não. O TrackPilot é uma automação para REAPER. Os pacotes de IR e timbres ficam separados na loja completa."
+    },
+    {
+      q: "Como recebo o acesso após a compra?",
+      a: "Após a compra, o acesso é enviado para o Gmail cadastrado na Cakto, com os arquivos disponibilizados via Google Drive para facilitar o download, instalação e uso."
+    },
+    {
+      q: "Posso conhecer os pacotes de IR também?",
+      a: "Sim. Nesta página existe o botão “Conhecer pacotes de IR”, que leva para a loja completa com os timbres e pacotes de IR para baixo."
+    }
+  ];
+
+  details.forEach((detail, index) => {
+    const item = faqItems[index];
+    if(!item){
+      detail.style.display = "none";
+      return;
+    }
+
+    detail.style.display = "";
+    detail.open = index === 0;
+    detail.innerHTML = `<summary>${item.q}</summary><p>${item.a}</p>`;
+  });
 }
 
 function getPriceSuffix(nome){
@@ -1249,6 +1350,7 @@ function trackGA4ProductEvent(eventName, p, extra = {}){
 /* ================== RENDER ================== */
 if(grid){
   applyTrackPilotCampaignHeader();
+  applyTrackPilotCampaignFAQ();
 
   grid.innerHTML = "";
 
