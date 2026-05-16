@@ -200,6 +200,46 @@ function isTrackPilotName(nome){
   return nome === "TrackPilot by TB-BASS IR";
 }
 
+function isTrackPilotCampaignPage(){
+  try{
+    const params = new URLSearchParams(window.location.search);
+    const produto = (params.get("produto") || "").toLowerCase().trim();
+    const campanha = (params.get("campanha") || "").toLowerCase().trim();
+    const path = (window.location.pathname || "").toLowerCase();
+
+    return (
+      produto === "trackpilot" ||
+      campanha === "trackpilot" ||
+      path === "/trackpilot" ||
+      path === "/trackpilot/"
+    );
+  }catch(e){
+    return false;
+  }
+}
+
+function getVisibleProducts(){
+  if(!isTrackPilotCampaignPage()) return produtos;
+  return produtos.filter(p => isTrackPilotName(p.nome));
+}
+
+function confirmTrackPilotCheckout(link){
+  const ok = window.confirm(
+    "Você está indo para o checkout do TrackPilot by TB-BASS IR.\n\n" +
+    "Importante: este produto é uma automação para REAPER.\n" +
+    "Ele NÃO é pacote de IR, timbre ou impulse response.\n\n" +
+    "Deseja continuar para comprar o TrackPilot?"
+  );
+
+  if(ok){
+    window.open(link, "_blank");
+  }
+}
+
+function getBuyButtonLabel(nome){
+  return isTrackPilotName(nome) ? "Comprar TrackPilot Agente" : "Comprar agora";
+}
+
 function getPriceSuffix(nome){
   return isTrackPilotName(nome) ? " no primeiro mês" : "";
 }
@@ -321,6 +361,54 @@ function getDiscountText(nome, pct){
 
     .trackpilot-feature .price-note{
       font-size:15px;
+    }
+
+    .trackpilot-more-products{
+      grid-column:1 / -1;
+      max-width:760px;
+      margin:8px auto 34px;
+      padding:22px 24px;
+      border-radius:22px;
+      text-align:center;
+      background:rgba(0,0,0,.42);
+      border:1px solid rgba(255,138,31,.32);
+      box-shadow:0 18px 42px rgba(0,0,0,.35);
+    }
+
+    .trackpilot-more-products h3{
+      margin:0 0 8px;
+      color:#ff9f36;
+      font-size:22px;
+      font-weight:900;
+    }
+
+    .trackpilot-more-products p{
+      max-width:560px;
+      margin:0 auto 16px;
+      opacity:.88;
+      line-height:1.45;
+    }
+
+    .trackpilot-store-link{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:38px;
+      padding:10px 18px;
+      border-radius:999px;
+      border:1px solid rgba(255,159,54,.55);
+      background:rgba(255,159,54,.14);
+      color:#fff;
+      font-weight:900;
+      text-decoration:none;
+      box-shadow:0 0 22px rgba(255,138,31,.18);
+      transition:transform .18s ease, background .18s ease, box-shadow .18s ease;
+    }
+
+    .trackpilot-store-link:hover{
+      transform:translateY(-1px);
+      background:rgba(255,159,54,.24);
+      box-shadow:0 0 28px rgba(255,138,31,.28);
     }
 
 
@@ -966,7 +1054,7 @@ function trackGA4ProductEvent(eventName, p, extra = {}){
 if(grid){
   grid.innerHTML = "";
 
-  produtos.forEach(p=>{
+  getVisibleProducts().forEach(p=>{
     const card = document.createElement("div");
     card.className = isTrackPilotName(p.nome)
       ? "card trackpilot-feature"
@@ -1009,7 +1097,12 @@ if(grid){
 
 
     if(showBuy && p.link && !p.release){
-      html += `<button class="buy-btn" onclick="window.open('${p.link}')">Comprar agora</button>`;
+      const buyLabel = getBuyButtonLabel(p.nome);
+      if(isTrackPilotName(p.nome)){
+        html += `<button class="buy-btn" onclick="confirmTrackPilotCheckout('${p.link}')">${buyLabel}</button>`;
+      }else{
+        html += `<button class="buy-btn" onclick="window.open('${p.link}', '_blank')">${buyLabel}</button>`;
+      }
     }
 
     if(precoFinal != null && !p.release){
@@ -1100,6 +1193,17 @@ if(grid){
       }
     }
   });
+
+  if(isTrackPilotCampaignPage()){
+    const more = document.createElement("div");
+    more.className = "trackpilot-more-products";
+    more.innerHTML = `
+      <h3>Também temos pacotes de IR para baixo</h3>
+      <p>Se você também quer conhecer nossos timbres de baixo, acesse a loja completa. O TrackPilot continua sendo uma automação para REAPER, separado dos pacotes de IR.</p>
+      <a class="trackpilot-store-link" href="/">Conhecer pacotes de IR</a>
+    `;
+    grid.appendChild(more);
+  }
 }
 
 /* ================== CRONÔMETRO ================== */
