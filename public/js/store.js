@@ -224,16 +224,62 @@ function getVisibleProducts(){
 }
 
 function confirmTrackPilotCheckout(link){
-  const ok = window.confirm(
-    "Você está indo para o checkout do TrackPilot by TB-BASS IR.\n\n" +
-    "Importante: este produto é uma automação para REAPER.\n" +
-    "Ele NÃO é pacote de IR, timbre ou impulse response.\n\n" +
-    "Deseja continuar para comprar o TrackPilot?"
-  );
+  openTrackPilotCheckoutModal(link);
+}
 
-  if(ok){
-    window.open(link, "_blank");
+function openTrackPilotCheckoutModal(link){
+  let modal = document.getElementById("trackpilotCheckoutModal");
+
+  if(!modal){
+    modal = document.createElement("div");
+    modal.id = "trackpilotCheckoutModal";
+    modal.className = "trackpilot-checkout-modal";
+    modal.innerHTML = `
+      <div class="trackpilot-checkout-backdrop" data-trackpilot-close="1"></div>
+      <div class="trackpilot-checkout-card" role="dialog" aria-modal="true" aria-labelledby="trackpilotCheckoutTitle">
+        <div class="trackpilot-checkout-badge">Compra segura</div>
+        <h3 id="trackpilotCheckoutTitle">Confirmar TrackPilot Agente</h3>
+        <p class="trackpilot-checkout-main">
+          Você está indo para o checkout do <strong>TrackPilot by TB-BASS IR</strong>.
+        </p>
+        <div class="trackpilot-checkout-note">
+          <strong>Importante:</strong> este produto é uma automação para <strong>REAPER</strong>.
+          Ele não é um pacote de IR, timbre ou impulse response.
+        </div>
+        <div class="trackpilot-checkout-actions">
+          <button type="button" class="trackpilot-checkout-secondary" data-trackpilot-close="1">Voltar</button>
+          <button type="button" class="trackpilot-checkout-primary">Ir para checkout seguro</button>
+        </div>
+      </div>
+    `;
+
+    document.body.appendChild(modal);
+
+    modal.addEventListener("click", (ev)=>{
+      if(ev.target.closest("[data-trackpilot-close]")){
+        closeTrackPilotCheckoutModal();
+      }
+    });
   }
+
+  const primary = modal.querySelector(".trackpilot-checkout-primary");
+  if(primary){
+    primary.onclick = ()=>{
+      closeTrackPilotCheckoutModal();
+      window.open(link, "_blank");
+    };
+  }
+
+  modal.classList.add("open");
+  document.body.classList.add("trackpilot-modal-open");
+}
+
+function closeTrackPilotCheckoutModal(){
+  const modal = document.getElementById("trackpilotCheckoutModal");
+  if(modal){
+    modal.classList.remove("open");
+  }
+  document.body.classList.remove("trackpilot-modal-open");
 }
 
 function getBuyButtonLabel(nome){
@@ -409,6 +455,128 @@ function getDiscountText(nome, pct){
       transform:translateY(-1px);
       background:rgba(255,159,54,.24);
       box-shadow:0 0 28px rgba(255,138,31,.28);
+    }
+
+    body.trackpilot-modal-open{
+      overflow:hidden;
+    }
+
+    .trackpilot-checkout-modal{
+      position:fixed;
+      inset:0;
+      z-index:9999999;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+    }
+
+    .trackpilot-checkout-modal.open{
+      display:flex;
+    }
+
+    .trackpilot-checkout-backdrop{
+      position:absolute;
+      inset:0;
+      background:rgba(0,0,0,.74);
+      backdrop-filter:blur(8px);
+    }
+
+    .trackpilot-checkout-card{
+      position:relative;
+      width:min(440px,92vw);
+      border-radius:26px;
+      padding:26px 22px 22px;
+      text-align:center;
+      color:#fff;
+      background:
+        radial-gradient(circle at 20% 0%, rgba(255,154,60,.22), transparent 36%),
+        linear-gradient(145deg, rgba(28,18,10,.98), rgba(6,6,6,.98));
+      border:1px solid rgba(255,154,60,.42);
+      box-shadow:0 28px 90px rgba(0,0,0,.82), 0 0 42px rgba(255,122,0,.18);
+    }
+
+    .trackpilot-checkout-badge{
+      display:inline-flex;
+      margin-bottom:12px;
+      padding:6px 12px;
+      border-radius:999px;
+      color:#16100a;
+      background:linear-gradient(135deg,#ffd08a,#ff8a1f);
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:.04em;
+      text-transform:uppercase;
+    }
+
+    .trackpilot-checkout-card h3{
+      margin:0 0 12px;
+      color:#ff9f36;
+      font-size:25px;
+      font-weight:950;
+    }
+
+    .trackpilot-checkout-main{
+      margin:0 auto 14px;
+      max-width:360px;
+      line-height:1.45;
+      opacity:.94;
+    }
+
+    .trackpilot-checkout-note{
+      margin:14px auto 20px;
+      padding:14px;
+      border-radius:18px;
+      background:rgba(255,154,60,.09);
+      border:1px solid rgba(255,154,60,.24);
+      line-height:1.45;
+      text-align:left;
+      font-size:14px;
+    }
+
+    .trackpilot-checkout-actions{
+      display:flex;
+      gap:10px;
+      justify-content:center;
+      flex-wrap:wrap;
+    }
+
+    .trackpilot-checkout-primary,
+    .trackpilot-checkout-secondary{
+      min-height:42px;
+      border:0;
+      border-radius:999px;
+      padding:11px 16px;
+      font-weight:900;
+      cursor:pointer;
+    }
+
+    .trackpilot-checkout-primary{
+      color:#140900;
+      background:linear-gradient(135deg,#ffb45f,#ff7a00);
+      box-shadow:0 0 26px rgba(255,122,0,.34);
+    }
+
+    .trackpilot-checkout-secondary{
+      color:#fff;
+      background:rgba(255,255,255,.11);
+      border:1px solid rgba(255,255,255,.16);
+    }
+
+    @media (max-width:520px){
+      .trackpilot-checkout-card{
+        padding:24px 18px 20px;
+      }
+      .trackpilot-checkout-card h3{
+        font-size:22px;
+      }
+      .trackpilot-checkout-actions{
+        flex-direction:column-reverse;
+      }
+      .trackpilot-checkout-primary,
+      .trackpilot-checkout-secondary{
+        width:100%;
+      }
     }
 
 
