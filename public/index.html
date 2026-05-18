@@ -238,7 +238,7 @@ footer{opacity:.7;margin:60px 0}
 <div id="whats-menu-wrap">
   <div id="whats-menu">
     <a href="https://wa.me/5575988674964?text=Ol%C3%A1%20Silas!%20Vim%20pelo%20site%20TB-BASS%20IR." target="_blank"
-       onclick="gtag('event','whatsapp_click',{contact:'silas'});">👤 Silas</a>
+       onclick="trackTBBassWhatsappClick('silas');">👤 Silas</a>
   </div>
 
   <div id="whats-float">
@@ -247,15 +247,34 @@ footer{opacity:.7;margin:60px 0}
 </div>
 
 <script>
+function getTBBassWhatsAppPayload(extra = {}){
+  const base = typeof window.getTBBassLastGA4ProductPayload === 'function'
+    ? window.getTBBassLastGA4ProductPayload({ source: 'floating_whatsapp' })
+    : { source: 'floating_whatsapp' };
+  return { ...base, ...extra };
+}
+
+function trackTBBassWhatsappOpen(){
+  if(typeof gtag === 'function'){
+    gtag('event','whatsapp_open', getTBBassWhatsAppPayload());
+  }
+}
+
+function trackTBBassWhatsappClick(contact){
+  if(typeof gtag === 'function'){
+    gtag('event','whatsapp_click', getTBBassWhatsAppPayload({ contact }));
+  }
+}
+
 document.getElementById("whats-float").onclick=()=>{
-  gtag('event','whatsapp_open');
+  trackTBBassWhatsappOpen();
   const m=document.getElementById("whats-menu");
   m.style.display = m.style.display==="block" ? "none":"block";
 }
 </script>
 
 <!-- STORE -->
-<script src="js/store.js?v=ga4-product-views-1"></script>
+<script src="js/store.js?v=ga4-product-context-2"></script>
 
 <!-- TRACKING PREVIEW & BUY (SEM ALTERAR STORE.JS) -->
 <script>
@@ -288,6 +307,7 @@ function getGA4CardItem(target){
     payload.value = price;
   }
 
+  window.tbBassLastGA4ProductPayload = payload;
   return payload;
 }
 

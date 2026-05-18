@@ -1326,9 +1326,37 @@ function getAnalyticsItem(p){
   return item;
 }
 
+function setGA4LastProductContext(p, source = "product_interaction"){
+  if(!p || typeof window === "undefined") return null;
+  const item = getAnalyticsItem(p);
+  const payload = {
+    item_id: item.item_id,
+    item_name: item.item_name,
+    currency: "BRL",
+    items: [item],
+    source
+  };
+  if(item.price != null){
+    payload.price = item.price;
+    payload.value = item.price;
+  }
+  window.tbBassLastGA4ProductPayload = payload;
+  return payload;
+}
+
+if(typeof window !== "undefined"){
+  window.getTBBassLastGA4ProductPayload = function(extra = {}){
+    return {
+      ...(window.tbBassLastGA4ProductPayload || {}),
+      ...extra
+    };
+  };
+}
+
 function trackGA4ProductEvent(eventName, p, extra = {}){
   if(typeof gtag !== "function" || !p) return;
 
+  setGA4LastProductContext(p, extra.source || eventName);
   const item = getAnalyticsItem(p);
   const payload = {
     item_id: item.item_id,
@@ -1354,6 +1382,7 @@ function trackGA4ProductViewOnce(p, source = "store_grid"){
   const itemId = getAnalyticsItemId(p);
   if(!itemId || viewedGA4ProductIds.has(itemId)) return;
   viewedGA4ProductIds.add(itemId);
+  setGA4LastProductContext(p, source);
   trackGA4ProductEvent("view_item", p, { source });
 }
 
