@@ -1346,6 +1346,36 @@ function trackGA4ProductEvent(eventName, p, extra = {}){
   gtag("event", eventName, payload);
 }
 
+const viewedGA4ProductIds = new Set();
+let ga4ProductViewObserver = null;
+
+function trackGA4ProductViewOnce(p, source = "store_grid"){
+  if(!p) return;
+  const itemId = getAnalyticsItemId(p);
+  if(!itemId || viewedGA4ProductIds.has(itemId)) return;
+  viewedGA4ProductIds.add(itemId);
+  trackGA4ProductEvent("view_item", p, { source });
+}
+
+function observeGA4ProductCardView(card, p){
+  if(!card || !p) return;
+  if(typeof IntersectionObserver !== "function"){
+    trackGA4ProductViewOnce(p, "store_grid_no_intersection_observer");
+    return;
+  }
+  if(!ga4ProductViewObserver){
+    ga4ProductViewObserver = new IntersectionObserver((entries)=>{
+      entries.forEach((entry)=>{
+        if(!entry.isIntersecting) return;
+        const itemId = entry.target?.dataset?.itemId || "";
+        const product = getAnalyticsProductById(itemId);
+        trackGA4ProductViewOnce(product, "store_grid_visible");
+        ga4ProductViewObserver.unobserve(entry.target);
+      });
+    }, { threshold: 0.45 });
+  }
+  ga4ProductViewObserver.observe(card);
+}
 
 /* ================== RENDER ================== */
 if(grid){
@@ -1445,6 +1475,7 @@ if(grid){
 
     card.innerHTML = html;
     grid.appendChild(card);
+    observeGA4ProductCardView(card, p);
 
     const vb = card.querySelector(".video-btn");
     if(vb){
