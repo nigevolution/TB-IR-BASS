@@ -1016,6 +1016,49 @@ function openVideo(url){
 /* ================== TESTE DE TIMBRE COM CLOUD RUN ================== */
 const TB_BASS_PREVIEW_API = "https://tb-bass-ir-preview-5sieyq2o4a-uc.a.run.app";
 
+async function fetchIRPreviewWithTimeout(form, timeoutMs){
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs || 180000);
+
+  try{
+    const response = await fetch(`${TB_BASS_PREVIEW_API}/api/preview`, {
+      method: "POST",
+      body: form,
+      signal: controller.signal,
+      cache: "no-store"
+    });
+
+    const rawText = await response.text();
+    let data = null;
+
+    try{
+      data = rawText ? JSON.parse(rawText) : {};
+    }catch(jsonErr){
+      throw new Error("O servidor respondeu em formato inesperado. Tente novamente ou envie outro WAV.");
+    }
+
+    if(!response.ok || !data.ok){
+      throw new Error(data.error || `Falha ao gerar prévia no servidor (${response.status}).`);
+    }
+
+    return data;
+  }catch(err){
+    if(err && err.name === "AbortError"){
+      throw new Error("O envio demorou demais no navegador. Use um áudio menor ou uma conexão Wi-Fi estável e tente novamente.");
+    }
+
+    const message = String((err && err.message) || err || "");
+    if(message === "Load failed" || message === "Failed to fetch" || message.includes("NetworkError")){
+      throw new Error("O navegador interrompeu o envio do áudio. No iPhone, salve o arquivo localmente em Arquivos, use Wi-Fi e tente um WAV/MP3 menor.");
+    }
+
+    throw err;
+  }finally{
+    clearTimeout(timer);
+  }
+}
+
+
 function ensureIRTestModal(){
   if(document.getElementById("irTestModal")) return;
 
@@ -1058,7 +1101,7 @@ function ensureIRTestModal(){
         <button id="irChooseFileBtn" class="ir-file-btn" type="button">Escolher arquivo pelo gerenciador</button>
         <span id="irChosenFileName" class="ir-file-name">Nenhum arquivo escolhido</span>
       </div>
-      <input id="irTestFile" type="file" style="display:none">
+      <input id="irTestFile" type="file" accept="audio/wav,audio/x-wav,audio/mpeg,audio/mp4,audio/aiff,.wav,.mp3,.m4a,.aif,.aiff" style="display:none">
       <button id="irTestGenerate" class="ir-generate">Gerar prévia fiel de 10s</button>
       <div id="irTestStatus" class="ir-status"></div>
       <audio id="irTestPlayer" controls playsinline></audio>
@@ -1233,16 +1276,7 @@ function ensureIRTestModal(){
       form.append("version", selectedVersion);
       form.append("audio", file);
 
-      const response = await fetch(`${TB_BASS_PREVIEW_API}/api/preview`, {
-        method: "POST",
-        body: form
-      });
-
-      const data = await response.json();
-
-      if(!response.ok || !data.ok){
-        throw new Error(data.error || "Falha ao gerar prévia.");
-      }
+      const data = await fetchIRPreviewWithTimeout(form, 180000);
 
       player.src = TB_BASS_PREVIEW_API + data.preview_url + "?t=" + Date.now();
       player.style.display = "block";
