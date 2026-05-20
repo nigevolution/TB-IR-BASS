@@ -1443,6 +1443,13 @@ function sendTrackPilotClickRecord(p, clickId, sessionId, checkoutUrl){
     created_at_iso: new Date().toISOString()
   };
   try{
+    const query = new URLSearchParams();
+    Object.keys(payload).forEach((key)=>{
+      const value = payload[key];
+      if(value !== null && value !== undefined && value !== "") query.set(key, String(value));
+    });
+    const pixel = new Image();
+    pixel.src = "https://tb-bass-license-api-179614473145.southamerica-east1.run.app/public/trackpilot-click?" + query.toString();
     const body = JSON.stringify(payload);
     if(navigator.sendBeacon){
       const blob = new Blob([body], {type:"application/json"});
