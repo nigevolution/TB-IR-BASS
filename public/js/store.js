@@ -267,11 +267,11 @@ function trackTrackPilotCheckoutEvent(eventName){
   }
 }
 
-function confirmTrackPilotCheckout(link){
-  openTrackPilotCheckoutModal(link);
+function confirmTrackPilotCheckout(link, itemId){
+  openTrackPilotCheckoutModal(link, itemId);
 }
 
-function openTrackPilotCheckoutModal(link){
+function openTrackPilotCheckoutModal(link, itemId){
   let modal = document.getElementById("trackpilotCheckoutModal");
 
   if(!modal){
@@ -311,7 +311,7 @@ function openTrackPilotCheckoutModal(link){
     primary.onclick = ()=>{
       trackTrackPilotCheckoutEvent("trackpilot_checkout_confirm");
       closeTrackPilotCheckoutModal();
-      window.open(link, "_blank");
+      openTrackedCheckout(link, itemId || "trackpilot-by-tb-bass-ir");
     };
   }
 
@@ -1378,6 +1378,103 @@ function setGA4LastProductContext(p, source = "product_interaction"){
   return payload;
 }
 
+function tpSafeIdPart(value){
+  return String(value || "item")
+    .toLowerCase()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "") || "item";
+}
+
+function tpRandomId(){
+  if(window.crypto && typeof window.crypto.randomUUID === "function") return window.crypto.randomUUID();
+  return Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 12);
+}
+
+function getTpSessionId(){
+  const key = "tb_bass_tp_session_id";
+  try{
+    let current = localStorage.getItem(key);
+    if(!current){
+      current = "tps_" + tpRandomId();
+      localStorage.setItem(key, current);
+    }
+    return current;
+  }catch(_){
+    if(!window.__tbBassTpSessionId) window.__tbBassTpSessionId = "tps_" + tpRandomId();
+    return window.__tbBassTpSessionId;
+  }
+}
+
+function createTpClickId(p){
+  const itemId = p ? getAnalyticsItemId(p) : "item";
+  return "tpc_" + tpSafeIdPart(itemId) + "_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2, 8);
+}
+
+function buildTrackedCheckoutUrl(link, p, clickId, sessionId){
+  let url;
+  try{ url = new URL(link, window.location.href); }
+  catch(_){ return link; }
+  const pageParams = new URLSearchParams(window.location.search || "");
+  ["utm_source", "utm_medium", "utm_campaign"].forEach((key)=>{
+    const value = pageParams.get(key);
+    if(value && !url.searchParams.get(key)) url.searchParams.set(key, value);
+  });
+  if(!url.searchParams.get("utm_source")) url.searchParams.set("utm_source", "site");
+  url.searchParams.set("sck", clickId);
+  url.searchParams.set("utm_content", clickId);
+  url.searchParams.set("utm_term", sessionId);
+  url.searchParams.set("tp_product_id", p ? getAnalyticsItemId(p) : "");
+  return url.toString();
+}
+
+function sendTrackPilotClickRecord(p, clickId, sessionId, checkoutUrl){
+  const item = p ? getAnalyticsItem(p) : null;
+  const payload = {
+    tp_click_id: clickId,
+    tp_session_id: sessionId,
+    item_id: item ? item.item_id : "",
+    item_name: item ? item.item_name : "",
+    price: item && item.price != null ? item.price : null,
+    checkout_url: checkoutUrl,
+    page_url: window.location.href,
+    referrer: document.referrer || "",
+    user_agent: navigator.userAgent || "",
+    created_at_iso: new Date().toISOString()
+  };
+  try{
+    const body = JSON.stringify(payload);
+    if(navigator.sendBeacon){
+      const blob = new Blob([body], {type:"application/json"});
+      navigator.sendBeacon("https://tb-bass-license-api-179614473145.southamerica-east1.run.app/public/trackpilot-click", blob);
+      return;
+    }
+    fetch("https://tb-bass-license-api-179614473145.southamerica-east1.run.app/public/trackpilot-click", {
+      method:"POST",
+      headers:{"content-type":"application/json"},
+      body,
+      keepalive:true
+    }).catch(()=>{});
+  }catch(_){ }
+}
+
+function openTrackedCheckout(link, itemId){
+  const p = getAnalyticsProductById(itemId) || produtos.find(prod => prod.link === link) || null;
+  const sessionId = getTpSessionId();
+  const clickId = createTpClickId(p);
+  const trackedUrl = buildTrackedCheckoutUrl(link, p, clickId, sessionId);
+  if(p && typeof gtag === "function"){
+    trackGA4ProductEvent("trackpilot_checkout_redirect", p, {
+      tp_click_id: clickId,
+      tp_session_id: sessionId,
+      checkout_url: trackedUrl,
+      source: "checkout_redirect"
+    });
+  }
+  sendTrackPilotClickRecord(p, clickId, sessionId, trackedUrl);
+  window.open(trackedUrl, "_blank");
+}
+
 if(typeof window !== "undefined"){
   window.getTBBassLastGA4ProductPayload = function(extra = {}){
     return {
@@ -1492,9 +1589,9 @@ if(grid){
     if(showBuy && p.link && !p.release){
       const buyLabel = getBuyButtonLabel(p.nome);
       if(isTrackPilotName(p.nome)){
-        html += `<button class="buy-btn" onclick="confirmTrackPilotCheckout('${p.link}')">${buyLabel}</button>`;
+        html += `<button class="buy-btn" onclick="confirmTrackPilotCheckout(&quot;${p.link}&quot;, &quot;${analyticsItem.item_id}&quot;)">${buyLabel}</button>`;
       }else{
-        html += `<button class="buy-btn" onclick="window.open('${p.link}', '_blank')">${buyLabel}</button>`;
+        html += `<button class="buy-btn" onclick="openTrackedCheckout(&quot;${p.link}&quot;, &quot;${analyticsItem.item_id}&quot;)">${buyLabel}</button>`;
       }
     }
 
@@ -1622,7 +1719,7 @@ function startCountdown(){
         let out = "";
 
         if(showBuy && link){
-          out += `<button class="buy-btn" onclick="window.open('${link}')">Comprar agora</button>`;
+          out += `<button class="buy-btn" onclick="openTrackedCheckout(&quot;${link}&quot;, &quot;${el.dataset.itemId || ""}&quot;)">Comprar agora</button>`;
         }
 
         if(cur != null){
