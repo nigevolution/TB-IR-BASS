@@ -1471,16 +1471,22 @@ function openTrackedCheckout(link, itemId){
   const clickId = createTpClickId(p);
   const trackedUrl = buildTrackedCheckoutUrl(link, p, clickId, sessionId);
   if(p && typeof gtag === "function"){
-    trackGA4ProductEvent("trackpilot_checkout_redirect", p, {
+    const checkoutPayload = {
       tp_click_id: clickId,
       tp_session_id: sessionId,
       checkout_url: trackedUrl,
       source: "checkout_redirect"
-    });
+    };
+    trackGA4ProductEvent("trackpilot_checkout_redirect", p, checkoutPayload);
+    if(!isTrackPilotName(p.nome)){
+      trackGA4ProductEvent("trackpilot_checkout_modal_open", p, checkoutPayload);
+      trackGA4ProductEvent("trackpilot_checkout_confirm", p, checkoutPayload);
+    }
   }
   sendTrackPilotClickRecord(p, clickId, sessionId, trackedUrl);
   window.open(trackedUrl, "_blank");
 }
+
 
 if(typeof window !== "undefined"){
   window.getTBBassLastGA4ProductPayload = function(extra = {}){
