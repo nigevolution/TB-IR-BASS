@@ -1083,8 +1083,16 @@ function ensureIRTestModal(){
         <label class="ir-version-option">
           <input type="radio" name="irTestVersion" value="updated-7-days">
           <span>
-            <b>Versão melhorada de 7 dias</b>
-            <small>É a atualização refinada que o cliente recebe depois.</small>
+            <b>Versão melhorada de 7 dias A</b>
+            <small>Primeira opção atual de 7 dias para comparar no mesmo MTD.</small>
+          </span>
+        </label>
+
+        <label class="ir-version-option ir-version-option-mtd-b">
+          <input type="radio" name="irTestVersion" value="updated-7-days-b">
+          <span>
+            <b>Versão melhorada de 7 dias B</b>
+            <small>Segunda opção atual de 7 dias para comparar no mesmo MTD.</small>
           </span>
         </label>
       </div>
@@ -1131,9 +1139,12 @@ function ensureIRTestModal(){
       }
 
       if(status){
-        status.textContent = input.value === "updated-7-days"
-          ? "Versão melhorada de 7 dias selecionada."
-          : "Versão que recebe na hora selecionada.";
+        const versionMessages = {
+          "immediate": "Versão que recebe na hora selecionada.",
+          "updated-7-days": "Versão melhorada de 7 dias A selecionada.",
+          "updated-7-days-b": "Versão melhorada de 7 dias B selecionada."
+        };
+        status.textContent = versionMessages[input.value] || "Versão selecionada.";
       }
 
       if((modal._selectedIRTestFile || fileInput?.files?.[0]) && generateBtn && !generateBtn.disabled){
@@ -1262,9 +1273,12 @@ function ensureIRTestModal(){
       }
 
       const selectedVersion = modal.dataset.version || "immediate";
-      const selectedVersionLabel = selectedVersion === "updated-7-days"
-        ? "versão melhorada de 7 dias"
-        : "versão que recebe na hora";
+      const versionLabels = {
+        "immediate": "versão que recebe na hora",
+        "updated-7-days": "versão melhorada de 7 dias A",
+        "updated-7-days-b": "versão melhorada de 7 dias B"
+      };
+      const selectedVersionLabel = versionLabels[selectedVersion] || "versão selecionada";
 
       btn.disabled = true;
       btn.textContent = "Processando...";
@@ -1314,6 +1328,11 @@ function openIRTest(productId, productName){
   modal._selectedIRTestFile = null;
   const chosenFileName = document.getElementById("irChosenFileName");
   if(chosenFileName) chosenFileName.textContent = "Nenhum arquivo escolhido";
+
+  const mtdBOption = modal.querySelector(".ir-version-option-mtd-b");
+  if(mtdBOption){
+    mtdBOption.style.display = productId === "mtd" ? "" : "none";
+  }
 
   const immediateOption = modal.querySelector('input[name="irTestVersion"][value="immediate"]');
   if(immediateOption) immediateOption.checked = true;
