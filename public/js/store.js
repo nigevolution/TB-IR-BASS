@@ -164,6 +164,15 @@ const produtos = [
     video:"/videos/mtd-535-24.mp4"
   },
   {
+    nome:"MTD 535-24 IR V2",
+    irId:"mtd-v2",
+    preco:null,
+    link:null,
+    desc:"Versao V2 em teste para comparar o timbre do MTD 535-24 diretamente com seu audio.",
+    status:"TESTE NO SITE",
+    showBuy:false
+  },
+  {
     nome:"Warwick Corvette IR",
     irId:"warwick-corvette",
     preco:79,
