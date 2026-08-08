@@ -59,9 +59,7 @@ body{
   position:fixed;
   inset:0;
   z-index:-2;
-  background:
-    radial-gradient(ellipse at center,rgba(0,0,0,.35),rgba(0,0,0,.92)),
-    url("bg-hero.jpg") center/cover no-repeat;
+  background:radial-gradient(ellipse at center,rgba(12,12,12,.72),rgba(0,0,0,.98));
 }
 
 /* VINHETA */
@@ -153,6 +151,67 @@ footer{opacity:.7;margin:60px 0}
   font-weight:bold;
   margin:6px 0;
 }
+
+
+
+/* Visible cinematic image motion: dedicated transformed artwork layer. */
+.bg-layer{background:#020202!important;overflow:hidden!important}
+.bg-layer::before{content:""!important;position:absolute!important;inset:-10%!important;background-image:linear-gradient(rgba(0,0,0,.38),rgba(0,0,0,.58)),url('/bg-hero.jpg')!important;background-size:cover!important;background-position:center!important;filter:saturate(1.08) contrast(1.05)!important;opacity:.78!important;animation:tbVisibleCamera 14s ease-in-out infinite alternate!important;will-change:transform!important}
+.bg-layer::after{content:""!important;position:absolute!important;inset:0!important;background:radial-gradient(circle at 25% 40%,rgba(255,122,24,.16),transparent 28%),linear-gradient(110deg,transparent 28%,rgba(255,155,65,.08) 48%,transparent 66%),radial-gradient(circle at center,transparent 35%,rgba(0,0,0,.78) 92%)!important;background-size:100% 100%,180% 100%,100% 100%!important;animation:tbVisibleLight 8s ease-in-out infinite alternate!important;pointer-events:none!important}
+@keyframes tbVisibleCamera{0%{transform:translate3d(-2.8%,-1.8%,0) scale(1.02)}50%{transform:translate3d(2.5%,1.8%,0) scale(1.10)}100%{transform:translate3d(-.5%,3%,0) scale(1.16)}}
+@keyframes tbVisibleLight{0%{background-position:center,-30% 50%,center;opacity:.62}100%{background-position:center,130% 50%,center;opacity:.92}}
+@media (prefers-reduced-motion:reduce){.bg-layer::before,.bg-layer::after{animation:none!important}}
+
+/* Cinematic background motion — gives the full-screen artwork a video-loop feel. */
+.bg-layer{
+  animation:tbCinematicCamera 26s cubic-bezier(.45,.05,.25,1) infinite alternate!important;
+  will-change:background-position,background-size,filter;
+}
+.bg-layer:before{
+  animation:tbLuxuryDrift 18s ease-in-out infinite alternate,tbAmbientPulse 8s ease-in-out infinite!important;
+}
+.bg-layer:after{
+  animation:tbLuxurySweep 13s ease-in-out infinite alternate,tbLightBreath 9s ease-in-out infinite!important;
+}
+@keyframes tbCinematicCamera{
+  0%{background-position:46% 48%,center,center;background-size:108% 108%,cover,cover;filter:brightness(.96) saturate(1.02)}
+  35%{background-position:52% 51%,center,center;background-size:114% 114%,cover,cover;filter:brightness(1.01) saturate(1.05)}
+  70%{background-position:48% 54%,center,center;background-size:111% 111%,cover,cover;filter:brightness(.98) saturate(1.04)}
+  100%{background-position:55% 49%,center,center;background-size:116% 116%,cover,cover;filter:brightness(1.02) saturate(1.06)}
+}
+@keyframes tbAmbientPulse{0%,100%{opacity:.56}50%{opacity:.82}}
+@keyframes tbLightBreath{0%,100%{opacity:.72}50%{opacity:.94}}
+@media (prefers-reduced-motion:reduce){.bg-layer,.bg-layer:before,.bg-layer:after{animation:none!important}}
+
+/* Full-screen premium studio artwork: actual image layer, not only CSS glow. */
+.bg-layer{background-image:
+ linear-gradient(90deg,rgba(0,0,0,.86),rgba(5,3,2,.62) 48%,rgba(0,0,0,.84)),
+ linear-gradient(180deg,rgba(0,0,0,.18),rgba(0,0,0,.72)),
+ url('/bg-hero.jpg')!important;
+ background-size:cover!important;background-position:center center!important;background-attachment:fixed!important}
+.bg-layer:before{mix-blend-mode:screen;opacity:.72}
+
+/* TB premium motion background — preview local */
+.bg-layer{overflow:hidden;background:
+ radial-gradient(circle at 18% 20%,rgba(255,122,24,.12),transparent 24%),
+ radial-gradient(circle at 82% 62%,rgba(255,184,92,.08),transparent 28%),
+ linear-gradient(115deg,#020202 0%,#090705 46%,#020202 100%)!important}
+.bg-layer:before{content:"";position:absolute;inset:-25%;pointer-events:none;background:
+ radial-gradient(ellipse at 28% 42%,rgba(255,122,24,.16),transparent 25%),
+ radial-gradient(ellipse at 72% 58%,rgba(255,188,110,.10),transparent 24%),
+ conic-gradient(from 205deg at 50% 50%,transparent 0 38%,rgba(255,122,24,.055) 44%,transparent 50% 100%);
+ filter:blur(22px);animation:tbLuxuryDrift 18s ease-in-out infinite alternate;will-change:transform}
+.bg-layer:after{background:
+ linear-gradient(108deg,transparent 20%,rgba(255,255,255,.018) 36%,rgba(255,145,55,.055) 48%,transparent 60%),
+ radial-gradient(circle at center,transparent 36%,rgba(0,0,0,.88) 88%)!important;
+ background-size:180% 100%,100% 100%!important;animation:tbLuxurySweep 13s ease-in-out infinite alternate}
+body:before{animation:tbGridFloat 28s linear infinite}
+body:after{animation:tbWaveFloat 16s ease-in-out infinite alternate;will-change:transform,opacity}
+@keyframes tbLuxuryDrift{0%{transform:translate3d(-3%,-2%,0) scale(1)}50%{transform:translate3d(4%,3%,0) scale(1.08)}100%{transform:translate3d(-1%,5%,0) scale(1.03)}}
+@keyframes tbLuxurySweep{0%{background-position:0% 50%,center}100%{background-position:100% 50%,center}}
+@keyframes tbGridFloat{to{background-position:52px 52px}}
+@keyframes tbWaveFloat{0%{transform:translate3d(-.6%,0,0) scale(1.005);opacity:.62}100%{transform:translate3d(.6%,1.2%,0) scale(1.018);opacity:.82}}
+@media (prefers-reduced-motion:reduce){.bg-layer:before,.bg-layer:after,body:before,body:after{animation:none!important}}
 </style>
 
   <!-- UTMify (UTMs) -->
@@ -173,6 +232,65 @@ footer{opacity:.7;margin:60px 0}
     a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
     document.head.appendChild(a);
   </script>
+
+<style id="tb-modern-black-preview">
+:root{--tb-bg:#050505;--tb-surface:#0b0b0c;--tb-surface-2:#111113;--tb-line:rgba(255,255,255,.09);--tb-text:#f5f5f5;--tb-muted:#a3a3a3;--tb-accent:#ff7a18;--tb-accent-soft:rgba(255,122,24,.14)}
+html{scroll-behavior:smooth}body{background:radial-gradient(circle at 50% -12%,rgba(255,122,24,.12),transparent 28%),radial-gradient(circle at 16% 28%,rgba(255,122,24,.055),transparent 26%),linear-gradient(180deg,#060606 0%,#020202 100%)!important;color:var(--tb-text)!important;font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;letter-spacing:-.01em}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-2;background-image:linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);background-size:52px 52px;mask-image:linear-gradient(to bottom,black,transparent 82%)}
+body:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;opacity:.72;background-repeat:no-repeat;background-size:100% 100%;background-position:center top;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 1100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1'%3E%3Cstop offset='0' stop-color='%23ff7a18' stop-opacity='0'/%3E%3Cstop offset='.18' stop-color='%23ff7a18' stop-opacity='.28'/%3E%3Cstop offset='.5' stop-color='%23ff9a3c' stop-opacity='.52'/%3E%3Cstop offset='.82' stop-color='%23ff7a18' stop-opacity='.26'/%3E%3Cstop offset='1' stop-color='%23ff7a18' stop-opacity='0'/%3E%3C/linearGradient%3E%3CradialGradient id='cone'%3E%3Cstop offset='0' stop-color='%23191919'/%3E%3Cstop offset='.55' stop-color='%23090909'/%3E%3Cstop offset='.78' stop-color='%23202020'/%3E%3Cstop offset='1' stop-color='%23030303'/%3E%3C/radialGradient%3E%3Cfilter id='blur'%3E%3CfeGaussianBlur stdDeviation='18'/%3E%3C/filter%3E%3C/defs%3E%3Cg opacity='.18'%3E%3Ccircle cx='1320' cy='245' r='150' fill='url(%23cone)' stroke='%233b3b3b' stroke-width='10'/%3E%3Ccircle cx='1320' cy='245' r='70' fill='%23060606' stroke='%232b2b2b' stroke-width='8'/%3E%3Ccircle cx='235' cy='640' r='190' fill='url(%23cone)' stroke='%23353535' stroke-width='10'/%3E%3Ccircle cx='235' cy='640' r='82' fill='%23060606' stroke='%23282828' stroke-width='8'/%3E%3C/g%3E%3Cg fill='none' stroke='url(%23g)' stroke-linecap='round'%3E%3Cpath d='M0 360 C80 360 90 355 130 355 C170 355 178 350 210 350 C250 350 255 370 292 370 C330 370 340 305 380 305 C418 305 430 445 466 445 C505 445 514 250 555 250 C595 250 604 405 642 405 C680 405 690 326 728 326 C765 326 778 372 816 372 C856 372 862 332 902 332 C940 332 950 347 988 347 C1028 347 1034 336 1074 336 C1112 336 1120 342 1160 342 C1200 342 1208 339 1248 339 C1290 339 1295 341 1340 341 C1385 341 1390 340 1435 340 C1480 340 1490 340 1600 340' stroke-width='3.2' opacity='.86'/%3E%3Cpath d='M0 455 C85 455 92 452 130 452 C170 452 180 445 220 445 C260 445 270 470 310 470 C350 470 360 420 400 420 C440 420 450 490 490 490 C530 490 540 403 580 403 C620 403 632 464 670 464 C710 464 720 430 760 430 C800 430 810 448 850 448 C890 448 900 438 940 438 C980 438 990 441 1030 441 C1070 441 1080 440 1120 440 C1160 440 1170 441 1210 441 C1250 441 1260 441 1300 441 C1340 441 1350 441 1390 441 C1430 441 1440 441 1600 441' stroke-width='1.4' opacity='.34'/%3E%3C/g%3E%3Cg opacity='.2' filter='url(%23blur)'%3E%3Cpath d='M260 160 H1290' stroke='%23ff7a18' stroke-width='3'/%3E%3Cpath d='M390 760 H1180' stroke='%23ff7a18' stroke-width='2'/%3E%3C/g%3E%3Cg opacity='.22' fill='%23ff7a18'%3E%3Crect x='305' y='855' width='4' height='18' rx='2'/%3E%3Crect x='321' y='842' width='4' height='31' rx='2'/%3E%3Crect x='337' y='828' width='4' height='45' rx='2'/%3E%3Crect x='353' y='850' width='4' height='23' rx='2'/%3E%3Crect x='369' y='815' width='4' height='58' rx='2'/%3E%3Crect x='385' y='836' width='4' height='37' rx='2'/%3E%3Crect x='401' y='823' width='4' height='50' rx='2'/%3E%3Crect x='417' y='846' width='4' height='27' rx='2'/%3E%3C/g%3E%3C/svg%3E");}
+header,nav{backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+main,section{position:relative}.container{width:min(1180px,calc(100% - 32px));margin-inline:auto}
+h1,h2,h3{letter-spacing:-.035em;line-height:1.02}h1{font-size:clamp(2.8rem,7vw,6.4rem);font-weight:850}h2{font-size:clamp(2rem,4vw,3.7rem)}p{color:var(--tb-muted);line-height:1.7}
+a,button{transition:transform .2s ease,border-color .2s ease,background .2s ease,box-shadow .2s ease,opacity .2s ease}button:hover,a:hover{transform:translateY(-1px)}
+.card,.product-card,[class*="card"],details{background:linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.018))!important;border:1px solid var(--tb-line)!important;box-shadow:0 24px 70px rgba(0,0,0,.32)!important;border-radius:20px!important}
+.product-card:hover,[class*="card"]:hover{border-color:rgba(255,122,24,.36)!important;box-shadow:0 28px 80px rgba(0,0,0,.48),0 0 0 1px rgba(255,122,24,.06)!important}
+button,.btn,[class*="button"],a[class*="btn"]{border-radius:12px!important;font-weight:700!important}.primary,.btn-primary,[class*="buy"],[class*="checkout"]{background:linear-gradient(135deg,#ff8a24,#ff6810)!important;color:#080808!important;border:0!important;box-shadow:0 10px 30px rgba(255,122,24,.18)!important}
+img{max-width:100%;height:auto}.hero,[class*="hero"]{isolation:isolate}.hero:after,[class*="hero"]:after{content:"";position:absolute;inset:auto 10% 0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,122,24,.55),transparent)}
+footer{border-top:1px solid var(--tb-line)!important;background:#030303!important}
+@media(max-width:720px){.container{width:min(100% - 22px,1180px)}h1{font-size:clamp(2.45rem,13vw,4rem)}section{padding-left:0!important;padding-right:0!important}.card,.product-card,[class*="card"],details{border-radius:16px!important}button,.btn,a[class*="btn"]{min-height:46px}}
+</style>
+
+<style id="tb-ir-hero-modern-override">
+.hero,[class*="hero"]{background-image:linear-gradient(110deg,rgba(2,2,2,.96) 0%,rgba(4,4,4,.88) 42%,rgba(7,7,7,.72) 100%)!important;background-color:#030303!important;overflow:hidden}
+.hero:before,[class*="hero"]:before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at 74% 48%,rgba(255,122,24,.13),transparent 27%),radial-gradient(ellipse at 82% 54%,rgba(255,255,255,.045),transparent 18%),linear-gradient(90deg,transparent 0 53%,rgba(255,122,24,.035) 53% 53.15%,transparent 53.15% 100%),repeating-linear-gradient(90deg,transparent 0 23px,rgba(255,255,255,.018) 24px,transparent 25px);opacity:.95}
+.hero .container,[class*="hero"] .container{position:relative;z-index:2}
+@media(max-width:720px){.hero:before,[class*="hero"]:before{background:radial-gradient(ellipse at 72% 35%,rgba(255,122,24,.10),transparent 28%),repeating-linear-gradient(90deg,transparent 0 27px,rgba(255,255,255,.014) 28px,transparent 29px)}}
+</style>
+<style id="tb-product-bass-preview">
+.tb-bass-visual{height:118px;margin:-4px -4px 16px;display:flex;align-items:center;justify-content:center;border-radius:16px;background:radial-gradient(ellipse at 50% 70%,rgba(255,122,24,.12),transparent 55%),linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,.005));overflow:hidden;position:relative}
+.tb-bass-visual:after{content:"";position:absolute;left:12%;right:12%;bottom:14px;height:1px;background:linear-gradient(90deg,transparent,rgba(255,122,24,.35),transparent)}
+.tb-bass-visual svg{width:94%;height:auto;overflow:visible;filter:drop-shadow(0 12px 16px rgba(0,0,0,.55));transform:rotate(-3deg)}
+.tb-bass-visual g:first-child{fill:#19191b;stroke:#d6d6d6;stroke-width:1.4;color:#ff7a18}.tb-bass-ray g:first-child{fill:#201914}.tb-bass-jazz g:first-child{fill:#17191c}.tb-bass-precision g:first-child{fill:#1d1715}.tb-bass-multiscale g:first-child{fill:#151b1b}.tb-bass-curved g:first-child{fill:#1c1719}
+.tb-bass-strings{fill:none;stroke:rgba(255,122,24,.65);stroke-width:.75}.card:hover .tb-bass-visual svg{transform:rotate(-2deg) scale(1.025);transition:transform .3s ease}
+@media(max-width:720px){.tb-bass-visual{height:104px;margin-bottom:13px}}
+</style>
+<style id="tb-real-instrument-photo-preview">
+.tb-instrument-photo{height:175px;margin:-4px -4px 16px;overflow:visible;position:relative;background:transparent;border:0;box-shadow:none}
+.tb-instrument-photo img{width:100%;height:100%;object-fit:contain;display:block;filter:drop-shadow(0 14px 18px rgba(0,0,0,.34));transition:transform .35s ease}
+.tb-instrument-photo:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.35)),radial-gradient(circle at 50% 80%,rgba(255,122,24,.08),transparent 55%)}
+.card:hover .tb-instrument-photo img{transform:scale(1.035)}
+@media(max-width:720px){.tb-instrument-photo{height:132px}}
+</style>
+
+<style id="tb-card-pro-finish">
+.tb-instrument-photo{height:190px!important;margin:0 0 12px!important;overflow:hidden!important;display:flex!important;align-items:center!important;justify-content:center!important;border-radius:18px!important;background:radial-gradient(ellipse at 50% 52%,rgba(255,130,35,.105) 0%,rgba(255,130,35,.035) 34%,rgba(255,255,255,.018) 55%,transparent 74%)!important;isolation:isolate!important}
+.tb-instrument-photo:before{content:"";position:absolute;inset:14% 10% 8%;border-radius:50%;background:radial-gradient(ellipse,rgba(255,255,255,.055),transparent 67%);filter:blur(12px);z-index:-1}
+.tb-instrument-photo img{width:94%!important;height:92%!important;object-fit:contain!important;object-position:center!important;filter:drop-shadow(0 14px 15px rgba(0,0,0,.48)) drop-shadow(0 0 10px rgba(255,125,28,.10))!important;transform:none!important}
+.tb-product-card:hover .tb-instrument-photo img{transform:scale(1.035)!important}
+/* Per-instrument visual sizing: only models that render smaller than Sadowsky NYC. */
+.tb-scale-gl-l2500 img{transform:scale(1.62)!important}
+.tb-scale-sadowsky-m5 img{transform:scale(1.72)!important}
+.tb-scale-sadowsky-metroline img{transform:scale(1.72)!important}
+.tb-scale-swing-jazz-deluxe img{transform:scale(1.62)!important}
+.tb-scale-yamaha-trb-jp2 img{transform:scale(1.78)!important}
+.tb-scale-ken-smith img{transform:scale(1.72)!important}
+.tb-product-card:hover .tb-scale-gl-l2500 img{transform:scale(1.66)!important}
+.tb-product-card:hover .tb-scale-sadowsky-m5 img,.tb-product-card:hover .tb-scale-sadowsky-metroline img,.tb-product-card:hover .tb-scale-ken-smith img{transform:scale(1.76)!important}
+.tb-product-card:hover .tb-scale-swing-jazz-deluxe img{transform:scale(1.66)!important}
+.tb-product-card:hover .tb-scale-yamaha-trb-jp2 img{transform:scale(1.82)!important}
+
+@media(max-width:720px){.tb-instrument-photo{height:165px!important}}
+</style>
 </head>
 
 <body>

@@ -1600,7 +1600,9 @@ if(grid){
       ${p.status ? `<div class="status">${p.status}</div>` : ``}
     `;
 
-    if(p.video){
+    // Botões de vídeo temporariamente ocultos nos cards.
+    // Os dados p.video permanecem intactos para reativação futura.
+    if(false && p.video){
       html += `<button class="video-btn" data-video="${p.video}">▶ Ver vídeo</button>`;
     }
 
@@ -1666,6 +1668,42 @@ if(grid){
     }
 
     card.innerHTML = html;
+    // Local preview: real instrument photography for identifiable IR/model cards.
+    const instrumentLabel = String(p.nome || p.name || p.title || p.slug || p.descricao || p.description || "").toLowerCase();
+    let instrumentPhoto = "";
+    let instrumentAlt = String(p.nome || "Instrumento do IR").replace(/ IR$/i, " bass");
+    const exactPhotoMap = [
+      [/bass mods/, "/assets/instruments/isolated-v1/bass-mods.png"],
+      [/fender 1978/, "/assets/instruments/isolated-v1/fender-1978.png"],
+      [/fender ultra 2|ultra ii/, "/assets/instruments/isolated-v1/fender-ultra-2.png"],
+      [/music\s*man|sting\s*ray|stingray/, "/assets/instruments/isolated-v1/music-man.png"],
+      [/g&l|l-2500/, "/assets/instruments/isolated-v1/gl-l2500.png"],
+      [/sadowsky m5/, "/assets/instruments/isolated-v1/sadowsky-m5.png"],
+      [/sadowsky metroline/, "/assets/instruments/isolated-v1/sadowsky-metroline.png"],
+      [/lakland/, "/assets/instruments/isolated-v1/lakland-ss44-75.png"],
+      [/sadowsky nyc/, "/assets/instruments/isolated-v1/sadowsky-nyc.png"],
+      [/fodera/, "/assets/instruments/isolated-v1/fodera.png"],
+      [/swing guitars|swing/, "/assets/instruments/isolated-v1/swing-jazz-deluxe.png"],
+      [/trb jp2|yamaha trb/, "/assets/instruments/isolated-v1/yamaha-trb-jp2.png"],
+      [/mayones|jabba/, "/assets/instruments/isolated-v1/mayones-jabba-5.png"],
+      [/mtd|535-24/, "/assets/instruments/isolated-v1/mtd-535-24.png"],
+      [/warwick|corvette/, "/assets/instruments/isolated-v1/warwick-corvette.png"],
+      [/ken smith/, "/assets/instruments/isolated-v1/ken-smith.png"],
+    ];
+    for (const [pattern, src] of exactPhotoMap) { if (pattern.test(instrumentLabel)) { instrumentPhoto = src; break; } }
+    if (instrumentPhoto) {
+      const scaleClassByAsset = {
+        "/assets/instruments/isolated-v1/gl-l2500.png": "tb-scale-gl-l2500",
+        "/assets/instruments/isolated-v1/sadowsky-m5.png": "tb-scale-sadowsky-m5",
+        "/assets/instruments/isolated-v1/sadowsky-metroline.png": "tb-scale-sadowsky-metroline",
+        "/assets/instruments/isolated-v1/swing-jazz-deluxe.png": "tb-scale-swing-jazz-deluxe",
+        "/assets/instruments/isolated-v1/yamaha-trb-jp2.png": "tb-scale-yamaha-trb-jp2",
+        "/assets/instruments/isolated-v1/ken-smith.png": "tb-scale-ken-smith"
+      };
+      const instrumentScaleClass = scaleClassByAsset[instrumentPhoto] || "";
+      card.insertAdjacentHTML("afterbegin", `<div class="tb-instrument-photo ${instrumentScaleClass}"><img src="${instrumentPhoto}" alt="${instrumentAlt}" loading="lazy" decoding="async" onerror="this.closest('.tb-instrument-photo').style.display='none'"></div>`);
+    }
+
     grid.appendChild(card);
     observeGA4ProductCardView(card, p);
 
