@@ -1600,9 +1600,7 @@ if(grid){
       ${p.status ? `<div class="status">${p.status}</div>` : ``}
     `;
 
-    // Botões de vídeo temporariamente ocultos nos cards.
-    // Os dados p.video permanecem intactos para reativação futura.
-    if(false && p.video){
+    if(p.video){
       html += `<button class="video-btn" data-video="${p.video}">▶ Ver vídeo</button>`;
     }
 
