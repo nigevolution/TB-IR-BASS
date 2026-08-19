@@ -1671,19 +1671,19 @@ if(grid){
     let instrumentPhoto = "";
     let instrumentAlt = String(p.nome || "Instrumento do IR").replace(/ IR$/i, " bass");
     const exactPhotoMap = [
-      [/bass mods/, "/assets/instruments/isolated-v1/bass-mods.png"],
+      [/bass mods/, "/assets/instruments/isolated-v1/bass-mods.png?v=20260819a"],
       [/fender 1978/, "/assets/instruments/isolated-v1/fender-1978.png"],
       [/fender ultra 2|ultra ii/, "/assets/instruments/isolated-v1/fender-ultra-2.png"],
       [/music\s*man|sting\s*ray|stingray/, "/assets/instruments/isolated-v1/music-man.png"],
       [/g&l|l-2500/, "/assets/instruments/isolated-v1/gl-l2500.png"],
-      [/sadowsky m5/, "/assets/instruments/isolated-v1/sadowsky-m5.png"],
+      [/sadowsky m5/, "/assets/instruments/isolated-v1/sadowsky-m5.png?v=20260819a"],
       [/sadowsky metroline/, "/assets/instruments/isolated-v1/sadowsky-metroline.png"],
       [/lakland/, "/assets/instruments/isolated-v1/lakland-ss44-75.png"],
       [/sadowsky nyc/, "/assets/instruments/isolated-v1/sadowsky-nyc.png"],
       [/fodera/, "/assets/instruments/isolated-v1/fodera.png"],
       [/swing guitars|swing/, "/assets/instruments/isolated-v1/swing-jazz-deluxe.png"],
       [/trb jp2|yamaha trb/, "/assets/instruments/isolated-v1/yamaha-trb-jp2.png"],
-      [/mayones|jabba/, "/assets/instruments/isolated-v1/mayones-jabba-5.png"],
+      [/mayones|jabba/, "/assets/instruments/isolated-v1/mayones-jabba-5.png?v=20260819a"],
       [/mtd|535-24/, "/assets/instruments/isolated-v1/mtd-535-24.png"],
       [/warwick|corvette/, "/assets/instruments/isolated-v1/warwick-corvette.png"],
       [/ken smith/, "/assets/instruments/isolated-v1/ken-smith.png"],
@@ -1698,7 +1698,8 @@ if(grid){
         "/assets/instruments/isolated-v1/yamaha-trb-jp2.png": "tb-scale-yamaha-trb-jp2",
         "/assets/instruments/isolated-v1/ken-smith.png": "tb-scale-ken-smith"
       };
-      const instrumentScaleClass = scaleClassByAsset[instrumentPhoto] || "";
+      const instrumentPhotoPath = instrumentPhoto.split("?", 1)[0];
+      const instrumentScaleClass = scaleClassByAsset[instrumentPhotoPath] || "";
       card.insertAdjacentHTML("afterbegin", `<div class="tb-instrument-photo ${instrumentScaleClass}"><img src="${instrumentPhoto}" alt="${instrumentAlt}" loading="lazy" decoding="async" onerror="this.closest('.tb-instrument-photo').style.display='none'"></div>`);
     }
 
