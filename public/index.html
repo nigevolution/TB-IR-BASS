@@ -324,6 +324,24 @@ footer{border-top:1px solid var(--tb-line)!important;background:#030303!importan
 .tb-product-card:hover .tb-scale-gl-l2500 img{transform:scale(.97)!important}
 /* ===== /TB 20260819 INSTRUMENT FIT FIX ===== */
 </style>
+
+<style id="tb-premium-sales-video">
+.tb-sales-video{max-width:1180px;margin:22px auto 0;padding:46px 24px 12px;position:relative;overflow:clip}
+.tb-sales-video-copy{margin:0 auto 24px;max-width:620px}
+.tb-sales-video-kicker{display:inline-block;margin:0 0 10px;color:#ff9a3c;font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}
+.tb-sales-video h2{margin:0;color:#f7f4f1;font-size:clamp(1.7rem,3.2vw,2.55rem);font-weight:780;letter-spacing:-.035em}
+.tb-sales-video-stage{width:min(100%,590px);margin:0 auto;padding:10px;border:1px solid rgba(255,154,60,.22);border-radius:34px;background:linear-gradient(145deg,rgba(24,18,14,.82),rgba(5,5,6,.94));box-shadow:0 34px 90px rgba(0,0,0,.58),0 0 42px rgba(255,122,24,.08),inset 0 1px rgba(255,255,255,.055);position:relative;isolation:isolate}
+.tb-sales-video-stage:before{content:"";position:absolute;inset:12% -8%;z-index:-1;border-radius:40%;background:radial-gradient(ellipse,rgba(255,122,24,.13),transparent 66%);filter:blur(30px);pointer-events:none}
+.tb-sales-video-frame{position:relative;aspect-ratio:9/16;overflow:hidden;border-radius:25px;background:#020202;box-shadow:inset 0 0 0 1px rgba(255,255,255,.055)}
+.tb-sales-video-player{display:block;width:100%;height:100%;object-fit:cover;background:#020202;outline:none}
+.tb-sales-video-play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%)!important;width:78px;height:78px;min-height:0!important;margin:0!important;padding:0!important;border:1px solid rgba(255,255,255,.28)!important;border-radius:50%!important;background:rgba(8,8,9,.68)!important;color:#fff!important;box-shadow:0 16px 48px rgba(0,0,0,.42),0 0 28px rgba(255,122,24,.20)!important;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);display:grid;place-items:center;z-index:3;transition:opacity .2s ease,transform .2s ease!important}
+.tb-sales-video-play:after{content:"";width:0;height:0;border-top:11px solid transparent;border-bottom:11px solid transparent;border-left:17px solid #fff;margin-left:5px;filter:drop-shadow(0 0 8px rgba(255,255,255,.24))}
+.tb-sales-video-play:hover{transform:translate(-50%,-50%) scale(1.055)!important}
+.tb-sales-video-frame.is-playing .tb-sales-video-play{opacity:0;pointer-events:none}
+.tb-sales-video-frame:focus-within .tb-sales-video-play{outline:2px solid rgba(255,154,60,.72);outline-offset:4px}
+@media(max-width:720px){.tb-sales-video{box-sizing:border-box;width:100%;max-width:100%;padding:34px 14px 8px!important}.tb-sales-video-copy{box-sizing:border-box;width:calc(100% - 28px);max-width:calc(100% - 28px);margin:0 auto 18px;padding:0 4px}.tb-sales-video-kicker{font-size:11px;letter-spacing:.12em}.tb-sales-video-stage{box-sizing:border-box;width:min(100%,430px);max-width:100%;padding:7px;border-radius:25px}.tb-sales-video-frame{border-radius:19px}.tb-sales-video-play{width:66px;height:66px}.tb-sales-video h2{box-sizing:border-box;width:100%;max-width:100%;padding:0 8px;font-size:clamp(1.12rem,5.1vw,1.5rem);line-height:1.12;white-space:normal;overflow-wrap:break-word}}
+@media(prefers-reduced-motion:reduce){.tb-sales-video-play{transition:none!important}}
+</style>
 </head>
 
 <body>
@@ -332,6 +350,41 @@ footer{border-top:1px solid var(--tb-line)!important;background:#030303!importan
 
 <h1>TB-BASS IR Store</h1>
 <p>IR premium direto na pedaleira • PIX e Cartão</p>
+
+
+<section class="tb-sales-video" aria-labelledby="tbSalesVideoTitle">
+  <div class="tb-sales-video-copy">
+    <span class="tb-sales-video-kicker">TB-BASS IR em ação</span>
+    <h2 id="tbSalesVideoTitle">Escute antes de escolher.</h2>
+  </div>
+  <div class="tb-sales-video-stage">
+    <div class="tb-sales-video-frame" id="tbSalesVideoFrame">
+      <video
+        id="tbSalesVideo"
+        class="tb-sales-video-player"
+        controls
+        playsinline
+        preload="metadata"
+        poster="/videos/premium/tb-bass-ir-store-poster.jpg"
+        src="/videos/premium/tb-bass-ir-store-apresentacao.mp4"
+        aria-label="Apresentação TB-BASS IR">
+      </video>
+      <button type="button" class="tb-sales-video-play" id="tbSalesVideoPlay" aria-label="Reproduzir apresentação"></button>
+    </div>
+  </div>
+</section>
+<script>
+(()=>{
+  const video=document.getElementById('tbSalesVideo');
+  const frame=document.getElementById('tbSalesVideoFrame');
+  const play=document.getElementById('tbSalesVideoPlay');
+  if(!video||!frame||!play)return;
+  play.addEventListener('click',()=>video.play());
+  video.addEventListener('play',()=>frame.classList.add('is-playing'));
+  video.addEventListener('pause',()=>frame.classList.remove('is-playing'));
+  video.addEventListener('ended',()=>frame.classList.remove('is-playing'));
+})();
+</script>
 
 <div id="produtos" class="grid"></div>
 
