@@ -1691,11 +1691,17 @@ if(grid){
     for (const [pattern, src] of exactPhotoMap) { if (pattern.test(instrumentLabel)) { instrumentPhoto = src; break; } }
     if (instrumentPhoto) {
       const scaleClassByAsset = {
+        "/assets/instruments/isolated-v1/fender-ultra-2.png": "tb-fit-fender-ultra-1958",
+        "/assets/instruments/isolated-v1/music-man.png": "tb-fit-music-man",
         "/assets/instruments/isolated-v1/gl-l2500.png": "tb-scale-gl-l2500",
         "/assets/instruments/isolated-v1/sadowsky-m5.png": "tb-scale-sadowsky-m5",
         "/assets/instruments/isolated-v1/sadowsky-metroline.png": "tb-scale-sadowsky-metroline",
+        "/assets/instruments/isolated-v1/lakland-ss44-75.png": "tb-fit-lakland-ss44-75",
+        "/assets/instruments/isolated-v1/sadowsky-nyc.png": "tb-fit-sadowsky-nyc",
+        "/assets/instruments/isolated-v1/fodera.png": "tb-fit-fodera",
         "/assets/instruments/isolated-v1/swing-jazz-deluxe.png": "tb-scale-swing-jazz-deluxe",
         "/assets/instruments/isolated-v1/yamaha-trb-jp2.png": "tb-scale-yamaha-trb-jp2",
+        "/assets/instruments/isolated-v1/mtd-535-24.png": "tb-fit-mtd-535-24",
         "/assets/instruments/isolated-v1/ken-smith.png": "tb-scale-ken-smith"
       };
       const instrumentPhotoPath = instrumentPhoto.split("?", 1)[0];
