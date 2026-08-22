@@ -219,8 +219,8 @@ function isTrackPilotCampaignPage(){
 }
 
 function getVisibleProducts(){
-  if(!isTrackPilotCampaignPage()) return produtos;
-  return produtos.filter(p => isTrackPilotName(p.nome));
+  if(isTrackPilotCampaignPage()) return produtos.filter(p => isTrackPilotName(p.nome));
+  return produtos.filter(p => !isTrackPilotName(p.nome));
 }
 
 function trackTrackPilotCheckoutEvent(eventName){
