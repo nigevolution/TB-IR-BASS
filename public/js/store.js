@@ -721,6 +721,14 @@ function getDiscountText(nome, pct){
       margin:6px 0;
     }
     .try-ir-btn:hover{filter:brightness(1.08)}
+    .ir-test-support-note{
+      max-width:420px;
+      margin:2px auto 10px;
+      font-size:12px;
+      line-height:1.45;
+      color:rgba(255,255,255,.72);
+    }
+    .ir-test-support-note strong{color:#fff}
     #irTestModal{position:fixed;inset:0;display:none;z-index:999999}
     #irTestModal.open{display:block}
     #irTestModal .ir-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.76)}
@@ -1312,6 +1320,18 @@ function ensureIRTestModal(){
   });
 }
 
+function openIRTestSupport(productId, productName){
+  const message = `Olá Silas! Vim pelo site TB-BASS IR e quero testar meu áudio no ${productName}. Vou enviar meu áudio seco pelo clipe 📎 > Documento, para preservar o arquivo original sem conversão ou compressão.`;
+  const url = `https://wa.me/5575988674964?text=${encodeURIComponent(message)}`;
+
+  const analyticsProduct = getAnalyticsProductById(productId);
+  trackGA4ProductEvent("ir_test_whatsapp_open", analyticsProduct, {
+    support_contact: "silas"
+  });
+
+  window.open(url, "_blank", "noopener,noreferrer");
+}
+
 function openIRTest(productId, productName){
   ensureIRTestModal();
 
@@ -1614,7 +1634,10 @@ if(grid){
     }
 
     if(p.irId){
-      html += `<button class="try-ir-btn" data-ir-id="${p.irId}" data-ir-name="${p.nome}">🎛 Testar meu áudio</button>`;
+      html += `
+        <button class="try-ir-btn" data-ir-id="${p.irId}" data-ir-name="${p.nome}">📲 Enviar áudio para teste</button>
+        <div class="ir-test-support-note"><strong>Importante:</strong> no WhatsApp, toque no clipe 📎 → <strong>Documento</strong> e selecione seu arquivo de áudio. Não envie como áudio/mídia, para preservar a qualidade original.</div>
+      `;
     }
 
 
@@ -1722,7 +1745,7 @@ if(grid){
     const tryBtn = card.querySelector(".try-ir-btn");
     if(tryBtn){
       tryBtn.addEventListener("click",()=>{
-        openIRTest(tryBtn.dataset.irId, tryBtn.dataset.irName);
+        openIRTestSupport(tryBtn.dataset.irId, tryBtn.dataset.irName);
       });
     }
 
