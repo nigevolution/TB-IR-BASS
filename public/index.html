@@ -388,6 +388,53 @@ footer{border-top:1px solid var(--tb-line)!important;background:#030303!importan
 
 <div id="produtos" class="grid"></div>
 
+
+<section id="feedbacks-reais" class="tb-feedbacks" aria-labelledby="tbFeedbacksTitle">
+  <style>
+    .tb-feedbacks{max-width:1380px;margin:72px auto 64px;padding:0 18px;text-align:center}
+    .tb-feedbacks-kicker{display:inline-block;margin-bottom:10px;font-size:12px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;color:#ff9a3c}
+    .tb-feedbacks h2{margin:0;font-size:clamp(28px,4vw,44px);line-height:1.05;color:#fff}
+    .tb-feedbacks-intro{max-width:720px;margin:14px auto 30px;color:rgba(255,255,255,.7);line-height:1.6}
+    .tb-feedbacks-grid{display:flex;gap:18px;align-items:flex-start;justify-content:center;overflow-x:auto;scroll-snap-type:x proximity;padding:0 0 12px;scrollbar-width:none}
+    .tb-feedback-card{appearance:none;flex:0 0 430px;max-width:calc(100vw - 36px);scroll-snap-align:center;border:1px solid rgba(255,154,60,.2);border-radius:22px;padding:10px;background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.018));box-shadow:0 22px 70px rgba(0,0,0,.35);cursor:zoom-in;overflow:hidden}
+    .tb-feedback-card img{display:block;width:100%;height:auto;border-radius:14px;background:#000;image-rendering:auto}
+    .tb-feedback-note{margin:18px 0 0;font-size:12px;color:rgba(255,255,255,.45)}
+    .tb-feedback-dialog{width:min(94vw,680px);max-height:92vh;padding:0;border:0;border-radius:18px;background:#090909;box-shadow:0 30px 110px rgba(0,0,0,.9)}
+    .tb-feedback-dialog::backdrop{background:rgba(0,0,0,.88)}
+    .tb-feedback-dialog img{display:block;width:100%;height:auto;max-height:88vh;object-fit:contain}
+    .tb-feedback-close{position:absolute;right:10px;top:10px;width:42px;height:42px;border:0;border-radius:50%;background:rgba(0,0,0,.72);color:#fff;font-size:24px;cursor:pointer}
+    @media(max-width:760px){
+      .tb-feedbacks{margin:56px auto 48px;padding:0}
+      .tb-feedbacks> :not(.tb-feedbacks-grid):not(.tb-feedback-dialog){margin-left:18px;margin-right:18px}
+      .tb-feedbacks-grid{justify-content:flex-start;gap:14px;scroll-snap-type:x mandatory;padding:0 18px 12px}
+      .tb-feedback-card{flex-basis:min(86vw,390px)}
+    }
+  </style>
+  <span class="tb-feedbacks-kicker">Feedbacks reais</span>
+  <h2 id="tbFeedbacksTitle">Quem testou, sentiu a diferença.</h2>
+  <p class="tb-feedbacks-intro">Relatos reais da comunidade TB-BASS IR.</p>
+  <div class="tb-feedbacks-grid">
+    <button class="tb-feedback-card" type="button" data-feedback-src="/assets/feedbacks/feedback-1.png" aria-label="Ampliar feedback 1"><img src="/assets/feedbacks/feedback-1.png" alt="Feedback real da comunidade TB-BASS IR" loading="lazy"></button>
+    <button class="tb-feedback-card" type="button" data-feedback-src="/assets/feedbacks/feedback-2.png" aria-label="Ampliar feedback 2"><img src="/assets/feedbacks/feedback-2.png" alt="Feedback real da comunidade TB-BASS IR" loading="lazy"></button>
+    <button class="tb-feedback-card" type="button" data-feedback-src="/assets/feedbacks/feedback-3.png" aria-label="Ampliar feedback 3"><img src="/assets/feedbacks/feedback-3.png" alt="Feedback real da comunidade TB-BASS IR" loading="lazy"></button>
+  </div>
+  <p class="tb-feedback-note">Toque em qualquer imagem para ampliar.</p>
+  <dialog class="tb-feedback-dialog" id="tbFeedbackDialog"><button type="button" class="tb-feedback-close" aria-label="Fechar">×</button><img alt="Feedback ampliado"></dialog>
+  <script>
+  (()=>{
+    const dialog=document.getElementById('tbFeedbackDialog');
+    if(!dialog)return;
+    const image=dialog.querySelector('img');
+    document.querySelectorAll('[data-feedback-src]').forEach(btn=>btn.addEventListener('click',()=>{
+      image.src=btn.dataset.feedbackSrc;
+      if(typeof dialog.showModal==='function')dialog.showModal();
+    }));
+    dialog.querySelector('.tb-feedback-close').addEventListener('click',()=>dialog.close());
+    dialog.addEventListener('click',e=>{if(e.target===dialog)dialog.close()});
+  })();
+  </script>
+</section>
+
 <section id="faq">
   <h2>Dúvidas Frequentes</h2>
 
