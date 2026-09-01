@@ -7,6 +7,10 @@ const precosCakto = {
   "Fender 1978 IR": 79,
   "Music Man IR": 49,
   "G&L L-2500 Americano IR": 49,
+  "Kubicki Ex Factor IR": 59,
+  "Fender American Elite Jazz Bass 2018 IR": 49,
+  "Fodera Elite DLX IR": 79,
+  "MTD Kingston ZX IR": 69,
   "Sadowsky M5 IR": 59,
   "Sadowsky Metroline IR": 35,
   "Lakland SS44-75 IR": 59,
@@ -41,6 +45,7 @@ const produtos = [
   },
   {
     nome:"Fender 1978 IR",
+    irId:"fender-1978",
     preco:79,
     link:"https://pay.cakto.com.br/32m3hrx_1077776",
     desc:"Vintage de verdade: grave redondo e cheio, médios orgânicos e aquele brilho antigo que encaixa perfeito na mix — ideal pra groove, rock, funk e worship.",
@@ -68,6 +73,7 @@ const produtos = [
   },
   {
     nome:"G&L L-2500 Americano IR",
+    irId:"gl-l2500",
     preco:49,
     link:"https://pay.cakto.com.br/egu872s_1077783",
     desc:"Americano com punch e presença: graves firmes, médios agressivos e definição absurda — perfeito pra slap, rock e som moderno sem embolar.",
@@ -177,6 +183,34 @@ const produtos = [
     desc:"Resposta hi-fi, ultra definição e sustain perfeito.",
     audio:"/audio/ken-smith.mp3",
     video:"/videos/ken-smith.mp4"
+  },
+  {
+    nome:"Kubicki Ex Factor IR",
+    irId:"kubicki-ex-factor",
+    preco:59,
+    link:"https://pay.cakto.com.br/ne4seso_1078181",
+    desc:"Ataque definido, médios presentes e resposta articulada com personalidade moderna."
+  },
+  {
+    nome:"Fender American Elite Jazz Bass 2018 IR",
+    irId:"fender-american-elite-2018",
+    preco:49,
+    link:"https://pay.cakto.com.br/3di9mhb_1078183",
+    desc:"Jazz Bass moderno com grave firme, médios detalhados e brilho controlado."
+  },
+  {
+    nome:"Fodera Elite DLX IR",
+    irId:"fodera-elite-dlx",
+    preco:79,
+    link:"https://pay.cakto.com.br/3ef9fp4_1078184",
+    desc:"Boutique de alta definição com graves profundos, médios tridimensionais e resposta refinada."
+  },
+  {
+    nome:"MTD Kingston ZX IR",
+    irId:"mtd-kingston-zx",
+    preco:69,
+    link:"https://pay.cakto.com.br/u8x66qx_1078185",
+    desc:"Resposta moderna com graves firmes, médios vivos e ataque rápido para palco e estúdio."
   }
 ];
 
@@ -1617,10 +1651,6 @@ if(grid){
       ${p.status ? `<div class="status">${p.status}</div>` : ``}
     `;
 
-    if(p.video){
-      html += `<button class="video-btn" data-video="${p.video}">▶ Ver vídeo</button>`;
-    }
-
     if(p.audio){
       html += `
         <div class="audio-wrap" style="display:none">
@@ -1696,6 +1726,10 @@ if(grid){
       [/fender ultra 2|ultra ii/, "/assets/instruments/isolated-v1/fender-ultra-2.png"],
       [/music\s*man|sting\s*ray|stingray/, "/assets/instruments/isolated-v1/music-man.png"],
       [/g&l|l-2500/, "/assets/instruments/isolated-v1/gl-l2500.png"],
+      [/kubicki ex factor|ex factor/, "/assets/instruments/isolated-v1/kubicki-ex-factor.png"],
+      [/fender american elite|fender elite 2018/, "/assets/instruments/isolated-v1/fender-american-elite-2018.png"],
+      [/fodera elite dlx/, "/assets/instruments/isolated-v1/fodera-elite-dlx.png"],
+      [/mtd kingston zx|kingston zx/, "/assets/instruments/isolated-v1/mtd-kingston-zx.png"],
       [/sadowsky m5/, "/assets/instruments/isolated-v1/sadowsky-m5.png?v=20260819a"],
       [/sadowsky metroline/, "/assets/instruments/isolated-v1/sadowsky-metroline.png"],
       [/lakland/, "/assets/instruments/isolated-v1/lakland-ss44-75.png"],
