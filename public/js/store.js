@@ -4,8 +4,9 @@ const precosCakto = {
 
   "Bass Mods IR": 49,
   "Fender Ultra 2 IR": 45,
-  "Fender 1978 IR": null,
+  "Fender 1978 IR": 79,
   "Music Man IR": 49,
+  "G&L L-2500 Americano IR": 49,
   "Sadowsky M5 IR": 59,
   "Sadowsky Metroline IR": 35,
   "Lakland SS44-75 IR": 59,
@@ -40,14 +41,12 @@ const produtos = [
   },
   {
     nome:"Fender 1978 IR",
-    preco:null,
-    link:null,
+    preco:79,
+    link:"https://pay.cakto.com.br/32m3hrx_1077776",
     desc:"Vintage de verdade: grave redondo e cheio, médios orgânicos e aquele brilho antigo que encaixa perfeito na mix — ideal pra groove, rock, funk e worship.",
     release:"2026-03-15T19:00:00",
-    status:"EM BREVE",
     audio:"/audio/fender-1978.mp3",
-    video:"/videos/fender-1978.mp4",
-    showBuy:false
+    video:"/videos/fender-1978.mp4"
   },
   {
     nome:"Fender Ultra 2 IR",
@@ -69,13 +68,11 @@ const produtos = [
   },
   {
     nome:"G&L L-2500 Americano IR",
-    preco:null,
-    link:null,
+    preco:49,
+    link:"https://pay.cakto.com.br/egu872s_1077783",
     desc:"Americano com punch e presença: graves firmes, médios agressivos e definição absurda — perfeito pra slap, rock e som moderno sem embolar.",
-    status:"EM BREVE",
     audio:"/audio/gl-l2500.mp3",
-    video:"/videos/gl-l2500.mp4",
-    showBuy:false
+    video:"/videos/gl-l2500.mp4"
   },
   {
     nome:"Sadowsky M5 IR",
