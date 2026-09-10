@@ -480,6 +480,9 @@ function getDiscountText(nome, pct){
       border:1px solid rgba(0,255,140,.35);
     }
 
+    .product-seo-link{color:inherit;text-decoration:none}
+    .product-seo-link:hover{color:inherit;text-decoration:underline;text-decoration-color:rgba(255,154,60,.72)}
+
     .coupon-badge{
       margin:10px auto 12px;
       display:inline-block;
@@ -1643,9 +1646,13 @@ if(grid){
 
     const showBuy = p.showBuy !== false;
     const priceSuffix = getPriceSuffix(p.nome);
+    const productSeoHref = p.irId ? `/ir/${p.irId}/` : "";
+    const productHeading = productSeoHref
+      ? `<h3><a class="product-seo-link" href="${productSeoHref}">${getDisplayProductName(p)}</a></h3>`
+      : `<h3>${getDisplayProductName(p)}</h3>`;
 
     let html = `
-      <h3>${getDisplayProductName(p)}</h3>
+      ${productHeading}
       <p>${p.desc}</p>
       ${p.cupom ? `<div class="coupon-badge">Cupom: ${p.cupom}</div>` : ``}
       ${p.status ? `<div class="status">${p.status}</div>` : ``}

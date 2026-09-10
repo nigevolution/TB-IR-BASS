@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /L/
+Disallow: /vault/
+Disallow: /client.html
+Sitemap: https://tbbassir.com.br/sitemap.xml
