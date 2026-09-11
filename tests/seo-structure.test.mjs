@@ -64,6 +64,25 @@ test('product SEO stays focused and machine-readable', () => {
   assert.ok(title.length <= 60, `hub title should stay within 60 chars, got ${title.length}`);
 });
 
+test('TB-BASS points organic social traffic to Silas Instagram without changing home body', () => {
+  const instagram = 'https://www.instagram.com/silasmarinhobx/';
+  const home = read('index.html');
+  assert.match(home, /"@type":"Person"/);
+  assert.match(home, /"name":"Silas Marinho"/);
+  assert.match(home, /"sameAs":\["https:\/\/www\.instagram\.com\/silasmarinhobx\/"\]/);
+  assert.doesNotMatch(home, />Ver @silasmarinhobx no Instagram</);
+
+  const hub = read(path.join('ir-para-baixo', 'index.html'));
+  assert.match(hub, new RegExp(instagram.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+  assert.match(hub, /Ver @silasmarinhobx no Instagram/);
+
+  for (const slug of irSlugs) {
+    const html = read(path.join('ir', slug, 'index.html'));
+    assert.match(html, /https:\/\/www\.instagram\.com\/silasmarinhobx\//);
+    assert.match(html, /Ver @silasmarinhobx no Instagram/);
+  }
+});
+
 test('store cards link to indexable IR detail pages', () => {
   const store = read('js/store.js');
   assert.match(store, /productSeoHref/);
