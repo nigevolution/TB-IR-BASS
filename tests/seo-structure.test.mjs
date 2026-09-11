@@ -49,6 +49,21 @@ test('every IR has an indexable product page with Product schema', () => {
   }
 });
 
+test('product SEO stays focused and machine-readable', () => {
+  for (const slug of irSlugs) {
+    const html = read(path.join('ir', slug, 'index.html'));
+    const meta = html.match(/<meta name="description" content="([^"]+)">/);
+    assert.ok(meta, `${slug} should expose a meta description`);
+    assert.ok(meta[1].length <= 160, `${slug} meta description should stay within 160 chars`);
+    assert.match(html, /"seller":\{"@type":"Organization","name":"TB-BASS IR","url":"https:\/\/tbbassir\.com\.br","logo":"https:\/\/tbbassir\.com\.br\/logo\.png"\}/);
+    assert.match(html, /Para quem procura .* IR para baixo/i);
+    assert.match(html, /Como testar .* IR no seu setup/i);
+  }
+  const hub = read(path.join('ir-para-baixo', 'index.html'));
+  const title = hub.match(/<title>([^<]+)<\/title>/)?.[1] || '';
+  assert.ok(title.length <= 60, `hub title should stay within 60 chars, got ${title.length}`);
+});
+
 test('store cards link to indexable IR detail pages', () => {
   const store = read('js/store.js');
   assert.match(store, /productSeoHref/);

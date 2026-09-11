@@ -51,6 +51,17 @@ const currentPrice = p => Number(precos[p.nome] ?? p.preco);
 const displayName = p => String(p.nome || '').replace(/\s+IR$/i, '');
 const existsPublic = urlPath => Boolean(urlPath) && fs.existsSync(path.join(publicDir, String(urlPath).replace(/^\/+/, '')));
 const descriptionFor = p => `${p.desc} Impulse Response (IR) para contrabaixo em WAV 24-bit, pronto para pedaleiras e IR loaders compatíveis.`;
+const compactMeta = (value, max = 158) => {
+  const text = String(value || '').replace(/\s+/g, ' ').trim();
+  if (text.length <= max) return text;
+  const cut = text.slice(0, max - 1).replace(/\s+\S*$/, '').replace(/[.,;:!?-]+$/, '');
+  return `${cut}.`;
+};
+const metaDescriptionFor = p => compactMeta(`${displayName(p)} IR para baixo em WAV 24-bit. ${p.desc} Compatível com pedaleiras e IR loaders que aceitam Impulse Response.`);
+const productTitleFor = p => {
+  const full = `${displayName(p)} IR para Baixo | TB-BASS IR`;
+  return full.length <= 60 ? full : `${displayName(p)} IR | TB-BASS IR`;
+};
 
 const baseCss = `
 :root{color-scheme:dark;--bg:#050505;--panel:#101010;--text:#f7f7f7;--muted:#b4b4b4;--accent:#ff8a24;--line:#2b2b2b}
@@ -74,6 +85,8 @@ function productPage(p) {
   const imagePath = mappedImage && existsPublic(mappedImage) ? mappedImage : '/logo.png';
   const imageUrl = `${canonicalBase}${imagePath}`;
   const desc = descriptionFor(p);
+  const metaDesc = metaDescriptionFor(p);
+  const seoTitle = productTitleFor(p);
   const price = currentPrice(p);
   const schema = {
     '@context':'https://schema.org',
@@ -92,7 +105,7 @@ function productPage(p) {
       price:price.toFixed(2),
       availability:'https://schema.org/InStock',
       itemCondition:'https://schema.org/NewCondition',
-      seller:{'@type':'Organization',name:'TB-BASS IR',url:canonicalBase}
+      seller:{'@type':'Organization',name:'TB-BASS IR',url:canonicalBase,logo:`${canonicalBase}/logo.png`}
     }
   };
   const breadcrumb = {
@@ -110,13 +123,13 @@ function productPage(p) {
 <html lang="pt-BR"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>${html(name)} IR para Baixo | TB-BASS IR</title>
-<meta name="description" content="${html(desc)}">
+<title>${html(seoTitle)}</title>
+<meta name="description" content="${html(metaDesc)}">
 <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
 <link rel="canonical" href="${canonical}">
 <meta property="og:type" content="product"><meta property="og:locale" content="pt_BR">
-<meta property="og:site_name" content="TB-BASS IR"><meta property="og:title" content="${html(name)} IR para Baixo | TB-BASS IR">
-<meta property="og:description" content="${html(desc)}"><meta property="og:url" content="${canonical}"><meta property="og:image" content="${imageUrl}">
+<meta property="og:site_name" content="TB-BASS IR"><meta property="og:title" content="${html(seoTitle)}">
+<meta property="og:description" content="${html(metaDesc)}"><meta property="og:url" content="${canonical}"><meta property="og:image" content="${imageUrl}">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/logo.png">
 <script type="application/ld+json">${JSON.stringify(schema)}</script>
@@ -142,6 +155,8 @@ function productPage(p) {
 <div class="facts"><div class="fact"><b>Formato</b><span>WAV 24-bit, 44,1 kHz e 48 kHz.</span></div><div class="fact"><b>Uso</b><span>Palco, estúdio, gravação e estudo.</span></div><div class="fact"><b>Entrega</b><span>Produto digital com entrega após a compra.</span></div></div>
 </section>
 <section class="section"><h2>Compatibilidade</h2><p>Compatível com pedaleiras e equipamentos que aceitam carregamento de Impulse Response em WAV, incluindo linhas da Mooer, Tank-B, MK300, MK20, Cuvave, Headrush, Ampero, Zoom, Line 6, Valeton e Hotone. Confirme no manual do seu equipamento se ele possui IR Loader.</p></section>
+<section class="section"><h2>Para quem procura ${html(name)} IR para baixo</h2><p>Esta opção é voltada a baixistas que querem comparar o perfil descrito no catálogo — ${html(p.desc)} — com o próprio instrumento e com a cadeia que já usam. O resultado de um IR depende também do baixo, captadores, cordas, técnica, ganho, equalização e sistema de monitoração, por isso vale ouvir e comparar antes da compra.</p><p>O ${html(name)} IR é entregue como arquivo WAV 24-bit em 44,1 kHz e 48 kHz. Use a versão exigida pelo seu equipamento e mantenha o arquivo original guardado para poder testar ajustes diferentes sem perder a referência.</p></section>
+<section class="section"><h2>Como testar ${html(name)} IR no seu setup</h2><p>Comece com o EQ da pedaleira o mais neutro possível e ajuste o ganho para não clipar a entrada ou a saída. Carregue o IR, compare com o bypass no mesmo volume e ouça principalmente definição do grave, presença dos médios, ataque e brilho. Essa comparação em volume semelhante evita escolher apenas porque uma opção ficou mais alta.</p><p>Para palco ou gravação, teste também no sistema que você realmente usa: fones, interface, monitor ou PA. Se o grave ficar excessivo ou o ataque sumir, faça pequenos ajustes de EQ depois de escolher o IR. A compatibilidade final sempre deve ser confirmada no manual do seu IR Loader.</p></section>
 ${audio ? `<section class="section">${audio}</section>` : ''}
 <section class="section"><h2>Como escolher seu IR de contrabaixo</h2><p>Compare o caráter de grave, médios, ataque e brilho com o som que você procura. Na TB-BASS IR você também pode testar opções usando o áudio do seu próprio baixo antes de decidir.</p><div class="actions"><a class="btn secondary" href="/ir-para-baixo/">Entender como funciona o IR para baixo</a><a class="btn primary" href="/#produtos">Comparar todos os IRs</a></div></section>
 <p class="legal">Os nomes e marcas de instrumentos citados identificam referências de timbre. TB-BASS IR é uma operação independente e não declara afiliação com fabricantes de instrumentos, salvo indicação expressa.</p>
@@ -158,6 +173,7 @@ for (const p of produtos) {
 }
 
 const hubCanonical = `${canonicalBase}/ir-para-baixo/`;
+const hubTitle = 'IR para Baixo (Impulse Response) | TB-BASS IR';
 const itemList = {
   '@context':'https://schema.org','@type':'ItemList',
   itemListElement:produtos.map((p,index)=>({
@@ -178,12 +194,12 @@ const cards = produtos.map(p => `<a class="card" href="/ir/${p.irId}/"><b>${html
 const hub = `<!doctype html>
 <html lang="pt-BR"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>IR para Baixo: Impulse Response para Contrabaixo | TB-BASS IR</title>
+<title>${hubTitle}</title>
 <meta name="description" content="IR para baixo e contrabaixo em WAV 24-bit. Entenda como funciona o Impulse Response, confira compatibilidade e compare timbres TB-BASS IR.">
 <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
 <link rel="canonical" href="${hubCanonical}">
 <meta property="og:type" content="website"><meta property="og:locale" content="pt_BR"><meta property="og:site_name" content="TB-BASS IR">
-<meta property="og:title" content="IR para Baixo: Impulse Response para Contrabaixo | TB-BASS IR"><meta property="og:url" content="${hubCanonical}">
+<meta property="og:title" content="${hubTitle}"><meta property="og:url" content="${hubCanonical}">
 <meta property="og:image" content="${canonicalBase}/bg-hero.jpg"><meta name="twitter:card" content="summary_large_image"><link rel="icon" href="/logo.png">
 <script type="application/ld+json">${JSON.stringify(itemList)}</script><script type="application/ld+json">${JSON.stringify(faq)}</script><style>${baseCss}</style>
 </head><body><div class="wrap"><header class="top"><a class="brand" href="/">TB-BASS IR</a></header><main>
