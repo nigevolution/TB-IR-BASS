@@ -38,7 +38,7 @@ const produtos = [
     nome:"Bass Mods IR",
     irId:"bass-mods",
     preco:59,
-    link:"https://pay.cakto.com.br/rtuwa88_720263",
+    link:"https://pay.cakto.com.br/checkout/rtuwa88_720263",
     desc:"Grave definido, ataque rápido e presença moderna.",
     audio:"/audio/bass-mods.mp3",
     video:"/videos/bass-mods.mp4"
@@ -47,7 +47,7 @@ const produtos = [
     nome:"Fender 1978 IR",
     irId:"fender-1978",
     preco:79,
-    link:"https://pay.cakto.com.br/32m3hrx_1077776",
+    link:"https://pay.cakto.com.br/checkout/32m3hrx_1077776",
     desc:"Vintage de verdade: grave redondo e cheio, médios orgânicos e aquele brilho antigo que encaixa perfeito na mix — ideal pra groove, rock, funk e worship.",
     release:"2026-03-15T19:00:00",
     audio:"/audio/fender-1978.mp3",
@@ -57,7 +57,7 @@ const produtos = [
     nome:"Fender Ultra 2 IR",
     irId:"fender-ultra-2",
     preco:59,
-    link:"https://pay.cakto.com.br/w3x2i3r_700686",
+    link:"https://pay.cakto.com.br/checkout/w3x2i3r_700686",
     desc:"Timbre limpo, quente e equilibrado.",
     audio:"/audio/fender-ultra-ii.mp3",
     video:"/videos/fender-ultra-2.mp4"
@@ -66,7 +66,7 @@ const produtos = [
     nome:"Music Man IR",
     irId:"music-man",
     preco:59,
-    link:"https://pay.cakto.com.br/n9ji2mm_700692",
+    link:"https://pay.cakto.com.br/checkout/n9ji2mm_700692",
     desc:"Punch agressivo, slap estalado e presença absurda.",
     audio:"/audio/music-man.mp3",
     video:"/videos/music-man.mp4"
@@ -75,7 +75,7 @@ const produtos = [
     nome:"G&L L-2500 Americano IR",
     irId:"gl-l2500",
     preco:49,
-    link:"https://pay.cakto.com.br/egu872s_1077783",
+    link:"https://pay.cakto.com.br/checkout/egu872s_1077783",
     desc:"Americano com punch e presença: graves firmes, médios agressivos e definição absurda — perfeito pra slap, rock e som moderno sem embolar.",
     audio:"/audio/gl-l2500.mp3",
     video:"/videos/gl-l2500.mp4"
@@ -84,7 +84,7 @@ const produtos = [
     nome:"Sadowsky M5 IR",
     irId:"sadowsky-m5",
     preco:69,
-    link:"https://pay.cakto.com.br/36243of_6",
+    link:"https://pay.cakto.com.br/checkout/36243of_698406",
     desc:"Grave cheio, médios polidos e definição premium.",
     audio:"/audio/sadowsky-m5.mp3",
     video:"/videos/sadowsky-m5.mp4"
@@ -93,7 +93,7 @@ const produtos = [
     nome:"Sadowsky Metroline IR",
     irId:"sadowsky-metroline",
     preco:39,
-    link:"https://pay.cakto.com.br/yaueq45_665688",
+    link:"https://pay.cakto.com.br/checkout/yaueq45_665688",
     desc:"Timbre clássico, suave e musical.",
     audio:"/audio/sadowsky-metroline.mp3",
     video:"/videos/sadowsky-metroline.mp4"
@@ -102,7 +102,7 @@ const produtos = [
     nome:"Lakland SS44-75 IR",
     irId:"lakland-ss44-75",
     preco:69,
-    link:"https://pay.cakto.com.br/wgonjnx_723722",
+    link:"https://pay.cakto.com.br/checkout/wgonjnx_723722",
     desc:"Boutique americano com punch absurdo, slap cristalino e médios vivos.",
     audio:"/audio/lakland-sl-44-75.mp3",
     video:"/videos/lakland-sl44-75.mp4",
@@ -112,7 +112,7 @@ const produtos = [
     nome:"Sadowsky NYC IR",
     irId:"sadowsky-nyc",
     preco:69,
-    link:"https://pay.cakto.com.br/3k2ofxi_750123",
+    link:"https://pay.cakto.com.br/checkout/3k2ofxi_750123",
     desc:"Flagship nova-iorquino com graves profundos e brilho cristalino.",
     audio:"/audio/sadowsky-nyc.mp3",
     video:"/videos/sadowsky-nyc.mp4",
@@ -122,7 +122,7 @@ const produtos = [
     nome:"Fodera IR",
     irId:"fodera",
     preco:89,
-    link:"https://pay.cakto.com.br/8pw23r3_733800",
+    link:"https://pay.cakto.com.br/checkout/8pw23r3_733800",
     desc:"Referência absoluta em boutique bass. Grave profundo, médios tridimensionais e definição de estúdio.",
     audio:"/audio/fodera.mp3",
     video:"/videos/fodera-bass.mp4"
@@ -131,7 +131,7 @@ const produtos = [
     nome:"Swing Guitars Jazz Deluxe IR",
     irId:"swing",
     preco:89,
-    link:"https://pay.cakto.com.br/3ff2d5r_750130",
+    link:"https://pay.cakto.com.br/checkout/3ff2d5r_750130",
     desc:"Timbre vintage com personalidade. Graves macios, médios encorpados e dinâmica musical perfeita para grooves, jazz, soul e bases orgânicas.",
     release:"2026-02-02T19:00:00",
     audio:"/audio/swing-guitars-jazz-deluxe.mp3",
@@ -141,7 +141,7 @@ const produtos = [
     nome:"TRB JP2 IR",
     irId:"trb-jp2",
     preco:69,
-    link:"https://pay.cakto.com.br/ebr74qa_733818",
+    link:"https://pay.cakto.com.br/checkout/ebr74qa_733818",
     desc:"Assinatura japonesa moderna. Grave firme, ataque rápido e equilíbrio perfeito para palco e estúdio.",
     audio:"/audio/trb-jp2.mp3",
     video:"/videos/trb-jp2.mp4"
@@ -150,7 +150,7 @@ const produtos = [
     nome:"Mayones Jabba 5 IR",
     irId:"mayones",
     preco:99,
-    link:"https://pay.cakto.com.br/388nbge_735148",
+    link:"https://pay.cakto.com.br/checkout/388nbge_735148",
     desc:"Flagship europeu com profundidade e definição profissional.",
     release:"2026-01-23T19:00:00",
     audio:"/audio/mayones-jabba-5.mp3",
@@ -160,7 +160,7 @@ const produtos = [
     nome:"MTD 535-24 IR",
     irId:"mtd",
     preco:99,
-    link:"https://pay.cakto.com.br/3bgf2sv_735157",
+    link:"https://pay.cakto.com.br/checkout/3bgf2sv_735157",
     desc:"Boutique luthier com dinâmica extrema e médios orgânicos.",
     release:"2026-01-23T19:00:00",
     audio:"/audio/mtd-535-24.mp3",
@@ -170,7 +170,7 @@ const produtos = [
     nome:"Warwick Corvette IR",
     irId:"warwick-corvette",
     preco:79,
-    link:"https://pay.cakto.com.br/3frq3qm_719724",
+    link:"https://pay.cakto.com.br/checkout/3frq3qm_719724",
     desc:"Médio encorpado e ataque metálico.",
     audio:"/audio/warwick-corvette.mp3",
     video:"/videos/warwick-proseries-corvette.mp4"
@@ -179,7 +179,7 @@ const produtos = [
     nome:"Ken Smith IR",
     irId:"ken-smith",
     preco:79,
-    link:"https://pay.cakto.com.br/zy8esjf_719715",
+    link:"https://pay.cakto.com.br/checkout/zy8esjf_719715",
     desc:"Resposta hi-fi, ultra definição e sustain perfeito.",
     audio:"/audio/ken-smith.mp3",
     video:"/videos/ken-smith.mp4"
@@ -188,28 +188,28 @@ const produtos = [
     nome:"Kubicki Ex Factor IR",
     irId:"kubicki-ex-factor",
     preco:59,
-    link:"https://pay.cakto.com.br/ne4seso_1078181",
+    link:"https://pay.cakto.com.br/checkout/ne4seso_1078181",
     desc:"Ataque definido, médios presentes e resposta articulada com personalidade moderna."
   },
   {
     nome:"Fender American Elite Jazz Bass 2018 IR",
     irId:"fender-american-elite-2018",
     preco:49,
-    link:"https://pay.cakto.com.br/3di9mhb_1078183",
+    link:"https://pay.cakto.com.br/checkout/3di9mhb_1078183",
     desc:"Jazz Bass moderno com grave firme, médios detalhados e brilho controlado."
   },
   {
     nome:"Fodera Elite DLX IR",
     irId:"fodera-elite-dlx",
     preco:79,
-    link:"https://pay.cakto.com.br/3ef9fp4_1078184",
+    link:"https://pay.cakto.com.br/checkout/3ef9fp4_1078184",
     desc:"Boutique de alta definição com graves profundos, médios tridimensionais e resposta refinada."
   },
   {
     nome:"MTD Kingston ZX IR",
     irId:"mtd-kingston-zx",
     preco:69,
-    link:"https://pay.cakto.com.br/u8x66qx_1078185",
+    link:"https://pay.cakto.com.br/checkout/u8x66qx_1078185",
     desc:"Resposta moderna com graves firmes, médios vivos e ataque rápido para palco e estúdio."
   }
 ];
