@@ -743,6 +743,7 @@ function getDiscountText(nome, pct){
     }
 
 
+    .try-ir-btn,.ir-test-support-note{display:none!important}
     .try-ir-btn{
       border:none;
       border-radius:18px;
