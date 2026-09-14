@@ -88,3 +88,16 @@ test('store cards link to indexable IR detail pages', () => {
   assert.match(store, /productSeoHref/);
   assert.match(store, /\/ir\/\$\{p\.irId\}\//);
 });
+
+
+test('home exposes a static crawlable path to the IR hub without hidden-link techniques', () => {
+  const home = read('index.html');
+  const anchor = home.match(/<a\s+href="\/ir-para-baixo\/"[^>]*>IR premium direto na pedaleira • PIX e Cartão<\/a>/)?.[0] || '';
+  assert.ok(anchor, 'home should expose a static HTML link to the IR hub');
+  assert.doesNotMatch(anchor, /\bhidden\b|aria-hidden=|display\s*:\s*none|visibility\s*:\s*hidden|opacity\s*:\s*0/i);
+
+  const hub = read(path.join('ir-para-baixo', 'index.html'));
+  for (const slug of irSlugs) {
+    assert.match(hub, new RegExp(`href="/ir/${slug}/"`), `hub should link to ${slug}`);
+  }
+});
