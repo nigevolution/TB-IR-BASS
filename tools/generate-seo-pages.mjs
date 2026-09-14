@@ -63,14 +63,14 @@ const irVideos = [
   },
   {
     slug:'15-opcoes-ir-silas-marinho', code:'DXPyY3JDssa', uploadDate:'2026-04-17',
-    title:'Mais de 15 opções de IR para baixo com Silas Marinho',
+    title:'15 opções de IR com Silas Marinho',
     description:'Silas Marinho apresenta em vídeo a disponibilidade de mais de 15 opções de IR para baixistas.',
     summary:'Conteúdo do perfil @silasmarinhobx mostrando a variedade de IRs e direcionando para comparação antes da escolha.',
     relatedSlugs:[]
   },
   {
     slug:'garanta-seu-ir-silas-marinho', code:'DWKTNcejpNj', uploadDate:'2026-03-21',
-    title:'IR para baixo: demonstração e opções com Silas Marinho',
+    title:'IR para baixo com Silas Marinho',
     description:'Reel de Silas Marinho apresentando IR para baixo e destacando a variedade de opções disponíveis para baixistas.',
     summary:'Vídeo comercial do próprio Silas Marinho sobre IR para baixo, conectado ao ecossistema TB-BASS IR.',
     relatedSlugs:[]

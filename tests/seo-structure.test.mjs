@@ -116,6 +116,8 @@ test('Silas IR videos have dedicated indexable watch pages with VideoObject', ()
     const page = read(relative);
     assert.match(page, new RegExp(`<link rel="canonical" href="https://tbbassir\\.com\\.br/videos-ir-para-baixo/${slug}/">`));
     assert.match(page, /"@type":"VideoObject"/);
+    const title = page.match(/<title>([^<]+)<\/title>/)?.[1] || '';
+    assert.ok(title.length <= 60, `${slug} title should stay within 60 chars, got ${title.length}`);
     assert.match(page, /"@id":"https:\/\/tbbassir\.com\.br\/#silas-marinho"/);
     assert.match(page, new RegExp(`https://www\\.instagram\\.com/reel/${code}/embed/`));
     assert.match(page, new RegExp(`https://www\\.instagram\\.com/p/${code}/media/\\?size=l`));
