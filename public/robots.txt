@@ -4,3 +4,4 @@ Disallow: /L/
 Disallow: /vault/
 Disallow: /client.html
 Sitemap: https://tbbassir.com.br/sitemap.xml
+Sitemap: https://tbbassir.com.br/video-sitemap.xml
