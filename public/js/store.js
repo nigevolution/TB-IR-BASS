@@ -3,7 +3,7 @@ const precosCakto = {
   "TrackPilot by TB-BASS IR": 49,
 
   "Bass Mods IR": 49,
-  "Fender Ultra 2 IR": 45,
+  "Fender Ultra 2 IR": 55,
   "Fender 1978 IR": 79,
   "Music Man IR": 49,
   "G&L L-2500 Americano IR": 49,
@@ -78,7 +78,6 @@ const produtos = [
     link:"https://pay.cakto.com.br/checkout/egu872s_1077783",
     desc:"Americano com punch e presença: graves firmes, médios agressivos e definição absurda — perfeito pra slap, rock e som moderno sem embolar.",
     audio:"/audio/gl-l2500.mp3",
-    video:"/videos/gl-l2500.mp4"
   },
   {
     nome:"Sadowsky M5 IR",
@@ -374,20 +373,26 @@ function getDisplayProductName(p){
 function applyTrackPilotCampaignHeader(){
   if(!isTrackPilotCampaignPage()) return;
 
-  const title = document.querySelector("h1");
-  if(title){
-    title.textContent = "TrackPilot Agente";
+  const conversionHero = document.getElementById("conversionHero");
+  if(conversionHero){
+    const kicker = conversionHero.querySelector(".conversion-kicker");
+    const title = conversionHero.querySelector("h1");
+    const copy = conversionHero.querySelector(".conversion-copy");
+    const primary = conversionHero.querySelector(".conversion-primary");
+    const secondary = conversionHero.querySelector(".conversion-secondary");
+    if(kicker) kicker.textContent = "TRACKPILOT • AUTOMAÇÃO PARA REAPER";
+    if(title) title.textContent = "Automação inteligente para REAPER";
+    if(copy) copy.textContent = "Organize, adicione e importe seus áudios nas tracks certas em poucos segundos.";
+    if(primary){ primary.textContent = "Conhecer TrackPilot"; primary.setAttribute("href", "#produtos"); }
+    if(secondary) secondary.style.display = "none";
   }
 
-  const allTextNodes = Array.from(document.querySelectorAll("p, span, div, small"));
-  const subtitle = allTextNodes.find(el =>
-    (el.textContent || "").trim() === "IR premium direto na pedaleira • PIX e Cartão"
-  );
-
-  if(subtitle){
-    subtitle.textContent = "Automação para REAPER";
-  }
-
+  ["conversionTrust", "toneNavigator"].forEach(id=>{
+    const el = document.getElementById(id);
+    if(el) el.style.display = "none";
+  });
+  const salesVideo = document.querySelector(".tb-sales-video");
+  if(salesVideo) salesVideo.style.display = "none";
   document.title = "TrackPilot Agente | TB-BASS IR";
 }
 
@@ -743,7 +748,6 @@ function getDiscountText(nome, pct){
     }
 
 
-    .try-ir-btn,.ir-test-support-note{display:none!important}
     .try-ir-btn{
       border:none;
       border-radius:18px;
@@ -1356,12 +1360,11 @@ function ensureIRTestModal(){
 }
 
 function openIRTestSupport(productId, productName){
-  const message = `Olá Silas! Vim pelo site TB-BASS IR e quero testar meu áudio no ${productName}. Vou enviar meu áudio seco pelo clipe 📎 > Documento, para preservar o arquivo original sem conversão ou compressão.`;
-  const url = `https://wa.me/5575988674964?text=${encodeURIComponent(message)}`;
+  const url = "https://wa.me/message/3QND546Y75L3M1";
 
   const analyticsProduct = getAnalyticsProductById(productId);
   trackGA4ProductEvent("ir_test_whatsapp_open", analyticsProduct, {
-    support_contact: "silas"
+    support_contact: "whatsapp_business"
   });
 
   window.open(url, "_blank", "noopener,noreferrer");
@@ -1480,6 +1483,21 @@ function getTpSessionId(){
   }
 }
 
+const TB_GA4_MEASUREMENT_ID = "G-FNRVG1V5MC";
+
+function cacheTbBassGa4Identifiers(){
+  if(typeof window === "undefined" || typeof gtag !== "function") return;
+  window.__tbBassGA4Ids = window.__tbBassGA4Ids || {};
+  gtag("get", TB_GA4_MEASUREMENT_ID, "client_id", value => {
+    if(value) window.__tbBassGA4Ids.client_id = String(value);
+  });
+  gtag("get", TB_GA4_MEASUREMENT_ID, "session_id", value => {
+    if(value) window.__tbBassGA4Ids.session_id = String(value);
+  });
+}
+
+cacheTbBassGa4Identifiers();
+
 function createTpClickId(p){
   const itemId = p ? getAnalyticsItemId(p) : "item";
   return "tpc_" + tpSafeIdPart(itemId) + "_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2, 8);
@@ -1499,6 +1517,9 @@ function buildTrackedCheckoutUrl(link, p, clickId, sessionId){
   url.searchParams.set("utm_content", clickId);
   url.searchParams.set("utm_term", sessionId);
   url.searchParams.set("tp_product_id", p ? getAnalyticsItemId(p) : "");
+  const gaIds = window.__tbBassGA4Ids || {};
+  if(gaIds.client_id) url.searchParams.set("ga_client_id", gaIds.client_id);
+  if(gaIds.session_id) url.searchParams.set("ga_session_id", gaIds.session_id);
   return url.toString();
 }
 
@@ -1624,6 +1645,26 @@ function observeGA4ProductCardView(card, p){
   ga4ProductViewObserver.observe(card);
 }
 
+function toneProfileForProduct(nome){
+  const value = String(nome || "").toLowerCase();
+  if(/fender 1978|sadowsky metroline|lakland|swing/.test(value)) return "vintage";
+  if(/fodera|ken smith|mtd 535|fender american elite/.test(value)) return "hifi";
+  if(/music man|g&l|l-2500|warwick|kubicki/.test(value)) return "punch";
+  return "modern";
+}
+
+function wireToneNavigator(){
+  const buttons = Array.from(document.querySelectorAll("[data-tone-filter]"));
+  if(!buttons.length || isTrackPilotCampaignPage()) return;
+  buttons.forEach(button=>button.addEventListener("click",()=>{
+    const filter = button.dataset.toneFilter || "all";
+    buttons.forEach(item=>item.setAttribute("aria-pressed", item === button ? "true" : "false"));
+    document.querySelectorAll("#produtos [data-tone-profile]").forEach(card=>{
+      card.hidden = filter !== "all" && card.dataset.toneProfile !== filter;
+    });
+  }));
+}
+
 /* ================== RENDER ================== */
 if(grid){
   applyTrackPilotCampaignHeader();
@@ -1635,7 +1676,10 @@ if(grid){
     const card = document.createElement("div");
     card.className = isTrackPilotName(p.nome)
       ? "card trackpilot-feature"
-      : "card";
+      : "card tb-product-card";
+    if(!isTrackPilotName(p.nome)){
+      card.setAttribute("data-tone-profile", toneProfileForProduct(p.nome));
+    }
 
     const precoFinal = toNumberOrNull(precosCakto[p.nome] ?? p.preco);
     const analyticsItem = getAnalyticsItem(p);
@@ -1659,6 +1703,33 @@ if(grid){
       ${p.status ? `<div class="status">${p.status}</div>` : ``}
     `;
 
+    if(p.video){
+      html += `<button class="video-btn" data-video="${p.video}">▶ Ver vídeo</button>`;
+    }
+
+    let priceHtml = "";
+    if(precoFinal != null && !p.release){
+      const antigo = toNumberOrNull(p.preco);
+      const novo = precoFinal;
+      const temDesconto = antigo != null && antigo > 0 && novo < antigo;
+      const pct = temDesconto ? Math.round(((antigo - novo) / antigo) * 100) : 0;
+      priceHtml += `<div class="price-wrap">`;
+      if(temDesconto){
+        priceHtml += `
+          <div class="price-line">
+            <span class="price-old">${formatBRL(antigo)}${isTrackPilotName(p.nome) ? " / mês" : ""}</span>
+            <span class="badge-off">${getDiscountText(p.nome, pct)}</span>
+          </div>
+          <div class="price-new">${formatBRL(novo)}${priceSuffix}</div>
+          ${getPriceNote(p.nome, antigo, novo)}
+        `;
+      }else{
+        priceHtml += `<div class="price-new">${formatBRL(novo)}${isTrackPilotName(p.nome) ? " / mês" : ""}</div>`;
+      }
+      priceHtml += `</div>`;
+    }
+    html += priceHtml;
+
     if(p.audio){
       html += `
         <div class="audio-wrap" style="display:none">
@@ -1670,11 +1741,10 @@ if(grid){
 
     if(p.irId){
       html += `
-        <button class="try-ir-btn" data-ir-id="${p.irId}" data-ir-name="${p.nome}">📲 Enviar áudio para teste</button>
+        <button class="try-ir-btn" data-ir-id="${p.irId}" data-ir-name="${p.nome}">🎸 Testar meu baixo grátis</button>
         <div class="ir-test-support-note"><strong>Importante:</strong> no WhatsApp, toque no clipe 📎 → <strong>Documento</strong> e selecione seu arquivo de áudio. Não envie como áudio/mídia, para preservar a qualidade original.</div>
       `;
     }
-
 
     if(showBuy && p.link && !p.release){
       const buyLabel = getBuyButtonLabel(p.nome);
@@ -1683,30 +1753,6 @@ if(grid){
       }else{
         html += `<button class="buy-btn" onclick="openTrackedCheckout(&quot;${p.link}&quot;, &quot;${analyticsItem.item_id}&quot;)">${buyLabel}</button>`;
       }
-    }
-
-    if(precoFinal != null && !p.release){
-      const antigo = toNumberOrNull(p.preco);
-      const novo = precoFinal;
-      const temDesconto = antigo != null && antigo > 0 && novo < antigo;
-      const pct = temDesconto ? Math.round(((antigo - novo) / antigo) * 100) : 0;
-
-      html += `<div class="price-wrap">`;
-
-      if(temDesconto){
-        html += `
-          <div class="price-line">
-            <span class="price-old">${formatBRL(antigo)}${isTrackPilotName(p.nome) ? " / mês" : ""}</span>
-            <span class="badge-off">${getDiscountText(p.nome, pct)}</span>
-          </div>
-          <div class="price-new">${formatBRL(novo)}${priceSuffix}</div>
-          ${getPriceNote(p.nome, antigo, novo)}
-        `;
-      }else{
-        html += `<div class="price-new">${formatBRL(novo)}${isTrackPilotName(p.nome) ? " / mês" : ""}</div>`;
-      }
-
-      html += `</div>`;
     }
 
     if(p.release){
@@ -1774,10 +1820,14 @@ if(grid){
     grid.appendChild(card);
     observeGA4ProductCardView(card, p);
 
-    const vb = card.querySelector(".video-btn");
-    if(vb){
-      vb.addEventListener("click",()=>{
-        openVideo(vb.getAttribute("data-video"));
+    if(window.TBBrowserIRDemo && typeof window.TBBrowserIRDemo.attachToCard === "function"){
+      window.TBBrowserIRDemo.attachToCard({ card, product: p });
+    }
+
+    const videoBtn = card.querySelector(".video-btn");
+    if(videoBtn){
+      videoBtn.addEventListener("click",()=>{
+        openVideo(videoBtn.getAttribute("data-video"));
       });
     }
 
@@ -1822,6 +1872,8 @@ if(grid){
     }
   });
 
+  wireToneNavigator();
+
   if(isTrackPilotCampaignPage()){
     const more = document.createElement("div");
     more.className = "trackpilot-more-products";
@@ -1855,10 +1907,6 @@ function startCountdown(){
 
         let out = "";
 
-        if(showBuy && link){
-          out += `<button class="buy-btn" onclick="openTrackedCheckout(&quot;${link}&quot;, &quot;${el.dataset.itemId || ""}&quot;)">Comprar agora</button>`;
-        }
-
         if(cur != null){
           out += `
             <div class="price-wrap">
@@ -1872,6 +1920,10 @@ function startCountdown(){
               ${getPriceNote(el.dataset.name, old, cur)}
             </div>
           `;
+        }
+
+        if(showBuy && link){
+          out += `<button class="buy-btn" onclick="openTrackedCheckout(&quot;${link}&quot;, &quot;${el.dataset.itemId || ""}&quot;)">Comprar agora</button>`;
         }
 
         el.outerHTML = out || ``;
