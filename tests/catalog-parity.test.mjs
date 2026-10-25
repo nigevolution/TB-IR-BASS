@@ -47,12 +47,12 @@ test('catálogo preserva isolamento da campanha TrackPilot', () => {
   assert.match(store, /return produtos\.filter\(p => !isTrackPilotName\(p\.nome\)\)/);
 });
 
-test('Fender Ultra 2 usa R$55 como preço atual e preserva R$59 de referência', () => {
+test('Fender Ultra 2 usa R$59 sem desconto e coincide com o preço de referência', () => {
   const current = store.match(/"Fender Ultra 2 IR":\s*(\d+)/);
   const reference = productBlock[1].match(/nome:"Fender Ultra 2 IR",[\s\S]*?preco:(\d+)/);
   assert.ok(current);
   assert.ok(reference);
-  assert.equal(Number(current[1]), 55);
+  assert.equal(Number(current[1]), 59);
   assert.equal(Number(reference[1]), 59);
 });
 

@@ -2,26 +2,26 @@
 const precosCakto = {
   "TrackPilot by TB-BASS IR": 49,
 
-  "Bass Mods IR": 49,
-  "Fender Ultra 2 IR": 55,
+  "Bass Mods IR": 59,
+  "Fender Ultra 2 IR": 59,
   "Fender 1978 IR": 79,
-  "Music Man IR": 49,
+  "Music Man IR": 59,
   "G&L L-2500 Americano IR": 49,
   "Kubicki Ex Factor IR": 59,
   "Fender American Elite Jazz Bass 2018 IR": 49,
   "Fodera Elite DLX IR": 79,
   "MTD Kingston ZX IR": 69,
-  "Sadowsky M5 IR": 59,
-  "Sadowsky Metroline IR": 35,
-  "Lakland SS44-75 IR": 59,
+  "Sadowsky M5 IR": 69,
+  "Sadowsky Metroline IR": 39,
+  "Lakland SS44-75 IR": 69,
   "Sadowsky NYC IR": 69,
   "Fodera IR": 89,
-  "Swing Guitars Jazz Deluxe IR": 69,
-  "TRB JP2 IR": 59,
-  "Mayones Jabba 5 IR": 89,
-  "MTD 535-24 IR": 89,
-  "Warwick Corvette IR": 59,
-  "Ken Smith IR": 59
+  "Swing Guitars Jazz Deluxe IR": 89,
+  "TRB JP2 IR": 69,
+  "Mayones Jabba 5 IR": 99,
+  "MTD 535-24 IR": 99,
+  "Warwick Corvette IR": 79,
+  "Ken Smith IR": 79
 };
 
 /* ================== PRODUTOS ================== */
@@ -231,7 +231,7 @@ const combos = [
     precoDe: 148.00,
     precoPor: 109.90,
     economia: 38.10,
-    link: "https://pay.cakto.com.br/checkout/86j5ytj"
+    link: "https://pay.cakto.com.br/checkout/86j5ytj_797266"
   },
   {
     id: "combo-fender-ultra-2-trb",
@@ -242,7 +242,7 @@ const combos = [
     precoDe: 128.00,
     precoPor: 99.90,
     economia: 28.10,
-    link: "https://pay.cakto.com.br/checkout/39wkq4q"
+    link: "https://pay.cakto.com.br/checkout/39wkq4q_797246"
   },
   {
     id: "combo-bass-mods-fender-ultra-2",
@@ -253,7 +253,7 @@ const combos = [
     precoDe: 118.00,
     precoPor: 99.90,
     economia: 18.10,
-    link: "https://pay.cakto.com.br/checkout/3bnzfqk"
+    link: "https://pay.cakto.com.br/checkout/3bnzfqk_797265"
   },
   {
     id: "combo-ken-smith-trb",
@@ -264,18 +264,18 @@ const combos = [
     precoDe: 148.00,
     precoPor: 115.90,
     economia: 32.10,
-    link: "https://pay.cakto.com.br/checkout/3bvaz3t"
+    link: "https://pay.cakto.com.br/checkout/3bvaz3t_797255"
   },
   {
     id: "combo-trb-music-man",
-    nome: "Combo TRB JP2 + Music Man StingRay",
+    nome: "Combo TRB JP2 + Music Man",
     badge: "🥊 Slap & Dinâmica",
     desc: "O clássico 'growl' potente do humbucker Music Man combinado ao brilho polido do TRB.",
     itens: ["Yamaha TRB JP2", "Music Man"],
     precoDe: 128.00,
-    precoPor: 94.90,
-    economia: 33.10,
-    link: "https://pay.cakto.com.br/checkout/9zqanv6"
+    precoPor: 99.90,
+    economia: 28.10,
+    link: "https://pay.cakto.com.br/checkout/9zqanv6_797247"
   },
   {
     id: "combo-fender-ultra-2-sadowsky-metroline",
@@ -286,7 +286,7 @@ const combos = [
     precoDe: 98.00,
     precoPor: 79.90,
     economia: 18.10,
-    link: "https://pay.cakto.com.br/checkout/fzp235u"
+    link: "https://pay.cakto.com.br/checkout/fzp235u_797243"
   },
   {
     id: "combo-warwick-mtd",
@@ -295,9 +295,9 @@ const combos = [
     desc: "A madeira orgânica e punch agressivo da Warwick com a dinâmica e agilidade do MTD.",
     itens: ["Warwick Corvette", "MTD 535-24"],
     precoDe: 178.00,
-    precoPor: 139.90,
-    economia: 38.10,
-    link: "https://pay.cakto.com.br/checkout/uanzm3v"
+    precoPor: 149.90,
+    economia: 28.10,
+    link: "https://pay.cakto.com.br/checkout/uanzm3v_797258"
   },
   {
     id: "combo-sadowsky-metroline-sadowsky-m5",
@@ -308,7 +308,7 @@ const combos = [
     precoDe: 108.00,
     precoPor: 79.90,
     economia: 28.10,
-    link: "https://pay.cakto.com.br/checkout/dt2t9jy"
+    link: "https://pay.cakto.com.br/checkout/dt2t9jy_797252"
   },
   {
     id: "combo-mtd-fender-ultra-2",
@@ -319,7 +319,7 @@ const combos = [
     precoDe: 158.00,
     precoPor: 129.90,
     economia: 28.10,
-    link: "https://pay.cakto.com.br/checkout/3c6kwki"
+    link: "https://pay.cakto.com.br/checkout/3c6kwki_797249"
   },
   {
     id: "combo-mayones-fodera",
@@ -330,7 +330,7 @@ const combos = [
     precoDe: 188.00,
     precoPor: 159.90,
     economia: 28.10,
-    link: "https://pay.cakto.com.br/checkout/desr77i"
+    link: "https://pay.cakto.com.br/checkout/desr77i_797263"
   }
 ];
 
