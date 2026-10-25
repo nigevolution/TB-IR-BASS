@@ -89,6 +89,149 @@ box-shadow:0 0 25px rgba(37,211,102,.7);
 }
 .whats-btn img{width:34px}
 footer{opacity:.7;margin:60px 0}
+
+/* ================== COMBOS VITRINE ================== */
+.tb-combos-section {
+  max-width: 1240px;
+  margin: 70px auto 40px;
+  padding: 0 16px;
+  text-align: center;
+}
+.combos-header {
+  margin-bottom: 36px;
+}
+.combos-tag {
+  display: inline-block;
+  background: rgba(255, 122, 24, 0.15);
+  border: 1px solid rgba(255, 122, 24, 0.4);
+  color: #ff9a3c;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  margin-bottom: 12px;
+}
+.combos-header h2 {
+  font-size: 32px;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 8px 0;
+  letter-spacing: -0.5px;
+}
+.combos-header p {
+  color: #a3a3a3;
+  font-size: 15px;
+  max-width: 650px;
+  margin: 0 auto;
+  line-height: 1.5;
+}
+.combos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+  text-align: left;
+}
+.tb-combo-card {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
+  border: 1px solid rgba(255, 122, 24, 0.22);
+  border-radius: 16px;
+  padding: 24px;
+  position: relative;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.tb-combo-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(255, 122, 24, 0.55);
+  box-shadow: 0 12px 30px rgba(255, 122, 24, 0.15);
+}
+.combo-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.badge-combo-highlight {
+  background: linear-gradient(135deg, #ff4500, #ff8c00);
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.badge-combo-economy {
+  background: rgba(46, 204, 113, 0.15);
+  color: #2ecc71;
+  border: 1px solid rgba(46, 204, 113, 0.35);
+  font-weight: 700;
+  font-size: 11px;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+.tb-combo-card h3 {
+  font-size: 19px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 10px;
+  line-height: 1.3;
+}
+.combo-items-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+.combo-item-pill {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #e5e5e5;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+.combo-desc {
+  font-size: 13px;
+  color: #a3a3a3;
+  line-height: 1.45;
+  margin: 0 0 18px;
+  flex-grow: 1;
+}
+.combo-price-subtext {
+  font-size: 11px;
+  color: #737373;
+  margin-top: 4px;
+}
+.combo-buy-btn {
+  margin-top: 14px;
+  background: linear-gradient(135deg, #ff7a00, #ff5000);
+  color: #fff;
+  font-weight: 800;
+  font-size: 14px;
+  padding: 13px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  box-shadow: 0 4px 15px rgba(255, 122, 0, 0.3);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.combo-buy-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 122, 0, 0.45);
+}
+@media (max-width: 600px) {
+  .combos-grid {
+    grid-template-columns: 1fr;
+  }
+}
 </style>
   <!-- UTMify Pixel -->
   <script>
@@ -107,6 +250,15 @@ footer{opacity:.7;margin:60px 0}
 <p>IR premium direto na pedaleira • PIX e Cartão</p>
 
 <div id="produtos" class="grid"></div>
+
+<section id="combos-vitrine" class="tb-combos-section">
+  <div class="combos-header">
+    <span class="combos-tag">⚡ COMBOS EXCLUSIVOS • 2 TIMBRES</span>
+    <h2>Combine 2 Timbres e Economize</h2>
+    <p>Simulações combinadas com harmonia de timbres para você cobrir qualquer estilo musical com desconto especial de pacote.</p>
+  </div>
+  <div id="combos-grid" class="combos-grid"></div>
+</section>
 
 <section id="faq">
 <h2>Dúvidas Frequentes</h2>

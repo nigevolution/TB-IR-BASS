@@ -220,6 +220,120 @@ const produtos = [
 
 const grid = document.getElementById("produtos");
 
+/* ================== COMBOS PROMOCIONAIS ================== */
+const combos = [
+  {
+    id: "combo-swing-fender-ultra-2",
+    nome: "Combo Swing Jazz Deluxe + Fender Ultra II",
+    badge: "🔥 O Mais Vendido",
+    desc: "O calor encorpado do Jazz Deluxe aliado à definição estelar do pré-amplificador Ultra II.",
+    itens: ["Swing Guitars Jazz Deluxe", "Fender Ultra II"],
+    precoDe: 148.00,
+    precoPor: 109.90,
+    economia: 38.10,
+    link: "https://pay.cakto.com.br/checkout/86j5ytj"
+  },
+  {
+    id: "combo-fender-ultra-2-trb",
+    nome: "Combo Fender Ultra II + TRB JP2",
+    badge: "⚡ Máxima Definição",
+    desc: "A versatilidade do timbre americano somada ao grave cortante e cristalino da lenda japonesa.",
+    itens: ["Fender Ultra II", "Yamaha TRB JP2"],
+    precoDe: 128.00,
+    precoPor: 99.90,
+    economia: 28.10,
+    link: "https://pay.cakto.com.br/checkout/39wkq4q"
+  },
+  {
+    id: "combo-bass-mods-fender-ultra-2",
+    nome: "Combo Bass Mods + Fender Ultra II",
+    badge: "💥 Punch & Presença",
+    desc: "Ataque rápido, presença moderna no mix e graves firmes para qualquer estilo.",
+    itens: ["Bass Mods", "Fender Ultra II"],
+    precoDe: 118.00,
+    precoPor: 89.90,
+    economia: 28.10,
+    link: "https://pay.cakto.com.br/checkout/3bnzfqk"
+  },
+  {
+    id: "combo-ken-smith-trb",
+    nome: "Combo Ken Smith + TRB JP2",
+    badge: "👑 Som Hi-Fi de Elite",
+    desc: "Sustain infinito, ultra definição nas cordas graves e corpo nobre de boutique.",
+    itens: ["Ken Smith", "Yamaha TRB JP2"],
+    precoDe: 148.00,
+    precoPor: 104.90,
+    economia: 43.10,
+    link: "https://pay.cakto.com.br/checkout/3bvaz3t"
+  },
+  {
+    id: "combo-trb-music-man",
+    nome: "Combo TRB JP2 + Music Man StingRay",
+    badge: "🥊 Slap & Dinâmica",
+    desc: "O clássico 'growl' potente do humbucker Music Man combinado ao brilho polido do TRB.",
+    itens: ["Yamaha TRB JP2", "Music Man"],
+    precoDe: 128.00,
+    precoPor: 94.90,
+    economia: 33.10,
+    link: "https://pay.cakto.com.br/checkout/9zqanv6"
+  },
+  {
+    id: "combo-fender-ultra-2-sadowsky-metroline",
+    nome: "Combo Fender Ultra II + Sadowsky Metroline",
+    badge: "✨ Clássico Renovado",
+    desc: "O som clássico de estúdio nova-iorquino com o requinte moderno do Ultra II.",
+    itens: ["Fender Ultra II", "Sadowsky Metroline"],
+    precoDe: 98.00,
+    precoPor: 79.90,
+    economia: 18.10,
+    link: "https://pay.cakto.com.br/checkout/fzp235u"
+  },
+  {
+    id: "combo-warwick-mtd",
+    nome: "Combo Warwick Corvette + MTD 535-24",
+    badge: "🎯 Médios Vivos & Punch",
+    desc: "A madeira orgânica e punch agressivo da Warwick com a dinâmica e agilidade do MTD.",
+    itens: ["Warwick Corvette", "MTD 535-24"],
+    precoDe: 178.00,
+    precoPor: 129.90,
+    economia: 48.10,
+    link: "https://pay.cakto.com.br/checkout/uanzm3v"
+  },
+  {
+    id: "combo-sadowsky-metroline-sadowsky-m5",
+    nome: "Combo Sadowsky Metroline + Sadowsky M5",
+    badge: "🗽 Família Sadowsky",
+    desc: "O pacote completo do timbre Sadowsky: a suavidade do Metroline e os graves cheios do M5.",
+    itens: ["Sadowsky Metroline", "Sadowsky M5"],
+    precoDe: 108.00,
+    precoPor: 79.90,
+    economia: 28.10,
+    link: "https://pay.cakto.com.br/checkout/dt2t9jy"
+  },
+  {
+    id: "combo-mtd-fender-ultra-2",
+    nome: "Combo MTD 535-24 + Fender Ultra II",
+    badge: "💎 Boutique & Versatilidade",
+    desc: "Médios expressivos e timbre aveludado para tocar de pop a fusion com autoridade.",
+    itens: ["MTD 535-24", "Fender Ultra II"],
+    precoDe: 158.00,
+    precoPor: 129.90,
+    economia: 28.10,
+    link: "https://pay.cakto.com.br/checkout/3c6kwki"
+  },
+  {
+    id: "combo-mayones-fodera",
+    nome: "Combo Mayones Jabba 5 + Fodera Elite",
+    badge: "🏆 Padrão Master de Gravação",
+    desc: "Os dois maiores ícones mundiais de contrabaixo de luxo para mixagens impecáveis.",
+    itens: ["Mayones Jabba 5", "Fodera"],
+    precoDe: 188.00,
+    precoPor: 159.90,
+    economia: 28.10,
+    link: "https://pay.cakto.com.br/checkout/desr77i"
+  }
+];
+
 /* ================== HELPERS ================== */
 function toNumberOrNull(v){
   if (v === null || v === undefined || v === "") return null;
@@ -392,7 +506,7 @@ function applyTrackPilotCampaignHeader(){
     if(secondary) secondary.style.display = "none";
   }
 
-  ["conversionTrust", "toneNavigator"].forEach(id=>{
+  ["conversionTrust", "toneNavigator", "combos-vitrine"].forEach(id=>{
     const el = document.getElementById(id);
     if(el) el.style.display = "none";
   });
@@ -1416,7 +1530,7 @@ function openIRTest(productId, productName){
 
 /* ================== GA4 PRODUTO ================== */
 function getAnalyticsItemId(p){
-  return p.irId || String(p.nome || "")
+  return p.id || p.irId || String(p.nome || "")
     .toLowerCase()
     .normalize("NFD").replace(/[\u0300-\u036f]/g,"")
     .replace(/[^a-z0-9]+/g,"-")
@@ -1424,10 +1538,18 @@ function getAnalyticsItemId(p){
 }
 
 function getAnalyticsProductById(itemId){
-  return produtos.find(p => getAnalyticsItemId(p) === itemId) || null;
+  return produtos.find(p => getAnalyticsItemId(p) === itemId) || (typeof combos !== "undefined" ? combos.find(c => c.id === itemId) : null) || null;
 }
 
 function getAnalyticsItem(p){
+  if(p && p.precoPor != null){
+    return {
+      item_id: p.id,
+      item_name: p.nome,
+      currency: "BRL",
+      price: p.precoPor
+    };
+  }
   const price = toNumberOrNull(precosCakto[p.nome] ?? p.preco);
   const item = {
     item_id: getAnalyticsItemId(p),
@@ -1566,7 +1688,7 @@ function sendTrackPilotClickRecord(p, clickId, sessionId, checkoutUrl){
 }
 
 function openTrackedCheckout(link, itemId){
-  const p = getAnalyticsProductById(itemId) || produtos.find(prod => prod.link === link) || null;
+  const p = getAnalyticsProductById(itemId) || produtos.find(prod => prod.link === link) || (typeof combos !== "undefined" ? combos.find(c => c.link === link) : null) || null;
   const sessionId = getTpSessionId();
   const clickId = createTpClickId(p);
   const trackedUrl = buildTrackedCheckoutUrl(link, p, clickId, sessionId);
@@ -1878,6 +2000,7 @@ if(grid){
     }
   });
 
+  renderCombos();
   wireToneNavigator();
 
   if(isTrackPilotCampaignPage()){
@@ -1890,6 +2013,48 @@ if(grid){
     `;
     grid.appendChild(more);
   }
+}
+
+/* ================== RENDER COMBOS ================== */
+function renderCombos(){
+  const combosContainer = document.getElementById("combos-grid");
+  if(!combosContainer) return;
+  if(isTrackPilotCampaignPage()){
+    const section = document.getElementById("combos-vitrine");
+    if(section) section.style.display = "none";
+    return;
+  }
+
+  combosContainer.innerHTML = "";
+  combos.forEach(c => {
+    const card = document.createElement("div");
+    card.className = "card tb-combo-card";
+    card.dataset.itemId = c.id;
+    card.dataset.itemName = c.nome;
+    card.dataset.price = String(c.precoPor);
+
+    const itemsTags = c.itens.map(item => `<span class="combo-item-pill">🎸 ${item}</span>`).join(" ");
+
+    card.innerHTML = `
+      <div class="combo-top-row">
+        <span class="badge-combo-highlight">${c.badge}</span>
+        <span class="badge-combo-economy">Economize ${formatBRL(c.economia)}</span>
+      </div>
+      <h3>${c.nome}</h3>
+      <div class="combo-items-row">${itemsTags}</div>
+      <p class="combo-desc">${c.desc}</p>
+      <div class="price-wrap">
+        <div class="price-line">
+          <span class="price-old">${formatBRL(c.precoDe)}</span>
+          <span class="badge-off">PACOTE 2 EM 1</span>
+        </div>
+        <div class="price-new">${formatBRL(c.precoPor)}</div>
+        <div class="combo-price-subtext">2 Simulações inclusas no checkout</div>
+      </div>
+      <button class="buy-btn combo-buy-btn" onclick="openTrackedCheckout(&quot;${c.link}&quot;, &quot;${c.id}&quot;)">Comprar Combo • ${formatBRL(c.precoPor)}</button>
+    `;
+    combosContainer.appendChild(card);
+  });
 }
 
 /* ================== CRONÔMETRO ================== */
