@@ -251,8 +251,8 @@ const combos = [
     desc: "Ataque rápido, presença moderna no mix e graves firmes para qualquer estilo.",
     itens: ["Bass Mods", "Fender Ultra II"],
     precoDe: 118.00,
-    precoPor: 89.90,
-    economia: 28.10,
+    precoPor: 99.90,
+    economia: 18.10,
     link: "https://pay.cakto.com.br/checkout/3bnzfqk"
   },
   {
@@ -262,8 +262,8 @@ const combos = [
     desc: "Sustain infinito, ultra definição nas cordas graves e corpo nobre de boutique.",
     itens: ["Ken Smith", "Yamaha TRB JP2"],
     precoDe: 148.00,
-    precoPor: 104.90,
-    economia: 43.10,
+    precoPor: 115.90,
+    economia: 32.10,
     link: "https://pay.cakto.com.br/checkout/3bvaz3t"
   },
   {
@@ -295,8 +295,8 @@ const combos = [
     desc: "A madeira orgânica e punch agressivo da Warwick com a dinâmica e agilidade do MTD.",
     itens: ["Warwick Corvette", "MTD 535-24"],
     precoDe: 178.00,
-    precoPor: 129.90,
-    economia: 48.10,
+    precoPor: 139.90,
+    economia: 38.10,
     link: "https://pay.cakto.com.br/checkout/uanzm3v"
   },
   {
