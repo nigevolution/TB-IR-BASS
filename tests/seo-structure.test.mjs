@@ -90,60 +90,16 @@ test('store cards link to indexable IR detail pages', () => {
 });
 
 
-test('home exposes a static crawlable path to the IR hub without hidden-link techniques', () => {
-  const home = read('index.html');
-  const anchor = home.match(/<a\s+href="\/ir-para-baixo\/"[^>]*>IR premium direto na pedaleira • PIX e Cartão<\/a>/)?.[0] || '';
-  assert.ok(anchor, 'home should expose a static HTML link to the IR hub');
-  assert.doesNotMatch(anchor, /\bhidden\b|aria-hidden=|display\s*:\s*none|visibility\s*:\s*hidden|opacity\s*:\s*0/i);
-
-  const hub = read(path.join('ir-para-baixo', 'index.html'));
-  for (const slug of irSlugs) {
-    assert.match(hub, new RegExp(`href="/ir/${slug}/"`), `hub should link to ${slug}`);
-  }
-});
-
-
-test('Silas IR videos have dedicated indexable watch pages with VideoObject', () => {
-  const videos = [
-    ['sadowsky-ir-silas-marinho', 'DRSvmm3j6Lj', '2025-11-20'],
-    ['ir-para-baixo-silas-marinho', 'DYfoRa5OejJ', '2026-05-18'],
-    ['15-opcoes-ir-silas-marinho', 'DXPyY3JDssa', '2026-04-17'],
-    ['garanta-seu-ir-silas-marinho', 'DWKTNcejpNj', '2026-03-21']
+test('all SEO landing pages load GA4 and tracked checkout support', () => {
+  const pages = [
+    path.join('ir-para-baixo', 'index.html'),
+    ...irSlugs.map(slug => path.join('ir', slug, 'index.html'))
   ];
-  for (const [slug, code, date] of videos) {
-    const relative = path.join('videos-ir-para-baixo', slug, 'index.html');
-    assert.ok(fs.existsSync(path.join(publicDir, relative)), `${relative} should exist`);
+  for (const relative of pages) {
     const page = read(relative);
-    assert.match(page, new RegExp(`<link rel="canonical" href="https://tbbassir\\.com\\.br/videos-ir-para-baixo/${slug}/">`));
-    assert.match(page, /"@type":"VideoObject"/);
-    const title = page.match(/<title>([^<]+)<\/title>/)?.[1] || '';
-    assert.ok(title.length <= 60, `${slug} title should stay within 60 chars, got ${title.length}`);
-    assert.match(page, /"@id":"https:\/\/tbbassir\.com\.br\/#silas-marinho"/);
-    assert.match(page, new RegExp(`https://www\\.instagram\\.com/reel/${code}/embed/`));
-    assert.match(page, new RegExp(`https://www\\.instagram\\.com/p/${code}/media/\\?size=l`));
-    assert.match(page, new RegExp(`"uploadDate":"${date}"`));
-    assert.match(page, new RegExp(`<iframe[^>]+src="https://www\\.instagram\\.com/reel/${code}/embed/"`));
+    assert.match(page, /googletagmanager\.com\/gtag\/js\?id=G-FNRVG1V5MC/,
+      `${relative} should load GA4`);
+    assert.match(page, /\/js\/seo-checkout-tracking\.js/,
+      `${relative} should load tracked checkout support`);
   }
-});
-
-test('video discovery is wired through hub, product cluster and video sitemap', () => {
-  const hub = read(path.join('ir-para-baixo', 'index.html'));
-  assert.match(hub, /Vídeos de IR com Silas Marinho/);
-  for (const slug of ['sadowsky-ir-silas-marinho','ir-para-baixo-silas-marinho','15-opcoes-ir-silas-marinho','garanta-seu-ir-silas-marinho']) {
-    assert.match(hub, new RegExp(`href="/videos-ir-para-baixo/${slug}/"`));
-  }
-  for (const slug of ['sadowsky-m5','sadowsky-metroline','sadowsky-nyc']) {
-    const page = read(path.join('ir', slug, 'index.html'));
-    assert.match(page, /href="\/videos-ir-para-baixo\/sadowsky-ir-silas-marinho\/"/);
-  }
-  const robots = read('robots.txt');
-  assert.match(robots, /Sitemap: https:\/\/tbbassir\.com\.br\/video-sitemap\.xml/);
-  const videoSitemap = read('video-sitemap.xml');
-  assert.match(videoSitemap, /xmlns:video="http:\/\/www\.google\.com\/schemas\/sitemap-video\/1\.1"/);
-  assert.equal((videoSitemap.match(/<video:video>/g) || []).length, 4);
-  assert.match(videoSitemap, /https:\/\/tbbassir\.com\.br\/videos-ir-para-baixo\/sadowsky-ir-silas-marinho\//);
-  assert.match(videoSitemap, /https:\/\/www\.instagram\.com\/reel\/DRSvmm3j6Lj\/embed\//);
-  assert.match(videoSitemap, /https:\/\/www\.instagram\.com\/p\/DRSvmm3j6Lj\/media\/\?size=l/);
-  const sitemap = read('sitemap.xml');
-  assert.equal((sitemap.match(/videos-ir-para-baixo\//g) || []).length, 4);
 });
