@@ -2,13 +2,16 @@ import sys
 import uuid
 import json
 import time
-from typing import Dict, Any, List
 
 sys.path.append("/Users/elbsferreiranobre/Documents/TB-IR-BASS-git/tools")
 from cakto_bridge import list_products, get_product, run_cakto_js, get_session_info
 
+EXACT_AVISO_LEGAL_P1 = "Aviso Legal: A TB-BASS IR comercializa seus produtos (arquivos digitais nos formatos IR, AM4Data e NAM) exclusivamente por meio dos canais oficiais informados neste site."
+EXACT_AVISO_LEGAL_P2 = "Arquivos adquiridos por terceiros, revendas não autorizadas, compartilhamentos ou qualquer outra forma de obtenção fora dos canais oficiais não conferem direito a suporte técnico, atualizações ou qualquer tipo de assistência."
+EXACT_AVISO_LEGAL_P3 = "É proibida a reprodução, distribuição, revenda, compartilhamento ou qualquer forma de exploração comercial deste conteúdo sem autorização expressa do titular dos direitos."
+
 def update_checkout_config(checkout_id: int, product_name: str, csrf_token: str) -> bool:
-    """Atualiza o Checkout Builder na Cakto incluindo o Aviso Legal e formatos IR, AM4Data e NAM."""
+    """Atualiza o Checkout Builder na Cakto com o Aviso Legal exato solicitado."""
     js_get = f"""
     const xhr = new XMLHttpRequest();
     xhr.open("GET", "https://api.cakto.com.br/api/product/builder/checkout/{checkout_id}/", false);
@@ -31,28 +34,72 @@ def update_checkout_config(checkout_id: int, product_name: str, csrf_token: str)
 
     clean_name = product_name.replace("Simulação ", "").strip()
 
-    new_items = [
+    new_list_items = [
         {"id": str(uuid.uuid4()), "text": f"TB-BASS IR — {clean_name}"},
         {"id": str(uuid.uuid4()), "text": "Formatos Inclusos: IR (.WAV 24-bit 44.1/48kHz), AM4Data (Tank-B) e NAM"},
-        {"id": str(uuid.uuid4()), "text": "Aviso Legal: Produto 100% digital para pedaleiras com IR Loader / NAM. Não é instrumento físico."},
-        {"id": str(uuid.uuid4()), "text": "Recomendação: Para máxima fidelidade sonora dos vídeos, use cordas novas ou semi-novas."},
+        {"id": str(uuid.uuid4()), "text": EXACT_AVISO_LEGAL_P1},
+        {"id": str(uuid.uuid4()), "text": EXACT_AVISO_LEGAL_P2},
+        {"id": str(uuid.uuid4()), "text": EXACT_AVISO_LEGAL_P3},
         {"id": str(uuid.uuid4()), "text": "Acesso imediato no e-mail cadastrado + Suporte pós-venda TB-BASS"}
     ]
 
-    has_list = False
+    html_legal_box = (
+        f"<div style='border:1px solid #333;background:#0d0d0d;border-radius:10px;padding:14px;margin-top:16px;font-size:12px;line-height:1.6;color:#999;'>"
+        f"<p style='margin:0 0 6px 0;'><strong style='color:#ff8a24;'>Aviso Legal:</strong> A TB-BASS IR comercializa seus produtos (arquivos digitais em formatos <strong>IR</strong>, <strong>AM4Data</strong> e <strong>NAM</strong>) exclusivamente por meio dos canais oficiais informados neste site.</p>"
+        f"<p style='margin:0 0 6px 0;'>Arquivos adquiridos por terceiros, revendas não autorizadas, compartilhamentos ou qualquer outra forma de obtenção fora dos canais oficiais <strong>não conferem direito a suporte técnico</strong>, atualizações ou qualquer tipo de assistência.</p>"
+        f"<p style='margin:0;'>É proibida a reprodução, distribuição, revenda, compartilhamento ou qualquer forma de exploração comercial deste conteúdo sem autorização expressa do titular dos direitos.</p>"
+        f"</div>"
+    )
+
+    legal_text_comp = {
+        "id": str(uuid.uuid4()),
+        "type": "text",
+        "attributes": {
+            "content": html_legal_box,
+            "alignment": "left",
+            "textColor": "#888888",
+            "fontSize": 12
+        }
+    }
+
+    legal_row = {
+        "id": str(uuid.uuid4()),
+        "type": "row",
+        "layout": [12],
+        "columns": [
+            {
+                "id": str(uuid.uuid4()),
+                "type": "column",
+                "components": [legal_text_comp]
+            }
+        ]
+    }
+
     for mode in ["desktop", "mobile"]:
         if mode in cfg and "rows" in cfg[mode]:
+            # Remove any previous legal text rows if present to prevent duplication
+            cfg[mode]["rows"] = [
+                r for r in cfg[mode]["rows"]
+                if not any(
+                    comp.get("type") == "text" and "Aviso Legal" in str(comp.get("attributes", {}).get("content", ""))
+                    for col in r.get("columns", [])
+                    for comp in col.get("components", [])
+                )
+            ]
+
             for row in cfg[mode]["rows"]:
                 for col in row.get("columns", []):
                     for comp in col.get("components", []):
                         c_type = comp.get("type")
                         if c_type == "list":
                             comp["attributes"]["title"] = "O que você recebe & Aviso Legal"
-                            comp["attributes"]["items"] = new_items
-                            has_list = True
+                            comp["attributes"]["items"] = new_list_items
                         elif c_type == "header":
                             comp["attributes"]["showSubtitle"] = True
                             comp["attributes"]["subtitleText"] = "Conteúdo Digital: IR (.WAV), AM4Data (Tank-B) e NAM. Envio imediato no e-mail."
+
+            # Append the dedicated legal box row at the bottom of the checkout
+            cfg[mode]["rows"].append(legal_row)
 
     payload = {
         "name": checkout_data.get("name", "Checkout Principal"),
@@ -102,7 +149,7 @@ def update_product_basic_desc(product_id: str, csrf_token: str) -> bool:
         return False
 
 def main():
-    print("Iniciando atualização em lote de Aviso Legal (IR, AM4Data, NAM) nos Checkouts da Cakto...")
+    print("Atualizando Aviso Legal exato (IR, AM4Data, NAM) nos Checkouts da Cakto...")
     session = get_session_info()
     csrf = session.get("csrfToken")
     if not csrf:
@@ -128,25 +175,23 @@ def main():
         offers = full_p.get("offers", [])
         checkout_ids = list(set([o.get("checkout") for o in offers if o.get("checkout")]))
 
-        print(f"\nAtualizando produto: {name} (ID: {p_id})")
-        # 1. Update basic description
+        print(f"\nProcessando produto: {name} (ID: {p_id})")
         desc_ok = update_product_basic_desc(p_id, csrf)
-        print(f"  - Descrição básica do produto atualizada: {'OK' if desc_ok else 'FALHA'}")
+        print(f"  - Descrição do produto: {'OK' if desc_ok else 'FALHA'}")
 
-        # 2. Update all checkouts
         for c_id in checkout_ids:
             ck_ok = update_checkout_config(c_id, name, csrf)
-            print(f"  - Checkout #{c_id} ({name}): {'OK' if ck_ok else 'FALHA'}")
+            print(f"  - Checkout #{c_id}: {'OK' if ck_ok else 'FALHA'}")
             if ck_ok:
                 total_checkouts += 1
             time.sleep(0.3)
 
         total_processed += 1
-        time.sleep(0.4)
+        time.sleep(0.3)
 
-    print(f"\nConcluído com sucesso:")
-    print(f"- Total de produtos atualizados: {total_processed}")
-    print(f"- Total de checkouts configurados com Aviso Legal: {total_checkouts}")
+    print(f"\nAtualização concluída:")
+    print(f"- Total de produtos processados: {total_processed}")
+    print(f"- Total de checkouts configurados com o Aviso Legal exato: {total_checkouts}")
 
 if __name__ == "__main__":
     main()
