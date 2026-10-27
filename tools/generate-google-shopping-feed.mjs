@@ -63,11 +63,12 @@ const itemsXml = produtos.map(p => {
   const priceNum = Number(precos[p.nome] ?? p.preco).toFixed(2);
   const imgPath = images[p.irId] || '/logo.png';
   const customLabel = top5Map[p.irId] ? `\n      <g:custom_label_0>${top5Map[p.irId]}</g:custom_label_0>` : '';
-  const desc = `${p.desc} Impulse Response (IR) para contrabaixo em WAV 24-bit, pronto para pedaleiras e IR loaders compatíveis.`;
+  const desc = `${p.desc} Impulse Response (IR) para contrabaixo e baixo em áudio WAV 24-bit de alta definição. 100% compatível com pedaleiras Tank-B (M-Vave), Cuvave Baby Bass, Zoom, Ampero, Boss e simuladores de gabinete com IR Loader.`;
+  const title = `${p.nome} para Baixo - IR Tank-B e Cuvave`;
 
   return `    <item>
       <g:id>${xmlEscape(p.irId)}</g:id>
-      <g:title>${xmlEscape(p.nome)} para Baixo</g:title>
+      <g:title>${xmlEscape(title)}</g:title>
       <g:description>${xmlEscape(desc)}</g:description>
       <g:link>${canonicalBase}/ir/${xmlEscape(p.irId)}/</g:link>
       <g:image_link>${canonicalBase}${xmlEscape(imgPath)}</g:image_link>

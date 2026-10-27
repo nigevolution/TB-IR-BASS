@@ -61,7 +61,7 @@ const compactMeta = (value, max = 158) => {
   const cut = text.slice(0, max - 1).replace(/\s+\S*$/, '').replace(/[.,;:!?-]+$/, '');
   return `${cut}.`;
 };
-const metaDescriptionFor = p => compactMeta(`${displayName(p)} IR para baixo em WAV 24-bit. ${p.desc} Compatível com pedaleiras e IR loaders que aceitam Impulse Response.`);
+const metaDescriptionFor = p => compactMeta(`${displayName(p)} IR para baixo em WAV 24-bit. ${p.desc} Compatível com Tank-B, Cuvave e pedaleiras com IR Loader.`);
 const productTitleFor = p => {
   const full = `${displayName(p)} IR para Baixo | TB-BASS IR`;
   return full.length <= 60 ? full : `${displayName(p)} IR | TB-BASS IR`;
@@ -102,6 +102,7 @@ function productPage(p) {
     brand:{'@type':'Brand',name:'TB-BASS IR'},
     url:canonical,
     category:'Impulse Response para contrabaixo',
+    keywords:`IR para baixo, IR contrabaixo, IR Tank-B, IR Cuvave, ${name} IR, impulse response contrabaixo`,
     offers:{
       '@type':'Offer',
       url:canonical,
@@ -159,7 +160,7 @@ ${ga4Tag}
 <p>${html(desc)}</p>
 <div class="facts"><div class="fact"><b>Formato</b><span>WAV 24-bit, 44,1 kHz e 48 kHz.</span></div><div class="fact"><b>Uso</b><span>Palco, estúdio, gravação e estudo.</span></div><div class="fact"><b>Entrega</b><span>Produto digital com entrega após a compra.</span></div></div>
 </section>
-<section class="section"><h2>Compatibilidade</h2><p>Compatível com pedaleiras e equipamentos que aceitam carregamento de Impulse Response em WAV, incluindo linhas da Mooer, Tank-B, MK300, MK20, Cuvave, Headrush, Ampero, Zoom, Line 6, Valeton e Hotone. Confirme no manual do seu equipamento se ele possui IR Loader.</p></section>
+<section class="section"><h2>Compatibilidade com Pedaleiras e IR Loaders</h2><p>100% compatível com pedaleiras e equipamentos que aceitam carregamento de Impulse Response em WAV 24-bit (44,1 kHz e 48 kHz). Testado e aprovado em M-Vave Tank-B, Cuvave Baby Bass, Mooer (GE series, Radar), MK300, MK20, Zoom (B1 Four, B3n, MS-60B+), Headrush, Ampero Hotone, Line 6 (HX Stomp, Helix), Valeton GP-200, Boss e plugins em DAW (Reaper, Pro Tools). Confirme no manual do seu equipamento se ele possui IR Loader.</p></section>
 <section class="section"><h2>Para quem procura ${html(name)} IR para baixo</h2><p>Esta opção é voltada a baixistas que querem comparar o perfil descrito no catálogo — ${html(p.desc)} — com o próprio instrumento e com a cadeia que já usam. O resultado de um IR depende também do baixo, captadores, cordas, técnica, ganho, equalização e sistema de monitoração, por isso vale ouvir e comparar antes da compra.</p><p>O ${html(name)} IR é entregue como arquivo WAV 24-bit em 44,1 kHz e 48 kHz. Use a versão exigida pelo seu equipamento e mantenha o arquivo original guardado para poder testar ajustes diferentes sem perder a referência.</p></section>
 <section class="section"><h2>Como testar ${html(name)} IR no seu setup</h2><p>Comece com o EQ da pedaleira o mais neutro possível e ajuste o ganho para não clipar a entrada ou a saída. Carregue o IR, compare com o bypass no mesmo volume e ouça principalmente definição do grave, presença dos médios, ataque e brilho. Essa comparação em volume semelhante evita escolher apenas porque uma opção ficou mais alta.</p><p>Para palco ou gravação, teste também no sistema que você realmente usa: fones, interface, monitor ou PA. Se o grave ficar excessivo ou o ataque sumir, faça pequenos ajustes de EQ depois de escolher o IR. A compatibilidade final sempre deve ser confirmada no manual do seu IR Loader.</p></section>
 ${audio ? `<section class="section">${audio}</section>` : ''}
@@ -190,6 +191,7 @@ const faq = {
   '@context':'https://schema.org','@type':'FAQPage',
   mainEntity:[
     {'@type':'Question',name:'O que é IR para baixo?',acceptedAnswer:{'@type':'Answer',text:'É um Impulse Response usado em pedaleiras e IR loaders compatíveis para reproduzir características de timbre em um arquivo de resposta ao impulso.'}},
+    {'@type':'Question',name:'Como instalar o IR na pedaleira Tank-B ou Cuvave?',acceptedAnswer:{'@type':'Answer',text:'Conecte a pedaleira ao celular via Bluetooth pelo aplicativo M-EFCS ou ao computador via USB pelo CubeSuite, e carregue o arquivo .WAV de 24-bit no slot de IR.'}},
     {'@type':'Question',name:'Qual formato dos IRs da TB-BASS IR?',acceptedAnswer:{'@type':'Answer',text:'Os arquivos são fornecidos em WAV 24-bit, com opções em 44,1 kHz e 48 kHz.'}},
     {'@type':'Question',name:'Como saber se minha pedaleira aceita IR?',acceptedAnswer:{'@type':'Answer',text:'Confira no manual se o equipamento possui IR Loader ou suporte a carregamento de Impulse Response em WAV.'}}
   ]
@@ -233,6 +235,7 @@ const date = new Date().toISOString().slice(0,10);
 const urls = [
   `${canonicalBase}/`,
   hubCanonical,
+  `${canonicalBase}/como-instalar-ir-na-tank-b/`,
   ...produtos.map(p => `${canonicalBase}/ir/${p.irId}/`)
 ];
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
