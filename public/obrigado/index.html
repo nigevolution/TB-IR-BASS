@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Pedido Confirmado com Sucesso | TB-BASS IR</title>
+  <meta name="description" content="Obrigado pela sua compra na TB-BASS IR. Seus arquivos de Impulse Response foram liberados e enviados para o seu e-mail.">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="canonical" href="https://tbbassir.com.br/obrigado/">
+  <link rel="icon" href="/logo.png">
+
+  <!-- Google Tag (GA4) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FNRVG1V5MC"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FNRVG1V5MC');
+  </script>
+
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '1147738740851849');
+  fbq('track', 'Purchase');
+  </script>
+  <noscript>
+    <img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1147738740851849&ev=Purchase&noscript=1"/>
+  </noscript>
+
+  <!-- Google Customer Reviews (Avaliações de Clientes do Google) Opt-in -->
+  <script src="https://apis.google.com/js/platform.js?onload=renderOptIn" async defer></script>
+  <script>
+    window.renderOptIn = function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const orderId = urlParams.get('order_id') || urlParams.get('id') || urlParams.get('transacao') || urlParams.get('transaction_id') || ('TB-' + Date.now().toString(36).toUpperCase());
+      const customerEmail = urlParams.get('email') || urlParams.get('customer_email') || 'cliente@tbbassir.com.br';
+      
+      const today = new Date().toISOString().split('T')[0];
+
+      window.gapi.load('surveyoptin', function() {
+        window.gapi.surveyoptin.render({
+          // REQUIRED FIELDS
+          "merchant_id": 5884867589,
+          "order_id": String(orderId),
+          "email": customerEmail,
+          "delivery_country": "BR",
+          "estimated_delivery_date": today
+        });
+      });
+    };
+  </script>
+
+  <style>
+    :root {
+      --accent: #ff9a3c;
+      --accent-dark: #ff6810;
+      --accent-gradient: linear-gradient(135deg, #ff9a3c 0%, #ff5e0e 100%);
+      --bg: #060608;
+      --bg-card: #0d0d12;
+      --line: rgba(255, 255, 255, 0.08);
+      --text: #ffffff;
+      --text-muted: #9e9ea8;
+      --success: #00ff88;
+      --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      line-height: 1.5;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* FUNDO AMBIENTE */
+    .bg-layer {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background: radial-gradient(circle at 50% 15%, rgba(0, 255, 136, 0.08), transparent 40%),
+                  radial-gradient(circle at 80% 80%, rgba(255, 154, 60, 0.06), transparent 35%),
+                  linear-gradient(180deg, #060608 0%, #020202 100%);
+    }
+
+    /* HEADER */
+    header {
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+      border-bottom: 1px solid var(--line);
+    }
+    .brand {
+      color: #fff;
+      font-weight: 900;
+      font-size: 1.3rem;
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+    .brand span {
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .home-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      transition: color 0.2s;
+    }
+    .home-link:hover { color: #fff; }
+
+    /* CONTEÚDO PRINCIPAL */
+    main {
+      flex: 1;
+      max-width: 860px;
+      margin: 40px auto 60px;
+      padding: 0 20px;
+      width: 100%;
+      text-align: center;
+    }
+
+    /* CARD DE SUCESSO */
+    .success-card {
+      background: linear-gradient(165deg, rgba(20, 22, 28, 0.95) 0%, rgba(10, 11, 15, 0.98) 100%);
+      border: 1px solid rgba(0, 255, 136, 0.35);
+      box-shadow: 0 25px 80px rgba(0, 0, 0, 0.7), 0 0 40px rgba(0, 255, 136, 0.1);
+      border-radius: 28px;
+      padding: 48px 32px;
+      position: relative;
+    }
+
+    /* ÍCONE DE CONFIRMAÇÃO */
+    .check-circle {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: rgba(0, 255, 136, 0.15);
+      border: 2px solid var(--success);
+      display: grid;
+      place-items: center;
+      margin: 0 auto 24px;
+      box-shadow: 0 0 30px rgba(0, 255, 136, 0.35);
+      animation: checkPulse 2s infinite alternate;
+    }
+    @keyframes checkPulse {
+      0% { transform: scale(1); box-shadow: 0 0 20px rgba(0, 255, 136, 0.25); }
+      100% { transform: scale(1.05); box-shadow: 0 0 40px rgba(0, 255, 136, 0.5); }
+    }
+    .check-circle svg {
+      width: 42px;
+      height: 42px;
+      stroke: var(--success);
+      stroke-width: 3;
+      fill: none;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: -0.03em;
+      margin-bottom: 12px;
+    }
+    .lead-text {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      max-width: 620px;
+      margin: 0 auto 32px;
+      line-height: 1.6;
+    }
+
+    /* CAIXA DE DETALHES */
+    .order-box {
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 22px 24px;
+      max-width: 620px;
+      margin: 0 auto 36px;
+      text-align: left;
+    }
+    .order-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      font-size: 14px;
+    }
+    .order-row:last-child { border-bottom: none; }
+    .order-label { color: var(--text-muted); font-weight: 600; }
+    .order-value { color: #fff; font-weight: 800; }
+    .badge-paid {
+      background: rgba(0, 255, 136, 0.15);
+      color: var(--success);
+      border: 1px solid rgba(0, 255, 136, 0.4);
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    /* PASSOS DE ACESSO */
+    .steps-box {
+      text-align: left;
+      max-width: 620px;
+      margin: 0 auto 36px;
+    }
+    .steps-title {
+      font-size: 13px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+    .step-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 16px;
+      background: rgba(255, 255, 255, 0.025);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 16px;
+    }
+    .step-number {
+      width: 32px;
+      height: 32px;
+      min-width: 32px;
+      border-radius: 50%;
+      background: var(--accent-gradient);
+      color: #080808;
+      font-weight: 900;
+      display: grid;
+      place-items: center;
+      font-size: 14px;
+    }
+    .step-text h4 {
+      font-size: 15px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+    .step-text p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* AÇÕES */
+    .actions-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      justify-content: center;
+      margin-top: 24px;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      padding: 0 28px;
+      background: var(--accent-gradient);
+      color: #080808;
+      font-weight: 900;
+      font-size: 14px;
+      border-radius: 14px;
+      text-decoration: none;
+      box-shadow: 0 8px 24px rgba(255, 110, 20, 0.35);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(255, 110, 20, 0.5);
+    }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      padding: 0 24px;
+      background: rgba(37, 211, 102, 0.15);
+      border: 1px solid rgba(37, 211, 102, 0.4);
+      color: #25D366;
+      font-weight: 800;
+      font-size: 14px;
+      border-radius: 14px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .btn-secondary:hover {
+      background: rgba(37, 211, 102, 0.25);
+      transform: translateY(-2px);
+    }
+
+    /* GOOGLE REVIEWS BOX */
+    .google-reviews-notice {
+      margin-top: 36px;
+      padding: 16px 20px;
+      background: rgba(66, 133, 244, 0.08);
+      border: 1px solid rgba(66, 133, 244, 0.25);
+      border-radius: 14px;
+      font-size: 13px;
+      color: #b0c9ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+    .google-reviews-notice svg {
+      width: 22px;
+      height: 22px;
+      min-width: 22px;
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 24px 20px;
+      text-align: center;
+      font-size: 13px;
+      color: #666;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="bg-layer"></div>
+
+<header>
+  <a href="https://tbbassir.com.br/" class="brand">TB-BASS <span>IR</span></a>
+  <a href="https://tbbassir.com.br/" class="home-link">← Voltar para a Loja</a>
+</header>
+
+<main>
+  <div class="success-card">
+    <div class="check-circle">
+      <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+
+    <h1>Pagamento Aprovado com Sucesso!</h1>
+    <p class="lead-text">
+      Obrigado por adquirir suas simulações <strong>TB-BASS IR</strong>.<br>
+      O acesso e o link de download direto já foram enviados para o seu e-mail.
+    </p>
+
+    <div class="order-box">
+      <div class="order-row">
+        <span class="order-label">Identificador do Pedido:</span>
+        <span class="order-value" id="displayOrderId">Carregando...</span>
+      </div>
+      <div class="order-row">
+        <span class="order-label">E-mail Cadastrado:</span>
+        <span class="order-value" id="displayEmail">Verificando...</span>
+      </div>
+      <div class="order-row">
+        <span class="order-label">Status da Transação:</span>
+        <span class="badge-paid">✓ APROVADO / LIBERADO</span>
+      </div>
+      <div class="order-row">
+        <span class="order-label">Formato dos Arquivos:</span>
+        <span class="order-value">WAV 24-bit (44.1 e 48kHz) + AM4Data + NAM</span>
+      </div>
+    </div>
+
+    <div class="steps-box">
+      <div class="steps-title">COMO ACESSAR E INSTALAR SEUS TIMBRES:</div>
+      
+      <div class="step-item">
+        <div class="step-number">1</div>
+        <div class="step-text">
+          <h4>Abra sua caixa de entrada</h4>
+          <p>Localize o e-mail enviado pela Cakto / TB-BASS IR. Verifique também as pastas de "Spam" ou "Promoções" caso não encontre em instantes.</p>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-number">2</div>
+        <div class="step-text">
+          <h4>Baixe a pasta com seus arquivos</h4>
+          <p>Você receberá acesso imediato aos arquivos de alta resolução prontos para descompactar no seu celular ou computador.</p>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-number">3</div>
+        <div class="step-text">
+          <h4>Carregue na sua pedaleira</h4>
+          <p>Conecte seu equipamento via Bluetooth pelo aplicativo oficial (como M-EFCS para Tank-B) ou via cabo USB pelo CubeSuite, e importe os WAVs para os slots desejados.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="actions-row">
+      <a href="/como-instalar-ir-na-tank-b/" class="btn-primary">
+        Ver Tutorial em Vídeo Passo a Passo
+      </a>
+      <a href="https://wa.me/message/3QND546Y75L3M1" target="_blank" rel="noopener" class="btn-secondary">
+        Preciso de Ajuda no WhatsApp
+      </a>
+    </div>
+
+    <div class="google-reviews-notice">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.85 10-10S17.52 2 12 2zm-1 14h2v2h-2v-2zm0-10h2v8h-2V6z"/>
+      </svg>
+      <span>Uma pesquisa oficial do <strong>Google Avaliações de Clientes</strong> pode aparecer nesta tela para você avaliar sua experiência.</span>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <p>© TB-BASS IR • Loja Oficial • Todos os direitos reservados.</p>
+</footer>
+
+<script>
+  // Preenche dados da URL
+  (function() {
+    const params = new URLSearchParams(window.location.search);
+    const orderId = params.get('order_id') || params.get('id') || params.get('transacao') || params.get('transaction_id') || ('TB-' + Date.now().toString(36).toUpperCase());
+    const email = params.get('email') || params.get('customer_email') || 'E-mail cadastrado na Cakto';
+
+    const orderEl = document.getElementById('displayOrderId');
+    const emailEl = document.getElementById('displayEmail');
+
+    if (orderEl) orderEl.innerText = orderId;
+    if (emailEl) emailEl.innerText = email;
+  })();
+</script>
+
+</body>
+</html>

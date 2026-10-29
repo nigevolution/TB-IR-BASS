@@ -452,22 +452,50 @@
     }
     .stars { color: #ffb703; font-size: 15px; letter-spacing: 2px; }
 
-    /* GEAR STAGE CARD NO HERO */
+    /* GEAR STAGE CARD NO HERO - RANKING TOP 3 */
     .stage-card {
       background: radial-gradient(circle at 50% 30%, rgba(255, 122, 24, 0.16), transparent 70%), var(--bg-card);
       border: 1px solid var(--line);
       border-radius: 28px;
-      padding: 30px 24px 22px;
+      padding: 24px 22px 18px;
       text-align: center;
       box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7);
       position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 410px;
+    }
+    .stage-rank-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: linear-gradient(135deg, #ff4500, #ff8c00);
+      color: #fff;
+      font-weight: 800;
+      font-size: 11px;
+      padding: 5px 14px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      box-shadow: 0 2px 12px rgba(255, 69, 0, 0.4);
+      margin-bottom: 8px;
+      transition: all 0.25s ease;
+    }
+    .gear-bass-wrap {
+      height: 240px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
     }
     .gear-bass {
       max-width: 100%;
-      height: 290px;
+      max-height: 220px;
       object-fit: contain;
       filter: drop-shadow(0 18px 38px rgba(0,0,0,0.85));
-      transition: transform 0.3s ease;
+      transition: opacity 0.3s ease, transform 0.3s ease;
     }
     .stage-card:hover .gear-bass { transform: scale(1.03); }
     .gear-pedal-badge {
@@ -480,7 +508,7 @@
       border-radius: 14px;
       padding: 12px 18px;
       font-size: 13px;
-      margin-top: 20px;
+      margin-top: 14px;
     }
     .pedal-led {
       width: 10px;
@@ -488,6 +516,27 @@
       border-radius: 50%;
       background: #00ff88;
       box-shadow: 0 0 12px #00ff88;
+    }
+    .stage-indicators {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .stage-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      transition: all 0.25s ease;
+    }
+    .stage-dot.active {
+      width: 22px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 10px var(--accent);
     }
 
     @media (max-width: 900px) {
@@ -1329,14 +1378,22 @@
   </div>
 
   <div class="conversion-right">
-    <div class="stage-card">
-      <img src="/assets/instruments/isolated-v1/fender-ultra-2.png" alt="Fender Ultra II Jazz Bass" class="gear-bass">
+    <div class="stage-card" id="heroStageCard">
+      <div class="stage-rank-badge" id="heroStageRank">🔥 #1 MAIS VENDIDO</div>
+      <div class="gear-bass-wrap">
+        <img src="/assets/instruments/isolated-v1/fender-ultra-2.png" alt="Fender Ultra II Jazz Bass" class="gear-bass" id="heroStageImg">
+      </div>
       <div class="gear-pedal-badge">
         <div style="display:flex;align-items:center;gap:10px;">
           <div class="pedal-led"></div>
-          <span style="font-weight:800;letter-spacing:0.5px;color:#fff;">IR LOADER ATIVO</span>
+          <span style="font-weight:800;letter-spacing:0.5px;color:#fff;" id="heroStageName">FENDER ULTRA II</span>
         </div>
         <span style="color:var(--accent);font-weight:800;font-size:12px;">WAV 24-BIT • 48kHz</span>
+      </div>
+      <div class="stage-indicators">
+        <button type="button" class="stage-dot active" onclick="switchStage(0)" aria-label="Ver 1º mais vendido"></button>
+        <button type="button" class="stage-dot" onclick="switchStage(1)" aria-label="Ver 2º mais vendido"></button>
+        <button type="button" class="stage-dot" onclick="switchStage(2)" aria-label="Ver 3º mais vendido"></button>
       </div>
     </div>
   </div>
@@ -1697,6 +1754,76 @@ heroAudio.addEventListener('ended', () => {
   heroWaveform.classList.remove('is-playing');
   heroTrackStatus.innerText = 'Finalizado • Toque para repetir';
 });
+</script>
+
+<!-- HERO TOP 3 STAGE AUTO-SWITCHER -->
+<script>
+const topBasses = [
+  {
+    name: "FENDER ULTRA II",
+    rank: "🔥 #1 MAIS VENDIDO",
+    img: "/assets/instruments/isolated-v1/fender-ultra-2.png",
+    alt: "Fender Ultra II Jazz Bass"
+  },
+  {
+    name: "SADOWSKY METROLINE",
+    rank: "🔥 #2 MAIS VENDIDO",
+    img: "/assets/instruments/isolated-v1/sadowsky-metroline.png",
+    alt: "Sadowsky Metroline Bass"
+  },
+  {
+    name: "YAMAHA TRB JP2",
+    rank: "🔥 #3 MAIS VENDIDO",
+    img: "/assets/instruments/isolated-v1/yamaha-trb-jp2.png",
+    alt: "Yamaha TRB JP2 John Patitucci"
+  }
+];
+
+let currentStageIndex = 0;
+let stageInterval = null;
+
+function switchStage(index) {
+  currentStageIndex = index;
+  const bass = topBasses[index];
+  const imgEl = document.getElementById('heroStageImg');
+  const nameEl = document.getElementById('heroStageName');
+  const rankEl = document.getElementById('heroStageRank');
+  const dots = document.querySelectorAll('.stage-dot');
+
+  if (!imgEl || !nameEl || !rankEl) return;
+
+  imgEl.style.opacity = '0';
+  imgEl.style.transform = 'scale(0.96)';
+
+  setTimeout(() => {
+    imgEl.src = bass.img;
+    imgEl.alt = bass.alt;
+    nameEl.innerText = bass.name;
+    rankEl.innerText = bass.rank;
+    imgEl.style.opacity = '1';
+    imgEl.style.transform = 'scale(1)';
+  }, 180);
+
+  dots.forEach((dot, idx) => {
+    if (idx === index) dot.classList.add('active');
+    else dot.classList.remove('active');
+  });
+}
+
+function startStageAutoRotate() {
+  if (stageInterval) clearInterval(stageInterval);
+  stageInterval = setInterval(() => {
+    const next = (currentStageIndex + 1) % topBasses.length;
+    switchStage(next);
+  }, 4000);
+}
+
+startStageAutoRotate();
+const stageCard = document.getElementById('heroStageCard');
+if (stageCard) {
+  stageCard.addEventListener('mouseenter', () => clearInterval(stageInterval));
+  stageCard.addEventListener('mouseleave', () => startStageAutoRotate());
+}
 </script>
 
 <!-- TRACKING PREVIEW & BUY (SEM ALTERAR STORE.JS) -->
