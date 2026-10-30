@@ -1872,5 +1872,24 @@ document.addEventListener('click', function(e){
 });
 </script>
 
+<!-- Google Customer Reviews (Avaliações de Clientes do Google) Badge Oficial -->
+<script id='merchantWidgetScript' src="https://www.gstatic.com/shopping/merchant/merchantwidget.js" defer></script>
+<script>
+  (function() {
+    var s = document.getElementById('merchantWidgetScript');
+    if (!s) return;
+    function initMerchantWidget() {
+      if (window.merchantwidget && typeof window.merchantwidget.start === 'function') {
+        window.merchantwidget.start({
+          merchant_id: 5884867589,
+          position: "BOTTOM_LEFT",
+          region: "BR"
+        });
+      }
+    }
+    s.addEventListener('load', initMerchantWidget);
+  })();
+</script>
+
 </body>
 </html>
