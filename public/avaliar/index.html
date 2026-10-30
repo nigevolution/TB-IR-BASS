@@ -12,9 +12,12 @@
   <!-- Google Customer Reviews (Avaliações de Clientes do Google) Opt-in -->
   <script src="https://apis.google.com/js/platform.js?onload=initGoogleSurvey" async defer></script>
   <script>
-    window.isGapiLoaded = false;
     window.initGoogleSurvey = function() {
-      window.isGapiLoaded = true;
+      if (window.gapi && window.gapi.load) {
+        window.gapi.load('surveyoptin', function() {
+          window.isSurveyOptinReady = true;
+        });
+      }
     };
 
     window.triggerGoogleReview = function(e) {
@@ -27,11 +30,17 @@
         return;
       }
 
+      const btn = document.getElementById('submitReviewBtn');
+      if (btn) {
+        btn.disabled = true;
+        btn.innerText = 'Carregando Google...';
+      }
+
       const orderId = 'TB-' + Date.now().toString(36).toUpperCase();
       const today = new Date().toISOString().split('T')[0];
 
-      function doRender() {
-        if (window.gapi && window.gapi.surveyoptin && typeof window.gapi.surveyoptin.render === 'function') {
+      function renderSurvey() {
+        try {
           window.gapi.surveyoptin.render({
             "merchant_id": 5884867589,
             "order_id": orderId,
@@ -39,32 +48,48 @@
             "delivery_country": "BR",
             "estimated_delivery_date": today
           });
-          showSuccess();
-        } else if (window.gapi && window.gapi.load) {
+          const msg = document.getElementById('reviewSuccessMsg');
+          if (msg) msg.style.display = 'block';
+          if (btn) {
+            btn.innerText = 'Pesquisa Aberta no Google ✓';
+          }
+        } catch(err) {
+          console.error(err);
+          if (btn) {
+            btn.disabled = false;
+            btn.innerText = '⭐ Abrir Avaliação no Google';
+          }
+          alert('Erro ao carregar módulo do Google. Tente novamente.');
+        }
+      }
+
+      function ensureAndRender() {
+        if (window.gapi && window.gapi.load) {
           window.gapi.load('surveyoptin', function() {
-            window.gapi.surveyoptin.render({
-              "merchant_id": 5884867589,
-              "order_id": orderId,
-              "email": email,
-              "delivery_country": "BR",
-              "estimated_delivery_date": today
-            });
-            showSuccess();
+            renderSurvey();
           });
+        } else {
+          var attempts = 0;
+          var interval = setInterval(function() {
+            attempts++;
+            if (window.gapi && window.gapi.load) {
+              clearInterval(interval);
+              window.gapi.load('surveyoptin', function() {
+                renderSurvey();
+              });
+            } else if (attempts > 30) {
+              clearInterval(interval);
+              if (btn) {
+                btn.disabled = false;
+                btn.innerText = '⭐ Abrir Avaliação no Google';
+              }
+              alert('Não foi possível conectar ao Google. Verifique sua conexão.');
+            }
+          }, 100);
         }
       }
 
-      function showSuccess() {
-        const msg = document.getElementById('reviewSuccessMsg');
-        if (msg) msg.style.display = 'block';
-        const btn = document.getElementById('submitReviewBtn');
-        if (btn) {
-          btn.disabled = true;
-          btn.innerText = 'Pesquisa Aberta no Google ✓';
-        }
-      }
-
-      doRender();
+      ensureAndRender();
     };
   </script>
 
