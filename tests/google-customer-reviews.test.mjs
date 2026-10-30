@@ -23,3 +23,11 @@ test('página de obrigado preserva privacidade e rastreamento de conversão', ()
   assert.match(obrigadoHtml, /1147738740851849/);
   assert.match(obrigadoHtml, /'track',\s*'Purchase'/);
 });
+
+test('página dedicada de avaliação para o grupo contém módulo do Google', () => {
+  const avaliarHtml = fs.readFileSync(path.join(root, 'public', 'avaliar', 'index.html'), 'utf8');
+  assert.match(avaliarHtml, /apis\.google\.com\/js\/platform\.js/);
+  assert.match(avaliarHtml, /"merchant_id":\s*5884867589/);
+  assert.match(avaliarHtml, /surveyoptin\.render/);
+  assert.match(avaliarHtml, /buyerEmailInput/);
+});

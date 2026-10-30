@@ -504,6 +504,20 @@
       </div>
     </div>
 
+    <!-- Bloco Interativo de Avaliação no Google para quem já comprou -->
+    <div id="manualReviewBox" class="review-invite-card">
+      <div class="review-badge-tag">⭐ AVALIAÇÃO OFICIAL GOOGLE</div>
+      <h3>Já comprou na TB-BASS IR? Deixe sua nota</h3>
+      <p>Digite o e-mail que você utilizou na compra para abrir o formulário oficial do Google:</p>
+      <form id="manualReviewForm" onsubmit="triggerManualGoogleReview(event)" class="review-form">
+        <input type="email" id="manualEmailInput" placeholder="Digite seu e-mail de compra..." required class="review-input">
+        <button type="submit" id="manualReviewBtn" class="review-btn">Avaliar no Google</button>
+      </form>
+      <div id="manualReviewSuccess" class="review-success-msg" style="display:none;">
+        ✓ Janela do Google aberta! Clique em <strong>"SIM"</strong> para confirmar sua avaliação.
+      </div>
+    </div>
+
     <div class="steps-box">
       <div class="steps-title">COMO ACESSAR E INSTALAR SEUS TIMBRES:</div>
       
@@ -539,20 +553,6 @@
       <a href="https://wa.me/message/3QND546Y75L3M1" target="_blank" rel="noopener" class="btn-secondary">
         Preciso de Ajuda no WhatsApp
       </a>
-    </div>
-
-    <!-- Bloco Interativo de Avaliação no Google para compradores anteriores -->
-    <div id="manualReviewBox" class="review-invite-card">
-      <div class="review-badge-tag">⭐ AVALIAÇÃO OFICIAL GOOGLE</div>
-      <h3>Já comprou na TB-BASS IR? Deixe sua nota</h3>
-      <p>Digite o e-mail que você utilizou na compra para abrir o questionário oficial do Google Avaliações do Consumidor:</p>
-      <form id="manualReviewForm" onsubmit="triggerManualGoogleReview(event)" class="review-form">
-        <input type="email" id="manualEmailInput" placeholder="Digite seu e-mail de compra..." required class="review-input">
-        <button type="submit" id="manualReviewBtn" class="review-btn">Avaliar no Google</button>
-      </form>
-      <div id="manualReviewSuccess" class="review-success-msg" style="display:none;">
-        ✓ Janela do Google aberta acima! Clique em <strong>"SIM"</strong> para confirmar.
-      </div>
     </div>
 
     <div class="google-reviews-notice">
