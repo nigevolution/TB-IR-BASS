@@ -14,6 +14,7 @@ test('página de obrigado contém o módulo opt-in oficial do Google Customer Re
   assert.match(obrigadoHtml, /"delivery_country":\s*"BR"/);
   assert.match(obrigadoHtml, /estimated_delivery_date/);
   assert.match(obrigadoHtml, /surveyoptin\.render/);
+  assert.match(obrigadoHtml, /!customerEmail\s*\|\|\s*!customerEmail\.includes\('@'\)/);
 });
 
 test('página de obrigado preserva privacidade e rastreamento de conversão', () => {

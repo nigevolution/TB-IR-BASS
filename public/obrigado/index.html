@@ -41,9 +41,14 @@
   <script>
     window.renderOptIn = function() {
       const urlParams = new URLSearchParams(window.location.search);
-      const orderId = urlParams.get('order_id') || urlParams.get('id') || urlParams.get('transacao') || urlParams.get('transaction_id') || ('TB-' + Date.now().toString(36).toUpperCase());
-      const customerEmail = urlParams.get('email') || urlParams.get('customer_email') || 'cliente@tbbassir.com.br';
+      const customerEmail = (urlParams.get('email') || urlParams.get('customer_email') || '').trim();
       
+      // O pop-up do Google só abre se houver um e-mail real do comprador
+      if (!customerEmail || !customerEmail.includes('@') || customerEmail.includes('cliente@tbbassir')) {
+        return;
+      }
+
+      const orderId = urlParams.get('order_id') || urlParams.get('id') || urlParams.get('transacao') || urlParams.get('transaction_id') || ('TB-' + Date.now().toString(36).toUpperCase());
       const today = new Date().toISOString().split('T')[0];
 
       window.gapi.load('surveyoptin', function() {
