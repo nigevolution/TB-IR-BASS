@@ -39,28 +39,58 @@
   <!-- Google Customer Reviews (Avaliações de Clientes do Google) Opt-in -->
   <script src="https://apis.google.com/js/platform.js?onload=renderOptIn" async defer></script>
   <script>
-    window.renderOptIn = function() {
-      const urlParams = new URLSearchParams(window.location.search);
-      const customerEmail = (urlParams.get('email') || urlParams.get('customer_email') || '').trim();
-      
-      // O pop-up do Google só abre se houver um e-mail real do comprador
-      if (!customerEmail || !customerEmail.includes('@') || customerEmail.includes('cliente@tbbassir')) {
+    window.renderGoogleSurvey = function(email, orderId) {
+      if (!email || !email.includes('@') || email.includes('cliente@tbbassir')) {
         return;
       }
-
-      const orderId = urlParams.get('order_id') || urlParams.get('id') || urlParams.get('transacao') || urlParams.get('transaction_id') || ('TB-' + Date.now().toString(36).toUpperCase());
+      const ordId = orderId || ('TB-' + Date.now().toString(36).toUpperCase());
       const today = new Date().toISOString().split('T')[0];
 
       window.gapi.load('surveyoptin', function() {
         window.gapi.surveyoptin.render({
           // REQUIRED FIELDS
           "merchant_id": 5884867589,
-          "order_id": String(orderId),
-          "email": customerEmail,
+          "order_id": String(ordId),
+          "email": email,
           "delivery_country": "BR",
           "estimated_delivery_date": today
         });
       });
+    };
+
+    window.renderOptIn = function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const customerEmail = (urlParams.get('email') || urlParams.get('customer_email') || '').trim();
+      const manualBox = document.getElementById('manualReviewBox');
+
+      // O pop-up automático só abre se houver um e-mail real do comprador
+      if (!customerEmail || !customerEmail.includes('@') || customerEmail.includes('cliente@tbbassir')) {
+        if (manualBox) manualBox.style.display = 'block';
+        return;
+      }
+
+      // Se houver e-mail válido na URL (compra direta), oculta o formulário manual e abre a pesquisa
+      if (manualBox) manualBox.style.display = 'none';
+      const orderId = urlParams.get('order_id') || urlParams.get('id') || urlParams.get('transacao') || urlParams.get('transaction_id');
+      window.renderGoogleSurvey(customerEmail, orderId);
+    };
+
+    window.triggerManualGoogleReview = function(e) {
+      if (e) e.preventDefault();
+      const input = document.getElementById('manualEmailInput');
+      const email = (input ? input.value : '').trim();
+      if (!email || !email.includes('@')) {
+        alert('Por favor, informe um e-mail válido.');
+        return;
+      }
+      window.renderGoogleSurvey(email);
+      const successEl = document.getElementById('manualReviewSuccess');
+      if (successEl) successEl.style.display = 'block';
+      const btn = document.getElementById('manualReviewBtn');
+      if (btn) {
+        btn.disabled = true;
+        btn.innerText = 'Pesquisa Aberta ✓';
+      }
     };
   </script>
 
@@ -318,6 +348,92 @@
       transform: translateY(-2px);
     }
 
+    /* GOOGLE REVIEWS INVITE CARD */
+    .review-invite-card {
+      margin-top: 32px;
+      padding: 26px 22px;
+      background: linear-gradient(145deg, rgba(30, 32, 40, 0.95), rgba(18, 20, 26, 0.98));
+      border: 1px solid rgba(255, 154, 60, 0.35);
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      text-align: center;
+    }
+    .review-badge-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      color: #ff9a3c;
+      background: rgba(255, 154, 60, 0.15);
+      border: 1px solid rgba(255, 154, 60, 0.3);
+      padding: 4px 12px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+    }
+    .review-invite-card h3 {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .review-invite-card p {
+      color: var(--text-muted);
+      font-size: 14px;
+      max-width: 520px;
+      margin: 0 auto 18px;
+      line-height: 1.5;
+    }
+    .review-form {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+    .review-input {
+      flex: 1;
+      min-width: 240px;
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 12px;
+      padding: 13px 18px;
+      color: #fff;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .review-input:focus {
+      border-color: #ff9a3c;
+    }
+    .review-btn {
+      background: var(--accent-gradient);
+      color: #000;
+      border: none;
+      border-radius: 12px;
+      padding: 13px 22px;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform 0.15s, filter 0.15s;
+    }
+    .review-btn:hover {
+      filter: brightness(1.1);
+      transform: translateY(-1px);
+    }
+    .review-btn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      background: #2a2a35;
+      color: #00ff88;
+    }
+    .review-success-msg {
+      margin-top: 14px;
+      color: var(--success);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
     /* GOOGLE REVIEWS BOX */
     .google-reviews-notice {
       margin-top: 36px;
@@ -423,6 +539,20 @@
       <a href="https://wa.me/message/3QND546Y75L3M1" target="_blank" rel="noopener" class="btn-secondary">
         Preciso de Ajuda no WhatsApp
       </a>
+    </div>
+
+    <!-- Bloco Interativo de Avaliação no Google para compradores anteriores -->
+    <div id="manualReviewBox" class="review-invite-card">
+      <div class="review-badge-tag">⭐ AVALIAÇÃO OFICIAL GOOGLE</div>
+      <h3>Já comprou na TB-BASS IR? Deixe sua nota</h3>
+      <p>Digite o e-mail que você utilizou na compra para abrir o questionário oficial do Google Avaliações do Consumidor:</p>
+      <form id="manualReviewForm" onsubmit="triggerManualGoogleReview(event)" class="review-form">
+        <input type="email" id="manualEmailInput" placeholder="Digite seu e-mail de compra..." required class="review-input">
+        <button type="submit" id="manualReviewBtn" class="review-btn">Avaliar no Google</button>
+      </form>
+      <div id="manualReviewSuccess" class="review-success-msg" style="display:none;">
+        ✓ Janela do Google aberta acima! Clique em <strong>"SIM"</strong> para confirmar.
+      </div>
     </div>
 
     <div class="google-reviews-notice">
