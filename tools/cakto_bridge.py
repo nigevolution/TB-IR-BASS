@@ -484,7 +484,7 @@ def batch_setup_member_area_upsell(
   <li><strong>Entrega Personalizada:</strong> arquivo final gerado sob medida para o seu contrabaixo e interface.</li>
 </ul>
 <p><br></p>
-<p><a href="{checkout_url}" target="_blank" style="display:inline-block;padding:14px 26px;background:#f47a2a;color:#ffffff;font-weight:bold;text-decoration:none;border-radius:8px;font-size:16px;">👉 CLIQUE AQUI PARA ADQUIRIR SUA CUSTOMIZAÇÃO POR R$ 40,00</a></p>"""
+<p><a href="{checkout_url}" target="_blank" style="display:inline-block;padding:14px 26px;background:#f47a2a;color:#ffffff;font-weight:bold;text-decoration:none;border-radius:8px;font-size:16px;">👉 CLIQUE AQUI PARA ADQUIRIR SUA CUSTOMIZAÇÃO POR R$ 60,00</a></p>"""
 
     results = {
         "total_courses": len(matched),
