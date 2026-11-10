@@ -1980,10 +1980,10 @@ function renderCombos(){
       <div class="price-wrap">
         <div class="price-line">
           <span class="price-old">${formatBRL(c.precoDe)}</span>
-          <span class="badge-off">PACOTE 2 EM 1</span>
+          <span class="badge-off">PACOTE ${c.itens.length} EM 1</span>
         </div>
         <div class="price-new">${formatBRL(c.precoPor)}</div>
-        <div class="combo-price-subtext">2 Simulações inclusas no checkout</div>
+        <div class="combo-price-subtext">${c.itens.length} Simulações inclusas no checkout</div>
       </div>
       <button class="buy-btn combo-buy-btn" onclick="openTrackedCheckout(&quot;${c.link}&quot;, &quot;${c.id}&quot;)">Comprar Combo • ${formatBRL(c.precoPor)}</button>
     `;
