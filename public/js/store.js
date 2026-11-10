@@ -223,114 +223,48 @@ const grid = document.getElementById("produtos");
 /* ================== COMBOS PROMOCIONAIS ================== */
 const combos = [
   {
-    id: "combo-swing-fender-ultra-2",
-    nome: "Combo Swing Jazz Deluxe + Fender Ultra II",
-    badge: "🔥 O Mais Vendido",
-    desc: "O calor encorpado do Jazz Deluxe aliado à definição estelar do pré-amplificador Ultra II.",
-    itens: ["Swing Guitars Jazz Deluxe", "Fender Ultra II"],
-    precoDe: 148.00,
-    precoPor: 109.90,
-    economia: 38.10,
-    link: "https://pay.cakto.com.br/checkout/86j5ytj_797266"
-  },
-  {
-    id: "combo-fender-ultra-2-trb",
-    nome: "Combo Fender Ultra II + TRB JP2",
-    badge: "⚡ Máxima Definição",
-    desc: "A versatilidade do timbre americano somada ao grave cortante e cristalino da lenda japonesa.",
-    itens: ["Fender Ultra II", "Yamaha TRB JP2"],
-    precoDe: 128.00,
-    precoPor: 99.90,
-    economia: 28.10,
-    link: "https://pay.cakto.com.br/checkout/39wkq4q_797246"
-  },
-  {
-    id: "combo-bass-mods-fender-ultra-2",
-    nome: "Combo Bass Mods + Fender Ultra II",
-    badge: "💥 Punch & Presença",
-    desc: "Ataque rápido, presença moderna no mix e graves firmes para qualquer estilo.",
-    itens: ["Bass Mods", "Fender Ultra II"],
-    precoDe: 118.00,
-    precoPor: 99.90,
-    economia: 18.10,
-    link: "https://pay.cakto.com.br/checkout/3bnzfqk_797265"
-  },
-  {
-    id: "combo-ken-smith-trb",
-    nome: "Combo Ken Smith + TRB JP2",
-    badge: "👑 Som Hi-Fi de Elite",
-    desc: "Sustain infinito, ultra definição nas cordas graves e corpo nobre de boutique.",
-    itens: ["Ken Smith", "Yamaha TRB JP2"],
-    precoDe: 148.00,
-    precoPor: 115.90,
-    economia: 32.10,
-    link: "https://pay.cakto.com.br/checkout/3bvaz3t_797255"
-  },
-  {
-    id: "combo-trb-music-man",
-    nome: "Combo TRB JP2 + Music Man",
-    badge: "🥊 Slap & Dinâmica",
-    desc: "O clássico 'growl' potente do humbucker Music Man combinado ao brilho polido do TRB.",
-    itens: ["Yamaha TRB JP2", "Music Man"],
-    precoDe: 128.00,
-    precoPor: 99.90,
-    economia: 28.10,
-    link: "https://pay.cakto.com.br/checkout/9zqanv6_797247"
-  },
-  {
-    id: "combo-fender-ultra-2-sadowsky-metroline",
-    nome: "Combo Fender Ultra II + Sadowsky Metroline",
-    badge: "✨ Clássico Renovado",
-    desc: "O som clássico de estúdio nova-iorquino com o requinte moderno do Ultra II.",
-    itens: ["Fender Ultra II", "Sadowsky Metroline"],
+    id: "combo-bf-1-fender-ultra-sadowsky",
+    nome: "Combo Black Friday 1 — Fender Ultra + Sadowsky",
+    badge: "🔥 40% OFF • BLACK FRIDAY",
+    desc: "A versatilidade moderna do Fender American Ultra combinada à suavidade do Sadowsky Metroline.",
+    itens: ["Fender American Ultra", "Sadowsky Metroline"],
     precoDe: 98.00,
-    precoPor: 79.90,
-    economia: 18.10,
-    link: "https://pay.cakto.com.br/checkout/fzp235u_797243"
+    precoPor: 58.80,
+    economia: 39.20,
+    link: "https://pay.cakto.com.br/checkout/j4u72kk_1306867"
   },
   {
-    id: "combo-warwick-mtd",
-    nome: "Combo Warwick Corvette + MTD 535-24",
-    badge: "🎯 Médios Vivos & Punch",
-    desc: "A madeira orgânica e punch agressivo da Warwick com a dinâmica e agilidade do MTD.",
-    itens: ["Warwick Corvette", "MTD 535-24"],
-    precoDe: 178.00,
-    precoPor: 149.90,
-    economia: 28.10,
-    link: "https://pay.cakto.com.br/checkout/uanzm3v_797258"
+    id: "combo-bf-2-musicman-trb-kensmith",
+    nome: "Combo Black Friday 2 — Music Man + TRB + Ken Smith",
+    badge: "⚡ 30% OFF • 3 TIMBRES",
+    desc: "O punch do Music Man StingRay, a definição do Yamaha TRB JP2 e a nobreza acústica do Ken Smith.",
+    itens: ["Music Man StingRay", "Yamaha TRB JP2", "Ken Smith"],
+    precoDe: 207.00,
+    precoPor: 144.90,
+    economia: 62.10,
+    link: "https://pay.cakto.com.br/checkout/ucc5muj_1306915"
   },
   {
-    id: "combo-sadowsky-metroline-sadowsky-m5",
-    nome: "Combo Sadowsky Metroline + Sadowsky M5",
-    badge: "🗽 Família Sadowsky",
-    desc: "O pacote completo do timbre Sadowsky: a suavidade do Metroline e os graves cheios do M5.",
-    itens: ["Sadowsky Metroline", "Sadowsky M5"],
-    precoDe: 108.00,
-    precoPor: 79.90,
-    economia: 28.10,
-    link: "https://pay.cakto.com.br/checkout/dt2t9jy_797252"
+    id: "combo-bf-3-mtd-fodera-mayones",
+    nome: "Combo Black Friday 3 — MTD + Fodera + Mayones",
+    badge: "👑 30% OFF • PACK BOUTIQUE",
+    desc: "Os 3 maiores gigantes mundiais: MTD 535-24, Fodera Custom e Mayones Jabba Custom.",
+    itens: ["MTD 535-24", "Fodera Custom", "Mayones Jabba Custom"],
+    precoDe: 279.70,
+    precoPor: 195.79,
+    economia: 83.91,
+    link: "https://pay.cakto.com.br/checkout/6ijutsd_1306916"
   },
   {
-    id: "combo-mtd-fender-ultra-2",
-    nome: "Combo MTD 535-24 + Fender Ultra II",
-    badge: "💎 Boutique & Versatilidade",
-    desc: "Médios expressivos e timbre aveludado para tocar de pop a fusion com autoridade.",
-    itens: ["MTD 535-24", "Fender Ultra II"],
-    precoDe: 158.00,
-    precoPor: 129.90,
-    economia: 28.10,
-    link: "https://pay.cakto.com.br/checkout/3c6kwki_797249"
-  },
-  {
-    id: "combo-mayones-fodera",
-    nome: "Combo Mayones Jabba 5 + Fodera Elite",
-    badge: "🏆 Padrão Master de Gravação",
-    desc: "Os dois maiores ícones mundiais de contrabaixo de luxo para mixagens impecáveis.",
-    itens: ["Mayones Jabba 5", "Fodera"],
-    precoDe: 188.00,
-    precoPor: 159.90,
-    economia: 28.10,
-    link: "https://pay.cakto.com.br/checkout/desr77i_797263"
+    id: "combo-bf-4-bassmods-sadowsky-swing",
+    nome: "Combo Black Friday 4 — Bass Mods + Sadowsky M5 + Swing",
+    badge: "💥 30% OFF • PACK PESADO",
+    desc: "Graves robustos e ataque moderno com Bass Mods, Sadowsky NYC M5 e Swing Guitars Jazz Deluxe.",
+    itens: ["Bass Mods", "Sadowsky NYC M5", "Swing Guitars"],
+    precoDe: 217.00,
+    precoPor: 151.90,
+    economia: 65.10,
+    link: "https://pay.cakto.com.br/checkout/gmvb7rj_1306917"
   }
 ];
 
@@ -2113,3 +2047,45 @@ function startCountdown(){
 }
 
 startCountdown();
+
+/* ================== BLACK FRIDAY COUNTDOWN ================== */
+function initBlackFridayTimer(){
+  // Liberação programada para amanhã: 11/11/2026 às 00:00:00 (Horário de Brasília)
+  const targetDate = new Date("2026-11-11T00:00:00-03:00").getTime();
+
+  function update(){
+    const now = Date.now();
+    const diff = targetDate - now;
+
+    const topTimer = document.getElementById("bfTopTimer");
+    const topLabel = document.getElementById("bfTopLabel");
+    const hEl = document.getElementById("bfH");
+    const mEl = document.getElementById("bfM");
+    const sEl = document.getElementById("bfS");
+    const headerTimer = document.getElementById("bfHeaderTimer");
+
+    if(diff <= 0){
+      if(topLabel) topLabel.textContent = "OFERTAS LIBERADAS! APROVEITE:";
+      if(topTimer) topTimer.textContent = "LIBERADO 🔥";
+      if(headerTimer) headerTimer.innerHTML = "<span style=\"color:#22c55e;font-weight:900;\">🔥 LIBERADO OFICIALMENTE!</span>";
+      return;
+    }
+
+    const totalHours = Math.floor(diff / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+    const pad = n => String(n).padStart(2, "0");
+    const timeStr = `${pad(totalHours)}:${pad(minutes)}:${pad(seconds)}`;
+
+    if(topTimer) topTimer.textContent = timeStr;
+    if(hEl) hEl.textContent = pad(totalHours);
+    if(mEl) mEl.textContent = pad(minutes);
+    if(sEl) sEl.textContent = pad(seconds);
+  }
+
+  update();
+  setInterval(update, 1000);
+}
+
+initBlackFridayTimer();

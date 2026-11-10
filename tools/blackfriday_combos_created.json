@@ -1,0 +1,42 @@
+[
+  {
+    "combo": "Combo 1",
+    "name": "Combo Black Friday 1 - Fender Ultra + Sadowsky",
+    "productId": "712d427f-dffc-4013-99a6-5b12b53aaa54",
+    "checkoutUrl": "https://pay.cakto.com.br/Bbq59af",
+    "cartaoLink": "https://pay.cakto.com.br/wv2cwb2",
+    "cartaoPrice": "R$ 68.60",
+    "pixLink": "https://pay.cakto.com.br/j4u72kk",
+    "pixPrice": "R$ 58.80"
+  },
+  {
+    "combo": "Combo 2",
+    "name": "Combo Black Friday 2 - Music Man + TRB + Ken Smith",
+    "productId": "d97ba6ab-ef32-4044-92b1-529ab019e733",
+    "checkoutUrl": "https://pay.cakto.com.br/6zRLMD8",
+    "cartaoLink": "https://pay.cakto.com.br/7yxxkhi",
+    "cartaoPrice": "R$ 165.60",
+    "pixLink": "https://pay.cakto.com.br/ucc5muj",
+    "pixPrice": "R$ 144.90"
+  },
+  {
+    "combo": "Combo 3",
+    "name": "Combo Black Friday 3 - MTD + Fodera + Mayones",
+    "productId": "52febf44-17f1-49a4-ac5f-baeb2c3cc25a",
+    "checkoutUrl": "https://pay.cakto.com.br/9kh87qc",
+    "cartaoLink": "https://pay.cakto.com.br/so2w76e",
+    "cartaoPrice": "R$ 223.76",
+    "pixLink": "https://pay.cakto.com.br/6ijutsd",
+    "pixPrice": "R$ 195.79"
+  },
+  {
+    "combo": "Combo 4",
+    "name": "Combo Black Friday 4 - Bass Mods + Sadowsky M5 + Swing",
+    "productId": "1ca97487-9829-4b86-b097-63f14e8b5826",
+    "checkoutUrl": "https://pay.cakto.com.br/6xoVPiq",
+    "cartaoLink": "https://pay.cakto.com.br/m9yruhv",
+    "cartaoPrice": "R$ 173.60",
+    "pixLink": "https://pay.cakto.com.br/gmvb7rj",
+    "pixPrice": "R$ 151.90"
+  }
+]
