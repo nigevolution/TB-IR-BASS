@@ -2048,44 +2048,9 @@ function startCountdown(){
 
 startCountdown();
 
-/* ================== BLACK FRIDAY COUNTDOWN ================== */
+/* ================== BLACK FRIDAY COMBOS READY ================== */
 function initBlackFridayTimer(){
-  // Liberação programada para amanhã: 11/11/2026 às 00:00:00 (Horário de Brasília)
-  const targetDate = new Date("2026-11-11T00:00:00-03:00").getTime();
-
-  function update(){
-    const now = Date.now();
-    const diff = targetDate - now;
-
-    const topTimer = document.getElementById("bfTopTimer");
-    const topLabel = document.getElementById("bfTopLabel");
-    const hEl = document.getElementById("bfH");
-    const mEl = document.getElementById("bfM");
-    const sEl = document.getElementById("bfS");
-    const headerTimer = document.getElementById("bfHeaderTimer");
-
-    if(diff <= 0){
-      if(topLabel) topLabel.textContent = "OFERTAS LIBERADAS! APROVEITE:";
-      if(topTimer) topTimer.textContent = "LIBERADO 🔥";
-      if(headerTimer) headerTimer.innerHTML = "<span style=\"color:#22c55e;font-weight:900;\">🔥 LIBERADO OFICIALMENTE!</span>";
-      return;
-    }
-
-    const totalHours = Math.floor(diff / (1000 * 60 * 60));
-    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-    const pad = n => String(n).padStart(2, "0");
-    const timeStr = `${pad(totalHours)}:${pad(minutes)}:${pad(seconds)}`;
-
-    if(topTimer) topTimer.textContent = timeStr;
-    if(hEl) hEl.textContent = pad(totalHours);
-    if(mEl) mEl.textContent = pad(minutes);
-    if(sEl) sEl.textContent = pad(seconds);
-  }
-
-  update();
-  setInterval(update, 1000);
+  // Cronometro removido a pedido do usuario - produtos e combos 100% liberados
 }
 
 initBlackFridayTimer();
