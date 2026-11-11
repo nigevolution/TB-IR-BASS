@@ -1067,6 +1067,7 @@ function ensureVideoModal(){
       background:#000;
     }
     .video-btn{
+      display:none !important;
       border:none;border-radius:18px;
       padding:14px 28px;
       background:linear-gradient(135deg,#ff9a3c,#ff7a00);
