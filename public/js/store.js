@@ -247,20 +247,20 @@ const combos = [
   {
     id: "combo-bf-3-mtd-fodera-mayones",
     nome: "Combo Black Friday 3 — MTD + Fodera + Mayones",
-    badge: "👑 30% OFF • PACK BOUTIQUE",
-    desc: "Os 3 maiores gigantes mundiais: MTD 535-24, Fodera Custom e Mayones Jabba Custom.",
-    itens: ["MTD 535-24", "Fodera Custom", "Mayones Jabba Custom"],
-    precoDe: 279.70,
+    badge: "👑 32% OFF • PACK BOUTIQUE",
+    desc: "Os 3 maiores gigantes mundiais: MTD 535-24, Fodera e Mayones Jabba 5.",
+    itens: ["MTD 535-24", "Fodera", "Mayones Jabba 5"],
+    precoDe: 287.00,
     precoPor: 195.79,
-    economia: 83.91,
+    economia: 91.21,
     link: "https://pay.cakto.com.br/checkout/6ijutsd_1306916"
   },
   {
     id: "combo-bf-4-bassmods-sadowsky-swing",
     nome: "Combo Black Friday 4 — Bass Mods + Sadowsky M5 + Swing",
     badge: "💥 30% OFF • PACK PESADO",
-    desc: "Graves robustos e ataque moderno com Bass Mods, Sadowsky NYC M5 e Swing Guitars Jazz Deluxe.",
-    itens: ["Bass Mods", "Sadowsky NYC M5", "Swing Guitars"],
+    desc: "Graves robustos e ataque moderno com Bass Mods, Sadowsky M5 e Swing Guitars Jazz Deluxe.",
+    itens: ["Bass Mods", "Sadowsky M5", "Swing Guitars"],
     precoDe: 217.00,
     precoPor: 151.90,
     economia: 65.10,
@@ -526,16 +526,18 @@ function getDiscountText(nome, pct){
   const css = document.createElement("style");
   css.id = "extraStoreCSS";
   css.innerHTML = `
-    .price-wrap{display:flex;flex-direction:column;gap:6px;margin-top:10px}
-    .price-line{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center}
-    .price-old{opacity:.65;text-decoration:line-through;font-size:14px}
-    .price-new{font-weight:800;font-size:18px}
+    .price-wrap{display:flex;flex-direction:column;gap:6px;margin-top:0}
+    .price-line{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:space-between}
+    .price-old{opacity:.68;text-decoration:line-through;font-size:13px}
+    .price-new{font-family:var(--font-display, inherit);font-weight:900;font-size:1.78rem;letter-spacing:-0.025em}
     .price-note{font-size:13px;opacity:.82;font-weight:700}
     .badge-off{
-      font-weight:800;font-size:12px;
-      padding:4px 10px;border-radius:999px;
-      background:rgba(0,255,140,.12);
-      border:1px solid rgba(0,255,140,.35);
+      font-family:var(--font-mono, inherit);
+      font-weight:800;font-size:11px;
+      padding:3px 9px;border-radius:6px;
+      background:rgba(34,197,94,.16);
+      color:#4ade80;
+      border:1px solid rgba(34,197,94,.38);
     }
 
     .product-seo-link{color:inherit;text-decoration:none}
@@ -1707,6 +1709,13 @@ function observeGA4ProductCardView(card, p){
   ga4ProductViewObserver.observe(card);
 }
 
+const TONE_PROFILE_LABELS = {
+  vintage: "Vintage",
+  modern: "Moderno",
+  hifi: "Hi-Fi",
+  punch: "Punch / Slap"
+};
+
 function toneProfileForProduct(nome){
   const value = String(nome || "").toLowerCase();
   if(/fender 1978|sadowsky metroline|lakland|swing/.test(value)) return "vintage";
@@ -1715,16 +1724,72 @@ function toneProfileForProduct(nome){
   return "modern";
 }
 
+function normalizeCatalogText(value){
+  return String(value || "")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .trim();
+}
+
+function applyCatalogFilters(){
+  if(isTrackPilotCampaignPage()) return;
+  const activeBtn = document.querySelector("[data-tone-filter][aria-pressed='true']");
+  const filter = activeBtn?.dataset?.toneFilter || "all";
+  const searchInput = document.getElementById("catalogSearch");
+  const query = normalizeCatalogText(searchInput?.value || "");
+  const cards = Array.from(document.querySelectorAll("#produtos [data-tone-profile]"));
+  let visibleCount = 0;
+
+  cards.forEach(card=>{
+    const matchesTone = filter === "all" || card.dataset.toneProfile === filter;
+    const searchable = normalizeCatalogText(
+      `${card.dataset.itemName || ""} ${card.querySelector("p")?.textContent || ""}`
+    );
+    const matchesQuery = !query || searchable.includes(query);
+    const visible = matchesTone && matchesQuery;
+    card.hidden = !visible;
+    if(visible) visibleCount++;
+  });
+
+  const countEl = document.getElementById("catalogCount");
+  if(countEl && cards.length){
+    countEl.textContent = visibleCount === cards.length
+      ? `Mostrando todos os ${cards.length} IRs disponíveis`
+      : `Exibindo ${visibleCount} de ${cards.length} IRs`;
+  }
+
+  const emptyEl = document.getElementById("catalogEmptyState");
+  if(emptyEl){
+    emptyEl.hidden = visibleCount > 0;
+  }
+}
+
 function wireToneNavigator(){
   const buttons = Array.from(document.querySelectorAll("[data-tone-filter]"));
+  const searchInput = document.getElementById("catalogSearch");
+  const resetBtn = document.getElementById("catalogEmptyReset");
   if(!buttons.length || isTrackPilotCampaignPage()) return;
+
   buttons.forEach(button=>button.addEventListener("click",()=>{
-    const filter = button.dataset.toneFilter || "all";
     buttons.forEach(item=>item.setAttribute("aria-pressed", item === button ? "true" : "false"));
-    document.querySelectorAll("#produtos [data-tone-profile]").forEach(card=>{
-      card.hidden = filter !== "all" && card.dataset.toneProfile !== filter;
-    });
+    applyCatalogFilters();
   }));
+
+  if(searchInput){
+    searchInput.addEventListener("input", applyCatalogFilters);
+  }
+
+  if(resetBtn){
+    resetBtn.addEventListener("click", ()=>{
+      if(searchInput) searchInput.value = "";
+      buttons.forEach(item=>item.setAttribute("aria-pressed", item.dataset.toneFilter === "all" ? "true" : "false"));
+      applyCatalogFilters();
+      if(searchInput) searchInput.focus();
+    });
+  }
+
+  applyCatalogFilters();
 }
 
 /* ================== RENDER ================== */
@@ -1757,13 +1822,25 @@ if(grid){
     const productHeading = productSeoHref
       ? `<h3><a class="product-seo-link" href="${productSeoHref}">${getDisplayProductName(p)}</a></h3>`
       : `<h3>${getDisplayProductName(p)}</h3>`;
+    const toneKey = !isTrackPilotName(p.nome) ? toneProfileForProduct(p.nome) : "";
+    const toneLabel = toneKey ? (TONE_PROFILE_LABELS[toneKey] || "") : "";
 
     let html = `
-      ${p.badge ? `<div class="badge-bestseller" style="display:inline-block;background:linear-gradient(135deg, #ff4500, #ff8c00);color:#ffffff;font-weight:700;font-size:11px;padding:3px 9px;border-radius:6px;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px;box-shadow:0 2px 8px rgba(255,69,0,0.3);">${p.badge}</div>` : ""}
-      ${productHeading}
-      <p>${p.desc}</p>
-      ${p.cupom ? `<div class="coupon-badge">Cupom: ${p.cupom}</div>` : ``}
-      ${p.status ? `<div class="status">${p.status}</div>` : ``}
+      <div class="tb-card-body">
+        ${(p.badge || toneLabel) ? `<div class="tb-card-top-row">
+          ${p.badge ? `<div class="badge-bestseller">${p.badge}</div>` : `<span></span>`}
+          ${toneLabel ? `<span class="tb-tone-tag tb-tone-${toneKey}">${toneLabel}</span>` : ``}
+        </div>` : ``}
+        ${productHeading}
+        <p class="tb-card-desc">${p.desc}</p>
+        ${p.irId ? `<div class="tb-card-specs">
+          <span class="tb-spec-chip">WAV 24-bit</span>
+          <span class="tb-spec-chip">44.1 / 48kHz</span>
+          <span class="tb-spec-chip">Entrega imediata</span>
+        </div>` : ""}
+        ${p.cupom ? `<div class="coupon-badge">Cupom: ${p.cupom}</div>` : ``}
+        ${p.status ? `<div class="status">${p.status}</div>` : ``}
+      </div>
     `;
 
     if(p.video){
@@ -1791,12 +1868,14 @@ if(grid){
       }
       priceHtml += `</div>`;
     }
+    html += `<div class="tb-card-footer">`;
     html += priceHtml;
 
-    if(p.audio){
+    const enableAudioPreview = false;
+    if(enableAudioPreview && p.audio){
       html += `
         <div class="audio-wrap" style="display:none">
-          <audio preload="metadata" src="${p.audio}"></audio>
+          <audio preload="none" src="${p.audio}"></audio>
           <button class="preview-btn">▶ Preview 30s</button>
         </div>
       `;
@@ -1822,6 +1901,7 @@ if(grid){
       html += `
         <div class="countdown"
           data-date="${p.release}"
+          data-item-id="${analyticsItem.item_id}"
           data-link="${p.link ?? ""}"
           data-price="${precoFinal ?? ""}"
           data-old="${p.preco ?? ""}"
@@ -1831,6 +1911,8 @@ if(grid){
         </div>
       `;
     }
+
+    html += `</div>`;
 
     card.innerHTML = html;
     // Local preview: real instrument photography for identifiable IR/model cards.
@@ -1971,22 +2053,26 @@ function renderCombos(){
     const itemsTags = c.itens.map(item => `<span class="combo-item-pill">🎸 ${item}</span>`).join(" ");
 
     card.innerHTML = `
-      <div class="combo-top-row">
-        <span class="badge-combo-highlight">${c.badge}</span>
-        <span class="badge-combo-economy">Economize ${formatBRL(c.economia)}</span>
-      </div>
-      <h3>${c.nome}</h3>
-      <div class="combo-items-row">${itemsTags}</div>
-      <p class="combo-desc">${c.desc}</p>
-      <div class="price-wrap">
-        <div class="price-line">
-          <span class="price-old">${formatBRL(c.precoDe)}</span>
-          <span class="badge-off">PACOTE ${c.itens.length} EM 1</span>
+      <div class="tb-combo-body">
+        <div class="combo-top-row">
+          <span class="badge-combo-highlight">${c.badge}</span>
+          <span class="badge-combo-economy">Economize ${formatBRL(c.economia)}</span>
         </div>
-        <div class="price-new">${formatBRL(c.precoPor)}</div>
-        <div class="combo-price-subtext">${c.itens.length} Simulações inclusas no checkout</div>
+        <h3>${c.nome}</h3>
+        <div class="combo-items-row">${itemsTags}</div>
+        <p class="combo-desc">${c.desc}</p>
       </div>
-      <button class="buy-btn combo-buy-btn" onclick="openTrackedCheckout(&quot;${c.link}&quot;, &quot;${c.id}&quot;)">Comprar Combo • ${formatBRL(c.precoPor)}</button>
+      <div class="tb-combo-footer">
+        <div class="price-wrap">
+          <div class="price-line">
+            <span class="price-old">${formatBRL(c.precoDe)}</span>
+            <span class="badge-off">PACOTE ${c.itens.length} EM 1</span>
+          </div>
+          <div class="price-new">${formatBRL(c.precoPor)}</div>
+          <div class="combo-price-subtext">${c.itens.length} Simulações inclusas no checkout</div>
+        </div>
+        <button class="buy-btn combo-buy-btn" onclick="openTrackedCheckout(&quot;${c.link}&quot;, &quot;${c.id}&quot;)">Comprar Combo • ${formatBRL(c.precoPor)}</button>
+      </div>
     `;
     combosContainer.appendChild(card);
   });
@@ -1997,7 +2083,7 @@ function startCountdown(){
   document.querySelectorAll(".countdown").forEach(el=>{
     const target = new Date(el.dataset.date).getTime();
 
-    const timer = setInterval(()=>{
+    const updateCountdownItem = ()=>{
       const diff = target - Date.now();
 
       if(diff <= 0){
@@ -2033,8 +2119,7 @@ function startCountdown(){
         }
 
         el.outerHTML = out || ``;
-        clearInterval(timer);
-        return;
+        return true;
       }
 
       const d = Math.floor(diff / 86400000);
@@ -2043,7 +2128,14 @@ function startCountdown(){
       const s = Math.floor((diff / 1000) % 60);
 
       el.innerHTML = `⏳ ${d}d ${h}h ${m}m ${s}s`;
-    },1000);
+      return false;
+    };
+
+    if(!updateCountdownItem()){
+      const timer = setInterval(()=>{
+        if(updateCountdownItem()) clearInterval(timer);
+      }, 1000);
+    }
   });
 }
 

@@ -27,5 +27,5 @@ test('botão flutuante abre o WhatsApp oficial em um toque', () => {
 test('UTMify ignora somente os links oficiais do WhatsApp', () => {
   assert.match(html, /data-utmify-ignore-classes="tb-whatsapp-direct"/);
   const directLinks = html.match(/class="[^"]*tb-whatsapp-direct[^"]*"[^>]*href="https:\/\/wa\.me\/message\/3QND546Y75L3M1"/g) || [];
-  assert.equal(directLinks.length, 2);
+  assert.equal(directLinks.length, 3);
 });
