@@ -1,5 +1,6 @@
 import { createClient } from "@supabase/supabase-js"
-import { sendGa4Purchase } from "./lib/ga4-purchase.mjs"
+// Dynamic import mantém o arquivo como CJS (sem "type":"module" no package.json)
+// Static ESM import quebraria com ERR_REQUIRE_ESM nas Netlify Lambda Functions
 
 async function getCaktoAccessToken() {
   if (process.env.CAKTO_TOKEN) return process.env.CAKTO_TOKEN
@@ -73,6 +74,7 @@ export async function handler(event) {
   })
 
   try {
+    const { sendGa4Purchase } = await import("./lib/ga4-purchase.mjs")
     const ga4 = await sendGa4Purchase(order)
     if (!ga4.skipped && !ga4.ok) {
       console.error("GA4 purchase failed", { orderId, status: ga4.status })
