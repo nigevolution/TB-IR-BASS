@@ -44,7 +44,7 @@ const images = {
 
 const canonicalBase = 'https://tbbassir.com.br';
 const ga4Tag = `<script async src="https://www.googletagmanager.com/gtag/js?id=G-FNRVG1V5MC"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FNRVG1V5MC');</script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-FNRVG1V5MC');gtag('config','AW-18480330357');</script>
 <script defer src="/js/seo-checkout-tracking.js"></script>`;
 const instagramProfile = 'https://www.instagram.com/silasmarinhobx/';
 const html = value => String(value ?? '')

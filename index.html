@@ -119,13 +119,14 @@
      crossorigin="anonymous"></script>
   <!-- Fim Google AdSense -->
 
-  <!-- Google Tag (GA4) -->
+  <!-- Google Tag (GA4 + Google Ads) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-FNRVG1V5MC"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'G-FNRVG1V5MC');
+    gtag('config', 'AW-18480330357');
   </script>
   <!-- Fim Google Tag -->
 
@@ -2425,6 +2426,7 @@ function trackTBBassWhatsappOpen(){
 function trackTBBassWhatsappClick(contact){
   if(typeof gtag === 'function'){
     gtag('event','whatsapp_click', getTBBassWhatsAppPayload({ contact }));
+    gtag('event','generate_lead', getTBBassWhatsAppPayload({ contact, method: 'whatsapp' }));
   }
 }
 </script>

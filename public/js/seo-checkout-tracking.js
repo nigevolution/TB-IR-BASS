@@ -53,13 +53,22 @@
     cacheGaIds();
     document.addEventListener('pointerdown', event => {
       const link = event.target.closest?.('[data-tb-checkout]');
+      if (link) updateLink(link);
+    }, { capture: true });
+    document.addEventListener('click', event => {
+      const link = event.target.closest?.('[data-tb-checkout]');
       if (link) {
         updateLink(link);
-        // Dispara begin_checkout no GA4 ao clicar em qualquer botão de checkout
+        // Dispara begin_checkout no GA4 e conversão no Google Ads ao clicar no checkout
         if (typeof gtag === 'function') {
           gtag('event', 'begin_checkout', {
             currency: 'BRL',
             ...(ga.session_id ? { session_id: ga.session_id } : {})
+          });
+          gtag('event', 'conversion', {
+            send_to: 'AW-18480330357/mrlxCK6h3b8dEPXsjexE',
+            value: 1.0,
+            currency: 'BRL'
           });
         }
       }

@@ -105,3 +105,94 @@ describe('Task 3: GA4 nas páginas faltantes', () => {
     });
   }
 });
+
+// ─── Task 4: Tag Google Ads (AW-18480330357) e conversão Checkout Iniciado ───
+describe('Task 4: Google Ads tag AW-18480330357 em todo o site', () => {
+  const pagesWithTag = [
+    'public/index.html',
+    'index.html',
+    'public/obrigado/index.html',
+    'public/politica-de-devolucao/index.html',
+    'public/como-instalar-ir-na-tank-b/index.html',
+    'public/avaliar/index.html',
+    'public/video.html',
+    'public/video2.html',
+    'public/videos-ir-para-baixo/15-opcoes-ir-silas-marinho/index.html',
+    'public/videos-ir-para-baixo/garanta-seu-ir-silas-marinho/index.html',
+    'public/videos-ir-para-baixo/sadowsky-ir-silas-marinho/index.html',
+    'public/ir-para-baixo/index.html',
+    'public/ir/fender-ultra-2/index.html',
+  ];
+
+  for (const page of pagesWithTag) {
+    test(`${page} configura gtag AW-18480330357`, () => {
+      const src = read(page);
+      assert.match(src, /gtag\s*\(\s*['"]config['"]\s*,\s*['"]AW-18480330357['"]\s*\)/,
+        `gtag('config', 'AW-18480330357') ausente em ${page}`);
+    });
+  }
+
+  test('seo-checkout-tracking.js dispara conversão AW-18480330357/mrlxCK6h3b8dEPXsjexE', () => {
+    const src = read('public/js/seo-checkout-tracking.js');
+    assert.match(src, /AW-18480330357\/mrlxCK6h3b8dEPXsjexE/);
+  });
+
+  test('seo-checkout-tracking.js dispara eventos no evento click (evitando falso positivo no scroll)', () => {
+    const src = read('public/js/seo-checkout-tracking.js');
+    assert.match(src, /addEventListener\(\s*['"]click['"]/);
+  });
+});
+
+// ─── Task 5: Home (store.js e index.html) persiste GCLID e dispara begin_checkout / generate_lead ───
+describe('Task 5: Rastreamento completo na Home (store.js e index.html)', () => {
+  const store = read('public/js/store.js');
+  const html = read('public/index.html');
+
+  test('store.js persiste gclid, gbraid e wbraid em sessionStorage', () => {
+    assert.match(store, /['"]gclid['"]/);
+    assert.match(store, /['"]gbraid['"]/);
+    assert.match(store, /['"]wbraid['"]/);
+    assert.match(store, /sessionStorage\.setItem/);
+    assert.match(store, /sessionStorage\.getItem/);
+  });
+
+  test('openTrackedCheckout dispara begin_checkout e conversão AW-18480330357/mrlxCK6h3b8dEPXsjexE', () => {
+    assert.match(store, /begin_checkout/);
+    assert.match(store, /AW-18480330357\/mrlxCK6h3b8dEPXsjexE/);
+  });
+
+  test('cliques em WhatsApp disparam generate_lead no GA4', () => {
+    assert.match(html, /gtag\s*\(\s*['"]event['"]\s*,\s*['"]generate_lead['"]/);
+    assert.match(store, /trackGA4ProductEvent\(\s*['"]generate_lead['"]/);
+  });
+
+  test('runtime sandbox: buildTrackedCheckoutUrl preserva gclid e UTMs do sessionStorage', async () => {
+    const vm = await import('node:vm');
+    const fnStart = store.indexOf('function getStoredTrackingParam(');
+    const fnEnd = store.indexOf('function sendTrackPilotClickRecord(');
+    assert.ok(fnStart !== -1 && fnEnd !== -1, 'helpers getStoredTrackingParam/buildTrackedCheckoutUrl devem existir');
+    const storageMap = new Map([
+      ['tb_gclid', 'EAIaIQobChMI_TEST_GCLID'],
+      ['tb_gbraid', 'GBRAID_TEST'],
+      ['tb_utm_source', 'google'],
+      ['tb_utm_medium', 'cpc'],
+      ['tb_utm_campaign', '24544740459'],
+    ]);
+    const ctx = {
+      URL,
+      URLSearchParams,
+      window: { location: { href: 'https://tbbassir.com.br/', search: '' }, __tbBassGA4Ids: { client_id: '11.22', session_id: '9988' } },
+      sessionStorage: { getItem: k => storageMap.get(k) ?? null, setItem: (k, v) => storageMap.set(k, v) },
+      getAnalyticsItemId: () => 'fender-ultra-2',
+    };
+    vm.runInNewContext(`${store.slice(fnStart, fnEnd)}\nthis.build = buildTrackedCheckoutUrl;`, ctx);
+    const out = new URL(ctx.build('https://pay.cakto.com.br/checkout/w3x2i3r_700686', { irId: 'fender-ultra-2' }, 'tpc_1', 'tps_1'));
+    assert.equal(out.searchParams.get('gclid'), 'EAIaIQobChMI_TEST_GCLID');
+    assert.equal(out.searchParams.get('gbraid'), 'GBRAID_TEST');
+    assert.equal(out.searchParams.get('utm_source'), 'google');
+    assert.equal(out.searchParams.get('utm_medium'), 'cpc');
+    assert.equal(out.searchParams.get('utm_campaign'), '24544740459');
+    assert.equal(out.searchParams.get('ga_client_id'), '11.22');
+    assert.equal(out.searchParams.get('ga_session_id'), '9988');
+  });
+});

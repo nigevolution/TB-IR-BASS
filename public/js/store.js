@@ -1422,6 +1422,10 @@ function openIRTestSupport(productId, productName){
   trackGA4ProductEvent("ir_test_whatsapp_open", analyticsProduct, {
     support_contact: "whatsapp_business"
   });
+  trackGA4ProductEvent("generate_lead", analyticsProduct, {
+    support_contact: "whatsapp_business",
+    method: "whatsapp"
+  });
 
   window.open(url, "_blank", "noopener,noreferrer");
 }
@@ -1562,9 +1566,34 @@ function cacheTbBassGa4Identifiers(){
 
 cacheTbBassGa4Identifiers();
 
+const TRACKED_AD_PARAM_KEYS = ["gclid", "gbraid", "wbraid", "utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"];
+
+function persistAdClickParams(){
+  if(typeof window === "undefined") return;
+  try{
+    const p = new URLSearchParams(window.location.search || "");
+    TRACKED_AD_PARAM_KEYS.forEach((key)=>{
+      const value = p.get(key);
+      if(value) sessionStorage.setItem("tb_" + key, value);
+    });
+  }catch(_){}
+}
+
+persistAdClickParams();
+
 function createTpClickId(p){
   const itemId = p ? getAnalyticsItemId(p) : "item";
   return "tpc_" + tpSafeIdPart(itemId) + "_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2, 8);
+}
+
+function getStoredTrackingParam(pageParams, key){
+  const direct = pageParams.get(key);
+  if(direct) return direct;
+  try{
+    return (typeof sessionStorage !== "undefined" && sessionStorage.getItem("tb_" + key)) || "";
+  }catch(_){
+    return "";
+  }
 }
 
 function buildTrackedCheckoutUrl(link, p, clickId, sessionId){
@@ -1572,14 +1601,14 @@ function buildTrackedCheckoutUrl(link, p, clickId, sessionId){
   try{ url = new URL(link, window.location.href); }
   catch(_){ return link; }
   const pageParams = new URLSearchParams(window.location.search || "");
-  ["utm_source", "utm_medium", "utm_campaign"].forEach((key)=>{
-    const value = pageParams.get(key);
+  ["utm_source", "utm_medium", "utm_campaign", "gclid", "gbraid", "wbraid"].forEach((key)=>{
+    const value = getStoredTrackingParam(pageParams, key);
     if(value && !url.searchParams.get(key)) url.searchParams.set(key, value);
   });
   if(!url.searchParams.get("utm_source")) url.searchParams.set("utm_source", "site");
   url.searchParams.set("sck", clickId);
-  url.searchParams.set("utm_content", clickId);
-  url.searchParams.set("utm_term", sessionId);
+  url.searchParams.set("utm_content", getStoredTrackingParam(pageParams, "utm_content") || clickId);
+  url.searchParams.set("utm_term", getStoredTrackingParam(pageParams, "utm_term") || sessionId);
   url.searchParams.set("tp_product_id", p ? getAnalyticsItemId(p) : "");
   const gaIds = window.__tbBassGA4Ids || {};
   if(gaIds.client_id) url.searchParams.set("ga_client_id", gaIds.client_id);
@@ -1629,18 +1658,31 @@ function openTrackedCheckout(link, itemId){
   const sessionId = getTpSessionId();
   const clickId = createTpClickId(p);
   const trackedUrl = buildTrackedCheckoutUrl(link, p, clickId, sessionId);
+  const gaIds = (typeof window !== "undefined" && window.__tbBassGA4Ids) || {};
   if(p && typeof gtag === "function"){
     const checkoutPayload = {
       tp_click_id: clickId,
       tp_session_id: sessionId,
       checkout_url: trackedUrl,
-      source: "checkout_redirect"
+      source: "checkout_redirect",
+      ...(gaIds.session_id ? { session_id: Number(gaIds.session_id) || gaIds.session_id } : {})
     };
+    trackGA4ProductEvent("begin_checkout", p, checkoutPayload);
     trackGA4ProductEvent("trackpilot_checkout_redirect", p, checkoutPayload);
     if(!isTrackPilotName(p.nome)){
       trackGA4ProductEvent("trackpilot_checkout_modal_open", p, checkoutPayload);
       trackGA4ProductEvent("trackpilot_checkout_confirm", p, checkoutPayload);
     }
+  }else if(typeof gtag === "function"){
+    gtag("event", "begin_checkout", { currency: "BRL", source: "checkout_redirect" });
+  }
+  if(typeof gtag === "function"){
+    const item = p ? getAnalyticsItem(p) : null;
+    gtag("event", "conversion", {
+      send_to: "AW-18480330357/mrlxCK6h3b8dEPXsjexE",
+      value: item && item.price != null ? item.price : 1.0,
+      currency: "BRL"
+    });
   }
   sendTrackPilotClickRecord(p, clickId, sessionId, trackedUrl);
   window.open(trackedUrl, "_blank");

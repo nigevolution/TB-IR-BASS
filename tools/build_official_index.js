@@ -60,13 +60,14 @@ const html = `<!DOCTYPE html>
   }
   </script>
 
-  <!-- Google Tag (GA4) -->
+  <!-- Google Tag (GA4 + Google Ads) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-FNRVG1V5MC"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'G-FNRVG1V5MC');
+    gtag('config', 'AW-18480330357');
   </script>
   <!-- Fim Google Tag -->
 
