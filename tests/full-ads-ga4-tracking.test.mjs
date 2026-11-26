@@ -37,6 +37,11 @@ describe('Task 1: cakto-webhook.js ESM fix', () => {
     assert.match(src, /sendGa4Purchase\(order\)/);
   });
 
+  test('usa endpoint OAuth oficial /public_api/token/ e não /oauth/token', () => {
+    assert.match(src, /https:\/\/api\.cakto\.com\.br\/public_api\/token\//);
+    assert.doesNotMatch(src, /\/oauth\/token/);
+  });
+
   test('node --check não reporta erro de sintaxe', async () => {
     const { execFile } = await import('node:child_process');
     const { promisify } = await import('node:util');

@@ -9,11 +9,10 @@ async function getCaktoAccessToken() {
   if (!clientId || !clientSecret) throw new Error("Cakto credentials not configured")
 
   const params = new URLSearchParams({
-    grant_type: "client_credentials",
     client_id: clientId,
     client_secret: clientSecret
   })
-  const response = await fetch("https://api.cakto.com.br/oauth/token", {
+  const response = await fetch("https://api.cakto.com.br/public_api/token/", {
     method: "POST",
     headers: { "content-type": "application/x-www-form-urlencoded" },
     body: params.toString()

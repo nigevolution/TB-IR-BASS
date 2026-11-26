@@ -80,5 +80,5 @@ test('Cakto webhook sends paid orders to GA4 and supports current OAuth env name
   assert.match(source, /sendGa4Purchase\(order\)/);
   assert.match(source, /CACKTO_CLIENT_ID/);
   assert.match(source, /CACKTO_CLIENT_SECRET/);
-  assert.match(source, /oauth\/token/);
+  assert.match(source, /public_api\/token\//);
 });
